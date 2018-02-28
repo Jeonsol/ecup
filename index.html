@@ -9,7 +9,8 @@
 <div class="target1">test2</div>
 <div class="target2">test2</div>
 <div class="target3 testClass4">test2</div>
-<script src="./ecup.js"></script>
+<script src="./node_modules/babel-polyfill/dist/polyfill.min.js"></script>
+<script src="./es5/ecup.js"></script>
 <script>
     ecup('.switch').e('click')
         .target('.target2', {addClass: 'testClass33'})
