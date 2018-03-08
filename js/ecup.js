@@ -41,17 +41,20 @@ function markupLayer() {
     /* 테스트에서 ecup으로 쓰여있는함수 */
     var Main = function(flag) {
 
-        var userObj = new Main();
+        var userObj;
 
         if (typeof flag === 'string') {
             // flag가 문자열인 경우, 그룹이름이기 떄문에 설정해주고 추후 group 메소드로 그린다.
+            userObj = new Main();
             userObj.groupName = flag;
+            return userObj;
         } else if (typeof flag === 'object') {
             // flag가 객체인 경우, flag가 바로 옵션이 되며 single로 그린다.
+            userObj = new Main();
             userObj.single(flag);
+            return userObj;
         }
 
-        return userObj;
     };
 
     Main.set = function(options) {
@@ -65,21 +68,23 @@ function markupLayer() {
         single: function(options) {
             /* single은 type에따라서 그리면된다. */
             // markupLayer.type 으로 불러온다.
-            draw(options, callback /* 타입에따른 */);
+            draw(options, windows /* 타입에따른 */);
         },
         group: function() {
             // 마지막 인자가 옵션
             var options = arguments[arguments.length - 1];
             // 받아온 공통 dom의 selector들을 배열로 넣어서
-            var commonDoms = [];
-            for (var i = 0; i < arguments.length - 1; ++i)
-                commonDoms.push(arguments[i]);
+            if (arguments.length > 1) {
+                var commonDoms = [];
+                for (var i = 0; i < arguments.length - 1; ++i)
+                    commonDoms.push(arguments[i]);
+            }
             /* group은 groupInfo를 먼저 생성 */
             var groupInfo = {
                 groupName: this.groupName,
                 groupDom: commonDoms
             };
-            draw(options, callback, groupInfo);
+            draw(options, windows, groupInfo);
         }
     };
 
@@ -94,28 +99,51 @@ function markupLayer() {
         callback(codeParser(), groupInfo);
 
         function codeParser() {
-            /*
+            // 공통 dom 생성
+            if (groupInfo)
+                var commonTarget = groupInfo.groupDom.join(',');
 
-            options의 형태는
-            {
-                버튼이름1: 함수1,
-                버튼이름2: 함수2
-            }
-            또는
-            {
-                버튼이름1: 옵션객체1,
-                버튼이름2: 옵션객체2
+
+            // option 의 객체/함수 여부 검사
+            for (var btnName in options) {
+
+                var option = options[btnName];
+                // 함수가 아닐경우
+                if (typeof option === 'object') {
+
+                    // 옵션에 타겟이 없는 경우, 공통 타겟을 할당
+                    if (!option.target) option.target = commonTarget;
+                    option = parsing(option);
+                    options[btnName] = option;
+                }
+
             }
 
-            이것을 spec = {
-                버튼이름1: 함수1,
-                버튼이름2: 함수2
+            return options;
+
+
+            // 옵션을 함수로 변환
+            function parsing(option) {
+
+                // target 이 없는 경우 에러 발생
+                if (!option.target) throw new Error('target 이 반드시 필요합니다...');
+
+                var fn, fnPart;
+                var fnBody = 'var that = this;';
+
+                for (var optFn in option) {
+                    if (optFn === 'target') continue;
+                    fnPart = 'that.' + optFn + '("' + option[optFn] + '");';
+                    fnBody += fnPart;
+                }
+
+                // 함수 생성 및 this 바인딩
+                fn = new Function(fnBody);
+                fn = fn.bind($(option.target));
+
+                return fn;
+
             }
-            로 변환
-            즉, 옵션이 객체인 경우 이벤트 함수로 변환하는 모듈
-             */
-            var spec = {};
-            return spec;
         }
     }
 
@@ -125,6 +153,16 @@ function markupLayer() {
             spec을 가지고 dom을 생성해서 뷰를 그려줌
             즉, 타입에 따라서 그려주는 module
          */
+
+        /* 테스트용 windows */
+        for (var btnName in spec) {
+            var $btn = $('<button type="button">' + btnName + '</button>');
+            $btn.click(spec[btnName]);
+            $(document.body).append($btn);
+        }
+
+        if (groupInfo)
+            console.log(groupInfo.groupName);
     }
 
     function external(spec, groupInfo) {
@@ -136,6 +174,9 @@ function markupLayer() {
     }
 
 }
+
+var ecup = {};
+ecup.markupLayer = markupLayer;
 
 
 /*
