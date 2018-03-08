@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>테스트 페이지</title>
+    <style>
+        .box {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:150px;height:150px;border:1px solid #333;}
+        .box1 {margin-left: -200px;}
+        .box3 {margin-left: 200px;}
+        .bgRed {background: red;}
+        .bgBlue {background: blue;}
+    </style>
+</head>
+<body>
+<div id="div" class="box box1"></div>
+<div id="div1" class="box box2"></div>
+<div id="div2" class="box box3"></div>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/ecup.js"></script>
+<script>
+    var mk = ecup.markupLayer();
+
+    mk({
+        '박스2 빨강': {
+            target: '#div1',
+            toggleClass: 'bgRed'
+        },
+        '박스2 파랑': {
+            target: '#div1',
+            toggleClass: 'bgBlue'
+        }
+    });
+
+    mk('그룹 제목 2').group(
+        '#div',
+        {
+            '박스1 빨강': {
+                toggleClass: 'bgRed',
+                addClass: 'test'
+            },
+            '박스1 파': {
+                toggleClass: 'bgBlue'
+            }
+        }
+    );
+</script>
+</body>
+</html>
