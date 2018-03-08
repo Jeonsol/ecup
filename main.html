@@ -3,58 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>마크업 테스트</title>
+    <style>
+        .test_wrap {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);}
+        .test_box {width:150px;height:150px;margin:20px;border: 1px solid #333;font-size:40px;line-height:150px;text-align:center;}
+    </style>
 </head>
 <body>
-    <div class="wrap">
-
+    <div class="test_wrap">
+        <div class="test_box box1">1</div>
+        <div class="test_box box2">2</div>
+        <div class="test_box box3">3</div>
     </div>
 </body>
-
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/import/codeParsing.js"></script>
 <script>
     /* 사용자 사용 예시 */
+    options = {
+        'box1': function(e) {
+            $('.box1').css('color', 'red');
+        },
+        'box2': function(e) {
+            $('.box2').css('background', 'red');
+        },
+        'box3': function(e) {
+            $('.box3').css('font-size', '100px');
+        }
+    };
 
-    // var mk = ecup.markupLayer();
-    //
-    // mk.set({
-    //     type: 'external',
-    //     theme: 'dark',
-    //     btnType: {
-    //         '테스트케이스': 'checked'
-    //     }
-    // });
-    //
-    // mk({
-    //     '버튼제목': function() {
-    //
-    //     },
-    //     '버튼제목': function() {
-    //
-    //     }
-    // });
-    //
-    // mk('그룹제목').group({
-    //     '버튼제목': function(e) {
-    //         var $div1 = $('#div1');
-    //         $div1.toggleClass('test_class');
-    //         $div1.toggleAttr('aria-label="test"');
-    //     },
-    //     '버튼제목': function(e) {
-    //         $('#span').addClass('test_class2');
-    //     },
-    // });
-    //
-    // mk('케이스 테스트').group(
-    //     '.div',
-    //     {
-    //         'case 1': {
-    //             toggleClass: 'test_class',
-    //             toggleAttr: 'aria-label="test"'
-    //         },
-    //         'case 2': {
-    //             target: '#span',
-    //             addClass: 'test_class2'
-    //         }
-    //     }
-    // );
+    parsedObj = codeParsing(options);
+    $layerWrap = $('<div class="__markup__">');
+    parsedObj.forEach(function($dom) {
+        $layerWrap.append($dom);
+    });
+
+    $(body).append($layerWrap);
+
+
 </script>
 </html>
