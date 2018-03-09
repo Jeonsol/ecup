@@ -34,7 +34,7 @@ let testData = [
 ];
 
 function external(testData) {
-	const theme = 'naver';
+	const theme = 'naver'; //default, naver, pink
 	let groupTitle,layerDomData,btnSet;
 	$('body').append('<div class="ecup_section"><button type="button" class="layer_btn"><span class="blind">레이어토글</span></button></button><div class="statement_layer"></div></div>');
 	$('.ecup_section .statement_layer').addClass(theme);

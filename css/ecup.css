@@ -6,6 +6,7 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
+	background-color: rgba(0, 0, 0, 0.1); // 테스트
 }
 .ecup_section .blind {
 	position: absolute;
@@ -25,17 +26,46 @@
 .ecup_section .statement_layer.naver .layer{
 	border-color: #00c73c;
 }
+.ecup_section .statement_layer.naver .event_btn{
+	background-color: #00c73c;
+}
+.ecup_section .statement_layer.pink .layer{
+	border-color: #ea447cdb;
+}
+.ecup_section .statement_layer.pink .event_btn{
+	background-color: #ea447cdb;
+}
 .ecup_section .layer {
+	overflow: hidden;
+	position: relative;
 	padding: 5%;
 	border: 1px dotted #000;
 	border-radius: 10px;
-	background-color: rgba(255,255,255,0.8);
+	margin-bottom: 10px;
+}
+.ecup_section .layer:before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background-color: #fff;
+	opacity: 0.8;
+	z-index: -1;
+	content: '';
 }
 .ecup_section .layer .title {
 	display: block;
 }
 .ecup_section .layer .event_btn {
 	display: block;
+	width: 100%;
+	height: 30px;
+	margin-top: 10px;
+	border: 0;
+	border-radius: 5px;
+	background-color: #269fd6;
+	color: #fff;
 }
 .ecup_section .layer_btn {
 	position: absolute;
