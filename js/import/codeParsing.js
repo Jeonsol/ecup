@@ -3,7 +3,7 @@ function codeParser(options, callback, groupInfo) {
 
     // 공통 dom 생성
     if (groupInfo)
-        var commonTarget = groupInfo.groupDom.join(',');
+        var commonTarget = $(groupInfo.groupDom.join(','));
 
 
     // option 의 객체/함수 여부 검사
@@ -17,6 +17,8 @@ function codeParser(options, callback, groupInfo) {
 
             // 옵션에 타겟이 없는 경우, 공통 타겟을 할당
             if (!option.target) option.target = commonTarget;
+            else option.target = $(option.target);
+
             option = parsing(option);
             options[btnName] = option;
         }
@@ -41,7 +43,7 @@ function codeParser(options, callback, groupInfo) {
         }
 
         fn = new Function(fnBody);
-        fn = fn.bind($(option.target));
+        fn = fn.bind(option.target);
 
         return fn;
 

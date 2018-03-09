@@ -99,9 +99,10 @@ function markupLayer() {
         callback(codeParser(), groupInfo);
 
         function codeParser() {
+
             // 공통 dom 생성
             if (groupInfo)
-                var commonTarget = groupInfo.groupDom.join(',');
+                var commonTarget = $(groupInfo.groupDom.join(','));
 
 
             // option 의 객체/함수 여부 검사
@@ -111,8 +112,12 @@ function markupLayer() {
                 // 함수가 아닐경우
                 if (typeof option === 'object') {
 
+                    console.log(option);
+
                     // 옵션에 타겟이 없는 경우, 공통 타겟을 할당
                     if (!option.target) option.target = commonTarget;
+                    else option.target = $(option.target);
+
                     option = parsing(option);
                     options[btnName] = option;
                 }
@@ -125,7 +130,6 @@ function markupLayer() {
             // 옵션을 함수로 변환
             function parsing(option) {
 
-                // target 이 없는 경우 에러 발생
                 if (!option.target) throw new Error('target 이 반드시 필요합니다...');
 
                 var fn, fnPart;
@@ -137,9 +141,8 @@ function markupLayer() {
                     fnBody += fnPart;
                 }
 
-                // 함수 생성 및 this 바인딩
                 fn = new Function(fnBody);
-                fn = fn.bind($(option.target));
+                fn = fn.bind(option.target);
 
                 return fn;
 
