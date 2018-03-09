@@ -38,6 +38,12 @@
 * */
 function markupLayer() {
 
+    var viewModule = {
+        'windows': windows,
+        'external': external,
+        'internal': internal
+    };
+
     /* 테스트에서 ecup으로 쓰여있는함수 */
     var Main = function(flag) {
 
@@ -68,7 +74,7 @@ function markupLayer() {
         single: function(options) {
             /* single은 type에따라서 그리면된다. */
             // markupLayer.type 으로 불러온다.
-            draw(options, windows /* 타입에따른 */);
+            draw(options, viewModule[markupLayer.type] /* 타입에따른 */);
         },
         group: function() {
             // 마지막 인자가 옵션
@@ -84,9 +90,12 @@ function markupLayer() {
                 groupName: this.groupName,
                 groupDom: commonDoms
             };
-            draw(options, windows, groupInfo);
+            draw(options, viewModule[markupLayer.type], groupInfo);
         }
     };
+
+    // 셋팅 초기화
+    markupLayer.type = 'windows';
 
     return Main;
 
@@ -111,8 +120,6 @@ function markupLayer() {
                 var option = options[btnName];
                 // 함수가 아닐경우
                 if (typeof option === 'object') {
-
-                    console.log(option);
 
                     // 옵션에 타겟이 없는 경우, 공통 타겟을 할당
                     if (!option.target) option.target = commonTarget;

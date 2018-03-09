@@ -13,8 +13,6 @@ function codeParser(options, callback, groupInfo) {
         // 함수가 아닐경우
         if (typeof option === 'object') {
 
-            console.log(option);
-
             // 옵션에 타겟이 없는 경우, 공통 타겟을 할당
             if (!option.target) option.target = commonTarget;
             else option.target = $(option.target);
