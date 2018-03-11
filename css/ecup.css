@@ -6,7 +6,7 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.1); // 테스트
+    z-index: 1000;
 }
 .ecup_section .blind {
 	position: absolute;
@@ -16,12 +16,13 @@
 	margin: -1px;
 	overflow: hidden;
 }
-
+.ecup_section.external {
+    display: none;
+}
 .ecup_section .statement_layer {
 	position: absolute;
-	top: 140px;
-	right: 100px;
 	width: 30%;
+    z-index: 1;
 }
 .ecup_section .statement_layer.naver .layer{
 	border-color: #00c73c;
@@ -34,6 +35,15 @@
 }
 .ecup_section .statement_layer.pink .event_btn{
 	background-color: #ea447cdb;
+}
+.ecup_section .dimmed {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.7;
 }
 .ecup_section .layer {
 	overflow: hidden;
@@ -69,12 +79,13 @@
 }
 .ecup_section .layer_btn {
 	position: absolute;
-	top: 100px;
+	top: 60px;
 	right: 100px;
 	width: 64px;
 	height: 30px;
 	border: 0;
 	background: transparent url('../img/btn_on_64x64.png') no-repeat 50% 50%;
+    z-index: 1;
 }
 .ecup_section .layer_btn.off {
 	background-image: url('../img/btn_off_64x64.png');

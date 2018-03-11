@@ -1,7 +1,7 @@
 /* 인라인 & 레이어 마크업 버튼 */
 
 function internal(spec, groupInfo) {
-	// 뷰처리 - 내장
+	// 뷰처리 - 레이어
 	var $layerDom = $('<div class="layer"></div>');
 	if(typeof groupInfo !== 'undefined') {
 		var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
@@ -13,4 +13,8 @@ function internal(spec, groupInfo) {
 		$layerDom.append($btn);
 	}
 	$('.ecup_section .statement_layer').append($layerDom);
+}
+
+function external(spec, groupInfo) {
+    // 뷰처리 - 내장
 }
