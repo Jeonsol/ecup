@@ -155,6 +155,22 @@ function markupLayer() {
 		}
 	};
 
+	Main.comment = function(options) {
+		for(var opt in options) {
+			var $commentDom = $('<div class="ecup_comment"><button type="button" class="comment_btn"><span class="blind">코멘트토글</span></button><div class="comment_area"><div class="outer_comment"><div class="inner_comment">'+options[opt]+'</div></div></div></div>');
+			if($(opt).css('position')!=='fixed' && $(opt).css('position')!=='relative' && $(opt).css('position')!=='absolute') {
+				$commentDom.css({'top': $(opt).offset().top, 'left': $(opt).offset().left})
+			}
+			else {
+				$commentDom.css({'top': 0, 'left': 0});
+			}
+			$(opt).append($commentDom);
+		}
+		$('.ecup_comment').on('click','.comment_btn',function() {
+			$(this).next('.comment_area').toggle();
+		})
+	};
+
 	Main.prototype = {
 		constructor: Main,
 		single: function(options) {

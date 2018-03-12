@@ -1,20 +1,22 @@
 @charset "utf-8";
 /*basic.css*/
-.ecup_section {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-    z-index: 1000;
-}
-.ecup_section .blind {
+.blind {
 	position: absolute;
 	clip: rect(0, 0, 0, 0);
 	width: 1px;
 	height: 1px;
 	margin: -1px;
 	overflow: hidden;
+}
+
+/*in-external layer*/
+.ecup_section {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
 }
 .ecup_section.external {
     display: none;
@@ -89,4 +91,83 @@
 }
 .ecup_section .layer_btn.off {
 	background-image: url('../img/btn_off_64x64.png');
+}
+
+/*designer comment*/
+.ecup_comment {
+	position: absolute;
+}
+.ecup_comment .comment_btn {
+	width: 24px;
+	height: 24px;
+	background: transparent url('../img/btn_comment_24x24.png') no-repeat 50% 50%;
+	border: 0;
+}
+.ecup_comment .comment_area {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 30px;
+	width: 100px;
+	padding: 0 20px;
+	background-color: #fff;
+}
+.ecup_comment .comment_area:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 27px;
+	height: 18px;
+	background: transparent url('../img/comment_topleft.png') no-repeat 50% 50%;
+	content: '';
+}
+.ecup_comment .comment_area:after {
+	position: absolute;
+	left: 9px;
+	bottom: 0;
+	width: 18px;
+	height: 18px;
+	background: transparent url('../img/comment_bottomleft.png') no-repeat 50% 50%;
+	content: '';
+}
+.ecup_comment .outer_comment:before {
+	position: absolute;
+	top: 0;
+	right: 2px;
+	width: 18px;
+	height: 18px;
+	background: transparent url('../img/comment_topright.png') no-repeat 50% 50%;
+	content: '';
+}
+.ecup_comment .outer_comment:after {
+	position: absolute;
+	right: 2px;
+	bottom: 0;
+	width: 18px;
+	height: 18px;
+	background: transparent url('../img/comment_bottomright.png') no-repeat 50% 50%;
+	content: '';
+}
+.ecup_comment .inner_comment {
+	padding: 20px 0;
+	border: 1px solid #e0dfdf;
+	border-width: 1px 0;
+}
+.ecup_comment .inner_comment:before {
+	position: absolute;
+	top: 18px;
+	left: 9px;
+	bottom: 18px;
+	width: 1px;
+	background-color: #e0dfdf;
+	content: '';
+}
+.ecup_comment .inner_comment:after {
+	position: absolute;
+	top: 18px;
+	right: 2px;
+	bottom: 18px;
+	width: 1px;
+	background-color: #e0dfdf;
+	content: '';
 }
