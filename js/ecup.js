@@ -68,20 +68,20 @@ function markupLayer() {
 			for (var opt in options)
 				markupLayer[opt] = options[opt];
 
-        $('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
+		$('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
 
 		positionSet(markupLayer.position);
 
 		function positionSet(position) {
 			var positionInfo = position.split(" ");
-            var $ecupLayer = $('.ecup_section .statement_layer');
+			var $ecupLayer = $('.ecup_section .statement_layer');
 
-        	if(positionInfo[0] === 'center') {
-                $ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
+			if(positionInfo[0] === 'center') {
+				$ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
 			}
 
 			else {
-        		$ecupLayer.css(positionInfo[0],'100px').css(positionInfo[1],'100px');
+				$ecupLayer.css(positionInfo[0],'100px').css(positionInfo[1],'100px');
 			}
 		}
 
@@ -89,9 +89,9 @@ function markupLayer() {
 			var $ecupDom = $('.ecup_section');
 
 			$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
-            $ecupDom.find('.statement_layer').addClass(markupLayer.theme);
+			$ecupDom.find('.statement_layer').addClass(markupLayer.theme);
 
-            $ecupDom.on('click','.layer_btn',function() {
+			$ecupDom.on('click','.layer_btn',function() {
 				var $target = $(this);
 
 				if($target.hasClass('off')) {
@@ -100,7 +100,7 @@ function markupLayer() {
 				}
 
 				else {
-                    $target.siblings().fadeOut(200);
+					$target.siblings().fadeOut(200);
 					$target.parent('.ecup_section').css({'z-index':'-1'})
 				}
 
@@ -109,15 +109,50 @@ function markupLayer() {
 		}
 
 		else if(markupLayer.type === 'external') {
-            var $ecupDom = $('.ecup_section');
+			var $ecupDom = $('.ecup_section');
 
-            $ecupDom.css({'display':'none'}).find('.statement_layer').addClass(markupLayer.theme);
+			$ecupDom.css({'display':'none'}).find('.statement_layer').addClass(markupLayer.theme);
 
-            //pc
-            $(document).dblclick(function() {
-            	$ecupDom.fadeIn(300);
-            });
-        }
+			//pc
+			$(document).dblclick(function() {
+				$ecupDom.fadeIn(300);
+			});
+
+			//mobile
+
+			(function($){
+
+				$.event.special.doubletap = {
+					bindType: 'touchend',
+					delegateType: 'touchend',
+
+					handle: function(event) {
+						var handleObj   = event.handleObj,
+							targetData  = jQuery.data(event.target),
+							now         = new Date().getTime(),
+							delta       = targetData.lastTouch ? now - targetData.lastTouch : 0,
+							delay       = delay == null ? 300 : delay;
+
+						if (delta < delay && delta > 30) {
+							targetData.lastTouch = null;
+							event.type = handleObj.origType;
+							['clientX', 'clientY', 'pageX', 'pageY'].forEach(function(property) {
+								event[property] = event.originalEvent.changedTouches[0][property];
+							});
+
+							handleObj.handler.apply(this, arguments);
+						} else {
+							targetData.lastTouch = now;
+						}
+					}
+				};
+
+			})(jQuery);
+
+			$(document).on('doubletap',function(){
+				$ecupDom.fadeIn(300);
+			});
+		}
 	};
 
 	Main.prototype = {
@@ -229,39 +264,39 @@ function markupLayer() {
 	}
 	function external(spec, groupInfo) {
 		// 뷰처리 - 내장
-        commonDrawLayer(spec, groupInfo);
+		commonDrawLayer(spec, groupInfo);
 
-        var $ecupDom = $('.ecup_section');
+		var $ecupDom = $('.ecup_section');
 
-        $ecupDom.on('click', '.dimmed', function() {
-        	$ecupDom.fadeOut(200);
+		$ecupDom.on('click', '.dimmed', function() {
+			$ecupDom.fadeOut(200);
 		});
 
-        $ecupDom.on('click', '.event_btn', function() {
-            $ecupDom.fadeOut(200);
-        });
+		$ecupDom.on('click', '.event_btn', function() {
+			$ecupDom.fadeOut(200);
+		});
 	}
 
 	function internal(spec, groupInfo) {
 		// 뷰처리 - 레이어
-        commonDrawLayer(spec, groupInfo);
+		commonDrawLayer(spec, groupInfo);
 	}
 
 	function commonDrawLayer(spec, groupInfo) {
-        var $layerDom = $('<div class="layer"></div>');
+		var $layerDom = $('<div class="layer"></div>');
 
-        if(typeof groupInfo !== 'undefined') {
-            var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
-            $layerDom.append(groupTitle);
-        }
+		if(typeof groupInfo !== 'undefined') {
+			var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
+			$layerDom.append(groupTitle);
+		}
 
-        for(var btnName in spec) {
-            var $btn = $('<button type="button" class="event_btn">'+btnName+'</button>');
-            $btn.click(spec[btnName]);
-            $layerDom.append($btn);
-        }
+		for(var btnName in spec) {
+			var $btn = $('<button type="button" class="event_btn">'+btnName+'</button>');
+			$btn.click(spec[btnName]);
+			$layerDom.append($btn);
+		}
 
-        $('.ecup_section .statement_layer').append($layerDom);
+		$('.ecup_section .statement_layer').append($layerDom);
 	}
 
 }

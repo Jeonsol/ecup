@@ -22,7 +22,7 @@
 .ecup_section .statement_layer {
 	position: absolute;
 	width: 30%;
-    z-index: 1;
+	z-index: 1;
 }
 .ecup_section .statement_layer.naver .layer{
 	border-color: #00c73c;
