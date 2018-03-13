@@ -159,20 +159,19 @@ function markupLayer() {
 
 
     function windows(spec, groupInfo) {
-        /* 뷰처리 - 팝업
-            spec을 가지고 dom을 생성해서 뷰를 그려줌
-            즉, 타입에 따라서 그려주는 module
-         */
-
-        /* 테스트용 windows */
-        for (var btnName in spec) {
-            var $btn = $('<button type="button">' + btnName + '</button>');
-            $btn.click(spec[btnName]);
-            $(document.body).append($btn);
+        newWindow = window.open('', 'newWindow', 'width=300, height=500');
+        for(var obj in spec) {
+            var name = obj,
+                func = spec[obj];
+            $(newWindow.document.body).append(new makeBtn(name, func));
         }
 
-        if (groupInfo)
-            console.log(groupInfo.groupName);
+        function makeBtn(name, func){
+            var html = '<button>' + name + '</button>';
+            var btn = $.parseHTML(html);
+            $(btn).on('click', func);
+            return btn;
+        }
     }
 
     function external(spec, groupInfo) {
