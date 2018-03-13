@@ -19,7 +19,7 @@
 	z-index: 1000;
 }
 .ecup_section.external {
-    display: none;
+	display: none;
 }
 .ecup_section .statement_layer {
 	position: absolute;
@@ -39,13 +39,13 @@
 	background-color: #ea447cdb;
 }
 .ecup_section .dimmed {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #000;
-    opacity: 0.7;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #000;
+	opacity: 0.7;
 }
 .ecup_section .layer {
 	overflow: hidden;
@@ -87,13 +87,20 @@
 	height: 30px;
 	border: 0;
 	background: transparent url('../img/btn_on_64x64.png') no-repeat 50% 50%;
-    z-index: 1;
+	z-index: 1;
 }
 .ecup_section .layer_btn.off {
 	background-image: url('../img/btn_off_64x64.png');
 }
 
 /*designer comment*/
+.ecup_comment_section {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
 .ecup_comment {
 	position: absolute;
 }

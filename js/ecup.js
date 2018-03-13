@@ -155,22 +155,6 @@ function markupLayer() {
 		}
 	};
 
-	Main.comment = function(options) {
-		for(var opt in options) {
-			var $commentDom = $('<div class="ecup_comment"><button type="button" class="comment_btn"><span class="blind">코멘트토글</span></button><div class="comment_area"><div class="outer_comment"><div class="inner_comment">'+options[opt]+'</div></div></div></div>');
-			if($(opt).css('position')!=='fixed' && $(opt).css('position')!=='relative' && $(opt).css('position')!=='absolute') {
-				$commentDom.css({'top': $(opt).offset().top, 'left': $(opt).offset().left})
-			}
-			else {
-				$commentDom.css({'top': 0, 'left': 0});
-			}
-			$(opt).append($commentDom);
-		}
-		$('.ecup_comment').on('click','.comment_btn',function() {
-			$(this).next('.comment_area').toggle();
-		})
-	};
-
 	Main.prototype = {
 		constructor: Main,
 		single: function(options) {
@@ -317,8 +301,64 @@ function markupLayer() {
 
 }
 
+function comment() {
+
+	var userObj;
+
+	function Main(flag) {
+
+		if (typeof  flag === 'string') {
+				userObj = new Main();
+				userObj.singleWrite(arguments[0],arguments[1]);
+			}
+
+		else if(typeof flag === 'object') {
+				userObj = new Main();
+				userObj.groupWrite(flag);
+			}
+
+	}
+
+	Main.prototype = {
+		constructor: Main,
+		singleWrite : function(target,msg) {
+			var $target = $(target);
+			var top = $target.offset().top/$(window).height()*100+'%';
+			var left = $target.offset().left/$(window).width()*100+'%';
+
+			var $commentDom = $('<div class="ecup_comment"><button type="button" class="comment_btn"><span class="blind">코멘트토글</span></button><div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + msg + '</div></div></div></div>');
+			$commentDom.css({'top': top, 'left': left});
+			comment.targetDom.append($commentDom);
+
+		},
+		groupWrite : function(flag) {
+
+			for (var opt in flag) {
+				var top = $(opt).offset().top/$(window).height()*100+'%';
+				var left = $(opt).offset().left/$(window).width()*100+'%';
+
+				var $commentDom = $('<div class="ecup_comment"><button type="button" class="comment_btn"><span class="blind">코멘트토글</span></button><div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + flag[opt] + '</div></div></div></div>');
+				$commentDom.css({'top': top, 'left': left});
+				comment.targetDom.append($commentDom);
+			}
+
+			$('.comment_btn').on('click', function () {
+				$(this).next('.comment_area').toggle();
+			});
+
+		}
+	};
+
+	comment.targetDom = $('<div class="ecup_comment_section"></div>');
+	$('body').append(comment.targetDom);
+
+	return Main;
+}
+
 var ecup = {};
 ecup.markupLayer = markupLayer;
+ecup.comment = comment;
+
 
 
 /*
