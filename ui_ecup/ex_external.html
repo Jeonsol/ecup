@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>External 마크업 레이어 예시</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi,viewport-fit=cover">
+    <link rel="stylesheet" href="./ex_css/w.css">
+    <link rel="stylesheet" href="./ex_css/w_cafe.css">
+    <link rel="stylesheet" href="./css/external.css">
+</head>
+<body>
+<header class='header fix'>
+    <div class='gnb' role='banner'>
+        <div class='gnb_l'><a href='#' class='gnb_home'><span class='blind'>카페홈</span></a></div>
+        <h1><a href="#"><span class="ellip">엑소뮤직사랑</span></a></h1>
+        <div class='gnb_sc'>
+            <a href='#' class='gnb_search' role="button"><span class='blind'>검색</span></a>
+        </div>
+        <div class='gnb_r'>
+            <a href='#' class="gnb_ham" role="button"><span class='blind'>확장영역 열기</span></a>
+        </div>
+    </div>
+</header>
+<div id="ct_skip" class="section_live section_live_view">
+
+    <div class="frame_live">
+        <div class="inner_live">
+            <div class="player_live">
+                <div class="box_error" style="display: block;">
+                    <span class="ico_wcafe ico_error01" role="img"></span>
+                    <p class="txt_error">다수의 신고로 방송이 중단되었습니다.</p>
+                </div>
+                <div class="box_error" style="display: none;">
+                    <span class="ico_wcafe ico_error02" role="img"></span>
+                    <p class="txt_error">삭제된 영상입니다.</p>
+                </div>
+                <div class="box_error" style="display: none;">
+                    <span class="ico_wcafe ico_error03" role="img"></span>
+                    <p class="txt_error">라이브가 종료되었습니다.</p>
+                </div>
+                <div class="box_error" style="display: none;">
+                    <span class="ico_wcafe ico_error03" role="img"></span>
+                    <p class="txt_error">인코딩 중입니다.</p>
+                </div>
+            </div>
+        </div>
+        <div class="info_live info_live_view">
+            <a href="#" class="link_user">
+                <div class="thumb">
+                    <img src="http://dev.ui.naver.com/tmp/?35x35_woman2_n_FFFFFF_100" width="48" height="48" alt="프로필사진">
+                </div>
+            </a>
+            <div class="link_info">
+                <p class="desc_txt">리니지 전섭1위 92렙 5집행기사 vs 별3개</p>
+                <div class="desc_count">
+                    <span class="txt nick">FerminFerminFerminFerminFerminFerminFermin</span>
+                    <span class="txt">
+						<span class="ico_wcafe ico_view" role="img" aria-label="view"></span>44,300
+						<span class="ico_wcafe ico_like" role="img" aria-label="like"></span>55,800
+					</span>
+                </div>
+            </div>
+            <a href="#" class="link_notice">
+                <span class="ico_wcafe ico_notice" role="img" aria-label="알림"></span>
+                <p class="notice_txt">새글알림</p>
+                <em class="ico_wcafe ico_flag" role="img" aria-label="off"></em>
+            </a>
+        </div>
+    </div>
+
+    <div class="frame_save">
+        <a href="#" class="btn_save_vod">내 VOD 다운로드</a>
+    </div>
+</div>
+<div class="__NTS_markup__" style="top:-100%; opacity:0.4;">
+    <h2>NTS 마크업검수 레이어</h2>
+    <div class="__area_btns__">
+        <div class="__area_btn__ __area_single__">
+            <a href="#" role="button"><span class="__view__ __btn__"></span>알림 버튼</a>
+            <a href="#" role="button"><span class="__view__ __btn__"></span>VOD 다운로드 버튼</a>
+        </div>
+        <div class="__area_btn__ __area_group__">
+            <strong>영상 알림화면</strong>
+            <a href="#" role="button" class="__checked__"><span class="__view__ __radio__"></span>방송 중단</a>
+            <a href="#" role="button"><span class="__view__ __radio__"></span>삭제된 영상</a>
+            <a href="#" role="button"><span class="__view__ __radio__"></span>라이브 종료</a>
+            <a href="#" role="button"><span class="__view__ __radio__"></span>인코딩 중</a>
+        </div>
+        <div class="__area_btn__ __area_group__">
+            <strong>그룹 이름짓기 힘들다 1 그룹 이름짓기 힘들다 1 그룹 이름짓기 힘들다 1</strong>
+            <a href="#" role="button" class="__checked__"><span class="__view__ __chbox__"></span>버튼 이름짓기 힘들다 1 버튼 이름짓기 힘들다 1 버튼 이름짓기 힘들다 1</a>
+            <a href="#" role="button"><span class="__view__ __chbox__"></span>버튼 이름짓기 힘들다 2</a>
+            <a href="#" role="button" class="__checked__"><span class="__view__ __chbox__"></span>버튼 이름짓기 힘들다 3</a>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $(document.body).click(function() {
+        var $layer = $('.__NTS_markup__');
+        if ($layer.css('top') !== '0px') $layer.animate({top: 0, opacity: 1}, 500);
+        else $layer.animate({top: '-100%', opacity: 0.4}, 500);
+    });
+</script>
+</body>
+</html>
