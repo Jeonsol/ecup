@@ -1,23 +1,39 @@
-function attr_HOF(attributes, callback) {
+function attr_HOF(attrParams, callback) {
 
-    if (typeof attributes !== 'string') throw new Error("check a type of attribute parameter");
+    var that = this;
 
-    attributes.trim();
-    attributes += ' ';
+    Array.prototype.forEach.call(attrParams, function(attrParam) {
 
-    var regExp = /(\S+)="([^"]+)"(?=\s)/g;
+        var attr, val, regExp;
 
-    while(true) {
+        if (typeof attrParam !== 'string') throw new Error("check a type of attribute parameter");
 
-        var temp = regExp.exec(attributes);
-        if (temp === null) break;
+        attrParam = $.trim(attrParam);
+        attrParam += ' ';
 
-        var attr = temp[1],
-            val = temp[2];
+        switch (callback) {
+            case attr_PF_remove:
+                regExp = /([^\s,]+)(?=[\s,])/g;
+                break;
+            case attr_PF_add:
+            case attr_PF_toggle:
+                regExp = /([^\s,]+)="([^",]+)"(?=[\s,])/g;
+                break;
+        }
 
-        callback(this, attr, val);
+        while(true) {
 
-    }
+            var temp = regExp.exec(attrParam);
+            if (temp === null) break;
+
+            if (temp[1]) attr = temp[1];
+            if (temp[2]) val = temp[2];
+
+            callback(that, attr, val);
+
+        }
+
+    });
 
 }
 
@@ -25,7 +41,20 @@ function attr_PF_add($dom, attr, val) {
     $dom.attr(attr, val);
 }
 
-function attr_PF_remove
+function attr_PF_remove($dom, attr) {
+    $dom.removeAttrOrigin(attr);
+}
+
+function attr_PF_toggle($doms, attr, val) {
+    $.each($doms, function(i, dom) {
+        var $dom = $(dom);
+        if ($dom.attr(attr)) $dom.removeAttrOrigin(attr);
+        else $dom.attr(attr, val);
+    });
+}
 
 
-jQuery.fn.addAttr = function(attributes) {attr_HOF.call(this, attributes, attr_PF_add)};
+jQuery.fn.addAttr = function() {attr_HOF.call(this, arguments, attr_PF_add);};
+jQuery.fn.removeAttrOrigin = jQuery.fn.removeAttr;
+jQuery.fn.removeAttr = function() {attr_HOF.call(this, arguments, attr_PF_remove);};
+jQuery.fn.toggleAttr = function() {attr_HOF.call(this, arguments, attr_PF_toggle);};
