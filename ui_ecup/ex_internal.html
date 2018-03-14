@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi,viewport-fit=cover">
     <link rel="stylesheet" href="./ex_css/w.css">
     <link rel="stylesheet" href="./ex_css/w_cafe.css">
-    <link rel="stylesheet" href="./css/external.css">
+    <link rel="stylesheet" href="./css/internal.css">
 </head>
 <body>
 <header class='header fix'>
@@ -72,35 +72,30 @@
         <a href="#" class="btn_save_vod">내 VOD 다운로드</a>
     </div>
 </div>
-<div class="__NTS_markup__" style="top:-100%; opacity:0.4;">
+<div class="__NTS_markup">
     <h2>NTS 마크업검수 레이어</h2>
-    <div class="__area_btns__">
-        <div class="__area_btn__ __area_single__">
-            <a href="#" role="button"><span class="__view__ __btn__"></span>알림 버튼</a>
-            <a href="#" role="button"><span class="__view__ __btn__"></span>VOD 다운로드 버튼</a>
+    <div class="__area_env">
+        <a href="#"><span class="__view"></span>UI 주석보기</a>
+    </div>
+    <div class="__area_btns">
+       <div class="__area_btn __area_single">
+            <a href="#" role="button"><span class="__view __btn"></span>알림 버튼</a>
+            <a href="#" role="button"><span class="__view __btn"></span>VOD 다운로드 버튼</a>
         </div>
-        <div class="__area_btn__ __area_group__">
+        <div class="__area_btn __area_group">
             <strong>영상 알림화면</strong>
-            <a href="#" role="button" class="__checked__"><span class="__view__ __radio__"></span>방송 중단</a>
-            <a href="#" role="button"><span class="__view__ __radio__"></span>삭제된 영상</a>
-            <a href="#" role="button"><span class="__view__ __radio__"></span>라이브 종료</a>
-            <a href="#" role="button"><span class="__view__ __radio__"></span>인코딩 중</a>
+            <a href="#" role="button" class="__checked"><span class="__view __radio"></span>방송 중단</a>
+            <a href="#" role="button"><span class="__view __radio"></span>삭제된 영상</a>
+            <a href="#" role="button"><span class="__view __radio"></span>라이브 종료</a>
+            <a href="#" role="button"><span class="__view __radio"></span>인코딩 중</a>
         </div>
-        <div class="__area_btn__ __area_group__">
+        <div class="__area_btn __area_group">
             <strong>그룹 이름짓기 힘들다 1 그룹 이름짓기 힘들다 1 그룹 이름짓기 힘들다 1</strong>
-            <a href="#" role="button" class="__checked__"><span class="__view__ __chbox__"></span>버튼 이름짓기 힘들다 1 버튼 이름짓기 힘들다 1 버튼 이름짓기 힘들다 1</a>
-            <a href="#" role="button"><span class="__view__ __chbox__"></span>버튼 이름짓기 힘들다 2</a>
-            <a href="#" role="button" class="__checked__"><span class="__view__ __chbox__"></span>버튼 이름짓기 힘들다 3</a>
+            <a href="#" role="button" class="__checked"><span class="__view __chbox"></span>버튼 이름짓기 힘들다 1 버튼 이름짓기 힘들다 1 버튼 이름짓기 힘들다 1</a>
+            <a href="#" role="button"><span class="__view __chbox"></span>버튼 이름짓기 힘들다 2</a>
+            <a href="#" role="button" class="__checked"><span class="__view __chbox"></span>버튼 이름짓기 힘들다 3</a>
         </div>
     </div>
 </div>
-<script src="../js/jquery-3.3.1.min.js"></script>
-<script>
-    $(document.body).click(function() {
-        var $layer = $('.__NTS_markup__');
-        if ($layer.css('top') !== '0px') $layer.animate({top: 0, opacity: 1}, 500);
-        else $layer.animate({top: '-100%', opacity: 0.4}, 500);
-    });
-</script>
 </body>
 </html>
