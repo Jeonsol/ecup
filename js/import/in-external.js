@@ -1,6 +1,11 @@
 /* 인라인 & 레이어 마크업 버튼 */
 
 function external(spec, groupInfo) {
+	// 뷰처리 - 레이어
+	commonDrawLayer(spec, groupInfo);
+}
+
+function internal(spec, groupInfo) {
 	// 뷰처리 - 내장
 	commonDrawLayer(spec, groupInfo);
 
@@ -13,11 +18,6 @@ function external(spec, groupInfo) {
 	$ecupDom.on('click', '.event_btn', function() {
 		$ecupDom.fadeOut(200);
 	});
-}
-
-function internal(spec, groupInfo) {
-	// 뷰처리 - 레이어
-	commonDrawLayer(spec, groupInfo);
 }
 
 function commonDrawLayer(spec, groupInfo) {
