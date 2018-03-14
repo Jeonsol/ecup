@@ -2,47 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>테스트 페이지</title>
+    <title>테스트</title>
     <style>
-        .box {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:150px;height:150px;border:1px solid #333;}
-        .box1 {margin-left: -200px;}
-        .box3 {margin-left: 200px;}
-        .bgRed {background: red;}
-        .bgBlue {background: blue;}
+        #test_box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #333;
+            margin: -100px 0 0 -100px;
+            font-size: 40px;
+            line-height: 200px;
+            text-align:center;
+        }
     </style>
 </head>
 <body>
-<div id="div" class="box box1"></div>
-<div id="div1" class="box box2"></div>
-<div id="div2" class="box box3"></div>
+<div id="tester"></div>
+<div id="test_box">Hi</div>
 <script src="./js/jquery-3.3.1.min.js"></script>
 <script src="./js/ecup.js"></script>
 <script>
-    var mk = ecup.markupLayer();
+$('#tester').addAttr('role="button", aria-label="good"');
+$('#tester').removeAttr('role aria-label');
+$('#tester').toggleAttr('role="button"', 'aria-label="good"');
 
-    mk({
-        '박스2 빨강': {
-            target: '#div1',
-            toggleClass: 'bgRed'
-        },
-        '박스2 파랑': {
-            target: '#div1',
-            toggleClass: 'bgBlue'
-        }
-    });
+console.log($.ecup);
 
-    mk('그룹 제목 2').group(
-        '#div',
-        {
-            '박스1 빨강': {
-                toggleClass: 'bgRed',
-                addClass: 'test'
-            },
-            '박스1 파': {
-                toggleClass: 'bgBlue'
-            }
-        }
-    );
+var layer = $.ecup.markupLayer();
+
+layer.set({
+    type: 'windows'
+});
+
+layer({
+    '박스 숨기기': {
+        target: '#test_box',
+        hide: 400
+    },
+    '박스 보이기': {
+        target: '#test_box',
+        show: 400
+    },
+    '박스 배경색 바꾸기': function() {
+        $('#test_box').css('background', 'blue');
+    }
+});
 </script>
 </body>
 </html>
