@@ -61,7 +61,6 @@
 		markupLayerManager.prototype = {
 			constructor: markupLayerManager,
 			single: function(options) {
-				/* single은 type에따라서 그리면된다. */
 				// markupLayer.type 으로 불러온다.
 				draw(options, viewModule[markupLayerManager.type] /* 타입에따른 */);
 			},
@@ -75,7 +74,8 @@
 						commonDoms.push(arguments[i]);
 					}
                 }
-				/* group은 groupInfo를 먼저 생성 */
+				console.log(arguments.length);
+				// group은 groupInfo를 먼저 생성
 				var groupInfo = {
 					groupName: this.groupName,
 					groupDom: commonDoms
@@ -102,7 +102,7 @@
 		function optionObj_to_eventFunc(options, groupInfo) {
 
 			// 공통 dom 을 사용하는 경우 생성
-			if (groupInfo) var commonTarget = $(groupInfo.groupDom.join(','));
+			if (groupInfo && groupInfo.groupDom) var commonTarget = $(groupInfo.groupDom.join(','));
 
 			// 기능이 객체로 주어진 경우 함수로 변환
 			for (var btnName in options) {
