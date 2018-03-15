@@ -130,7 +130,7 @@
 
                 for (var optFn in option) {
                     if (optFn === 'target') continue;
-                    fnPart = 'that.' + optFn + '("' + option[optFn] + '");';
+                    fnPart = "that." + optFn + "('" + option[optFn] + "');";
                     fnBody += fnPart;
                 }
 
@@ -176,12 +176,72 @@
 
     /** 속성 다루기 addAttr, removeAttr, toggleAttr **/
 
-    jQuery.fn.addAttr = function() {attr_HOF.call(this, arguments, attr_PF_add);};
-    jQuery.fn.removeAttrOrigin = jQuery.fn.removeAttr;
-    jQuery.fn.removeAttr = function() {attr_HOF.call(this, arguments, attr_PF_remove);};
-    jQuery.fn.toggleAttr = function() {attr_HOF.call(this, arguments, attr_PF_toggle);};
+    /* 속성 추가/수정 */
+    jQuery.fn.addAttr = function() {
+        jQuery.fn.addAttr.PF = function($dom, attr, val) {
+            $dom.attr(attr, val);
+        };
+        HOF_parseParam.call(this, arguments, jQuery.fn.addAttr.PF);
+    };
 
-    function attr_HOF(attrParams, callback) {
+    /* 속성 삭제 */
+    jQuery.fn.removeAttrOrigin = jQuery.fn.removeAttr;
+    jQuery.fn.removeAttr = function() {
+        jQuery.fn.removeAttr.PF = function($dom, attr) {
+            $dom.removeAttrOrigin(attr);
+        };
+        HOF_parseParam.call(this, arguments, jQuery.fn.removeAttr.PF);
+    };
+
+    /* 속성 토글 */
+    jQuery.fn.toggleAttr = function() {
+        jQuery.fn.toggleAttr.PF = function($doms, attr, val) {
+            $.each($doms, function(i, dom) {
+                if (dom.hasAttribute(attr)) dom.removeAttribute(attr);
+                else dom.setAttribute(attr, val);
+            });
+        };
+        HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);
+    };
+
+    /* 인라인 스타일 추가/수정 */
+    jQuery.fn.addStyle = function() {
+        jQuery.fn.addStyle.PF = function($doms, style, val) {
+            $.each($doms, function(i, dom) {
+                dom.style[style] = val;
+            });
+        };
+        HOF_parseParam.call(this, arguments, jQuery.fn.addStyle.PF);
+    };
+
+    /* 인라인 스타일 삭제 */
+    jQuery.fn.removeStyle = function() {
+        jQuery.fn.removeStyle.PF = function($doms, style) {
+            $.each($doms, function(index, dom) {
+                dom.style.removeProperty(style);
+            });
+        };
+        HOF_parseParam.call(this, arguments, jQuery.fn.removeStyle.PF);
+    };
+
+    /* 인라인 스타일 토글 */
+    jQuery.fn.toggleStyle = function() {
+        jQuery.fn.toggleStyle.PF = function($doms, style, val) {
+            $.each($doms, function(index, dom) {
+                if(!dom.style[style] || dom.style[style] !== val) {
+                    dom.style[style] = val;
+                } else {
+                    dom.style.removeProperty(style);
+                }
+            });
+        };
+        HOF_parseParam.call(this, arguments, jQuery.fn.toggleStyle.PF);
+    };
+
+
+
+    /* 고계 함수 - 문자열 파라미터 파싱 */
+    function HOF_parseParam(attrParams, callback) {
 
         var that = this;
 
@@ -195,12 +255,17 @@
             attrParam += ' ';
 
             switch (callback) {
-                case attr_PF_remove:
+                case jQuery.fn.removeAttr.PF:
+                case jQuery.fn.removeStyle.PF:
                     regExp = /([^\s,]+)(?=[\s,])/g;
                     break;
-                case attr_PF_add:
-                case attr_PF_toggle:
+                case jQuery.fn.addAttr.PF:
+                case jQuery.fn.toggleAttr.PF:
                     regExp = /([^\s,]+)="([^",]+)"(?=[\s,])/g;
+                    break;
+                case jQuery.fn.addStyle.PF:
+                case jQuery.fn.toggleStyle.PF:
+                    regExp = /([a-zA-Z\-]+)\s*:\s*(\S+)(?=;)/g;
                     break;
             }
 
@@ -215,17 +280,9 @@
                 callback(that, attr, val);
 
             }
-        });
-    }
 
-    function attr_PF_add($dom, attr, val) {$dom.attr(attr, val);}
-    function attr_PF_remove($dom, attr) {$dom.removeAttrOrigin(attr);}
-    function attr_PF_toggle($doms, attr, val) {
-        $.each($doms, function(i, dom) {
-            var $dom = $(dom);
-            if ($dom.attr(attr)) $dom.removeAttrOrigin(attr);
-            else $dom.attr(attr, val);
         });
+
     }
 
 });
