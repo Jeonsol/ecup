@@ -90,17 +90,15 @@ function markupLayer() {
 
 	// 셋팅 초기화
 	markupLayer.type = 'windows';
-
 	markupLayer.theme = '';
 	markupLayer.position = 'top right';
+
 	Main.set = function(options) {
 		if (typeof options === 'object')
 			for (var opt in options)
 				markupLayer[opt] = options[opt];
 
 		$('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
-
-		positionSet(markupLayer.position);
 
 		function positionSet(position) {
 			var positionInfo = position.split(" ");
@@ -115,28 +113,30 @@ function markupLayer() {
 			}
 		}
 
-		if (markupLayer.type !== 'internal') {
-			if (markupLayer.type === 'external') {
-				var $ecupDom = $('.ecup_section');
+		if (markupLayer.type === 'external') {
 
-				$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
-				$ecupDom.find('.statement_layer').addClass(markupLayer.theme);
+			positionSet(markupLayer.position);
 
-				$ecupDom.on('click', '.layer_btn', function () {
-					var $target = $(this);
+			var $ecupDom = $('.ecup_section');
 
-					if ($target.hasClass('off')) {
-						$target.siblings().fadeIn(200);
-					}
+			$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
+			$ecupDom.find('.statement_layer').addClass(markupLayer.theme);
 
-					else {
-						$target.siblings().fadeOut(200);
-					}
+			$ecupDom.on('click', '.layer_btn', function () {
+				var $target = $(this);
 
-					$target.toggleClass('off');
-				});
-			}
-		} else {
+				if ($target.hasClass('off')) {
+					$target.siblings().fadeIn(200);
+				}
+
+				else {
+					$target.siblings().fadeOut(200);
+				}
+
+				$target.toggleClass('off');
+			});
+		}
+		else {
 			var $ecupDom = $('.ecup_section');
 
 			$ecupDom.css({'display': 'none'}).find('.statement_layer').addClass(markupLayer.theme);
