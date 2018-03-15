@@ -28,8 +28,6 @@ $('#tester').addAttr('role="button", aria-label="good"');
 $('#tester').removeAttr('role aria-label');
 $('#tester').toggleAttr('role="button"', 'aria-label="good"');
 
-console.log($.ecup);
-
 var layer = $.ecup.markupLayer();
 
 layer.set({
@@ -45,10 +43,19 @@ layer({
         target: '#test_box',
         show: 400
     },
+    '속성 토글': {
+        target: '#test_box',
+        toggleAttr: 'role="button"'
+    },
+    '스타일 토글': {
+        target: '#test_box',
+        toggleStyle: 'background-color: blue; color: pink; font-size: 24px;'
+    },
     '박스 배경색 바꾸기': function() {
         $('#test_box').css('background', 'blue');
     }
 });
+
 </script>
 </body>
 </html>
