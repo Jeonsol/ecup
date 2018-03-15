@@ -79,6 +79,8 @@
 
 		// 셋팅 초기화
 		markupLayerManager.type = 'windows';
+        markupLayerManager.buttonArray = [];
+        markupLayerManager.newWindow = null;
 
 		return markupLayerManager;
 
@@ -140,19 +142,50 @@
 
 		/* 별도의 창으로 그려줌 */
 		function windows(spec, groupInfo) {
-			var newWindow = window.open('', 'newWindow', 'width=300, height=500');
-			for(var obj in spec) {
-				var name = obj,
-					func = spec[obj];
-				$(newWindow.document.body).append(new makeBtn(name, func));
+            if(markupLayerManager.newWindow == null)  init();
+            if(groupInfo == null) groupInfo = Math.floor(Math.random(10)*100);
+
+            markupLayerManager.buttonArray.push({name: groupInfo, button: spec});
+            drawing(markupLayerManager.buttonArray);
+
+            function init() {
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=500');
+                $(markupLayerManager.newWindow.document.head).append(css());
+            }
+
+            function drawing(btnArray) {
+                var $wrap = $('<div />', {
+	                class: '__NTS_markup',
+                });
+                $wrap.append($('<h2>마크업 검수 레이어</h2>'));
+                $.each(btnArray, function(index){
+                    $wrap.append(groupping(btnArray[index]));
+                })
+            	$(markupLayerManager.newWindow.document.body).html($wrap);
+            }
+
+            function groupping(btnObj) {
+                var $groups = $('<div />', { class: '__area_btns'}).append($('<strong>').text(btnObj.name));
+                for(var btn in btnObj.button)
+                    $groups.append(makeBtn(btn, btnObj.button[btn]));
+                return $groups;
+            }
+
+			function makeBtn(name, func) {
+                var $a =  $('<a />', {
+                    text: name,
+                    click: func,
+                    role: 'button',
+                    class: '__checked',
+                    href: '#'
+                });
+                $a.prepend('<span class="__view __radio"></span>');
+                return $a;
 			}
 
-			function makeBtn(name, func){
-				var html = '<button>' + name + '</button>';
-				var btn = $.parseHTML(html);
-				$(btn).on('click', func);
-				return btn;
-			}
+            function css(){
+                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/ui_ecup/css/internal.css"});
+            }
 		}
 
 
