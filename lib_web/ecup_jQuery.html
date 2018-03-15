@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>NTS Markup Library : jQuery 확장 메서드</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-    <link rel="stylesheet" href="./ecup.css">
+    <link rel="stylesheet" href="./ecup_lib.css">
 </head>
 <body>
 <div class="wrap">
@@ -29,6 +29,9 @@
                         <li>
                             <a href="#anchor_1" class="link_direct">DOM 의 속성을 다루는 메서드</a>
                         </li>
+                        <li>
+                            <a href="#anchor_2" class="link_direct">DOM 의 인라인 스타일을 다루는 메서드</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="item">
@@ -49,6 +52,51 @@
 
                 <section class="section_content">
                     <h5 id="anchor_1" class="tit">1. DOM 의 속성을 다루는 메서드</h5>
+                    <div class="inner">
+                        <p class="mg_top1">기존의 jQuery에서 <span class="code">.attr()</span> 메서드를 통해 속성을 다뤘는데</p>
+                        <p>이 기능을 좀 더 직관적이고 여러가지 속성을 한번에 다룰 수 있도록 확장시켰습니다.</p>
+                        <p class="mg_top1">1) 속성 <strong>추가하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>// 예시</p>
+                            <p>$('#test').addAttr('role="button" aria-label="닫기"');</p>
+                            <p>$('#test').addAttr('role="button"', 'aria-label="닫기"');</p>
+                        </div>
+                        <p class="mg_top2">2) 속성 <strong>삭제하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>// 예시</p>
+                            <p>$('#test').removeAttr('role, aria-label');</p>
+                            <p>$('#test').removeAttr('role', 'aria-label');</p>
+                        </div>
+                        <p class="mg_top2">3) 속성 <strong>토글하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>// 예시</p>
+                            <p>$('#test').toggleAttr('role="button", aria-label="열기"');</p>
+                            <p>$('#test').toggleAttr('role="button"', 'aria-label="열기"');</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_2" class="tit">2. DOM 의 인라인 스타일을 다루는 메서드</h5>
+                    <div class="inner">
+                        <p class="mg_top1">기존의 jQuery에서 <span class="code">.css()</span> 메서드를 통해 인라인스타일을 다뤘는데</p>
+                        <p>이 기능을 좀 더 직관적이고 여러가지 스타일을 한번에 다룰 수 있도록 확장시켰습니다.</p>
+                        <p class="mg_top1">1) 인라인스타일 <strong>추가하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>$('#test').addStyle('background-color: #555; color: red;');</p>
+                            <p>$('#test').addStyle('background-color: #555', 'color: red');</p>
+                        </div>
+                        <p class="mg_top2">2) 인라인스타일 <strong>삭제하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>$('#test').removeStyle('color, font-size');</p>
+                            <p>$('#test').removeStyle('color', 'font-size');</p>
+                        </div>
+                        <p class="mg_top2">3) 인라인스타일 <strong>토글하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>$('#test').toggleStyle('width: 100%; height: 100%;');</p>
+                            <p>$('#test').toggleStyle('width: 100%', 'height: 100%');</p>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
@@ -57,7 +105,8 @@
 <div class="__anchor_layer__">
     <a href="#top">맨 위로</a>
     <a href="#anchor_1">DOM 의 속성을 다루는 메소드</a>
+    <a href="#anchor_2">DOM 의 인라인 스타일을 다루는 메소드</a>
 </div>
-<script src="./ecup.js"></script>
+<script src="./ecup_lib.js"></script>
 </body>
 </html>
