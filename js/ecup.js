@@ -53,8 +53,130 @@
 		markupLayerManager.set = function(options) {
 			if (typeof options === 'object') {
 				for (var opt in options) {
-                    markupLayerManager[opt] = options[opt];
+					markupLayerManager[opt] = options[opt];
 				}
+			}
+
+			$('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
+
+			function positionSet(position) {
+				var positionInfo = position.split(" ");
+				var $ecupLayer = $('.ecup_section .statement_layer');
+
+				if(positionInfo[0] === 'center') {
+					$ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
+				}
+
+				else {
+					$ecupLayer.css(positionInfo[0],'100px').css(positionInfo[1],'100px');
+				}
+			}
+
+			if (markupLayerManager.type === 'external') {
+
+				positionSet(markupLayerManager.position);
+
+				var $ecupDom = $('.ecup_section');
+
+				$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
+				$ecupDom.find('.statement_layer').addClass(markupLayerManager.theme);
+
+				$ecupDom.on('click', '.layer_btn', function () {
+					var $target = $(this);
+
+					if ($target.hasClass('off')) {
+						$target.siblings().fadeIn(200);
+					}
+
+					else {
+						$target.siblings().fadeOut(200);
+					}
+
+					$target.toggleClass('off');
+				});
+			}
+
+			else {
+				var $ecupDom = $('.ecup_section');
+
+				$ecupDom.css({'display': 'none'}).find('.statement_layer').addClass(markupLayerManager.theme);
+
+				//pc
+				$(document).dblclick(function () {
+					$ecupDom.fadeIn(300);
+				});
+
+				//mobile - swipe
+				(function() {
+					var touchStartEvent = "touchstart",
+						touchStopEvent = "touchend",
+						touchMoveEvent = "touchmove";
+					$.event.special.swipeupdown = {
+						setup: function() {
+							var thisObject = this;
+							var $this = $(thisObject);
+							$this.bind(touchStartEvent, function(event) {
+								var data = event.originalEvent.touches ?
+										event.originalEvent.touches[ 0 ] :
+										event,
+									start = {
+										time: (new Date).getTime(),
+										coords: [ data.pageX, data.pageY ],
+										origin: $(event.target)
+									},
+									stop;
+
+								function moveHandler(event) {
+									if (!start) {
+										return;
+									}
+									var data = event.originalEvent.touches ?
+										event.originalEvent.touches[ 0 ] :
+										event;
+									stop = {
+										time: (new Date).getTime(),
+										coords: [ data.pageX, data.pageY ]
+									};
+
+									// prevent scrolling
+									if (Math.abs(start.coords[1] - stop.coords[1]) > 10) {
+										event.preventDefault();
+									}
+								}
+								$this
+									.bind(touchMoveEvent, moveHandler)
+									.one(touchStopEvent, function(event) {
+										$this.unbind(touchMoveEvent, moveHandler);
+										if (start && stop) {
+											if (stop.time - start.time < 1000 &&
+												Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
+												Math.abs(start.coords[0] - stop.coords[0]) < 75) {
+												start.origin
+													.trigger("swipeupdown")
+													.trigger(start.coords[1] > stop.coords[1] ? "swipeup" : "swipedown");
+											}
+										}
+										start = stop = undefined;
+									});
+							});
+						}
+					};
+					$.each({
+						swipedown: "swipeupdown",
+						swipeup: "swipeupdown"
+					}, function(event, sourceEvent){
+						$.event.special[event] = {
+							setup: function(){
+								$(this).bind(sourceEvent, $.noop);
+							}
+						};
+					});
+
+				})();
+
+				$(document).on('swipedown', function () {
+					$ecupDom.fadeIn(300);
+				});
 			}
 		};
 
@@ -86,6 +208,8 @@
 
 		// 셋팅 초기화
 		markupLayerManager.type = 'windows';
+		markupLayerManager.theme = '';
+		markupLayerManager.position = 'top right';
 
 		return markupLayerManager;
 
@@ -165,12 +289,39 @@
 
 		/* 보이지 않게 내장되게 그려줌 */
 		function internal(spec, groupInfo) {
-			// TODO
+			commonDrawLayer(spec, groupInfo);
+
+			var $ecupDom = $('.ecup_section');
+
+			$ecupDom.on('click', '.dimmed', function() {
+				$ecupDom.fadeOut(200);
+			});
+
+			$ecupDom.on('click', '.event_btn', function() {
+				$ecupDom.fadeOut(200);
+			});
 		}
 
 		/* 화면상에 보이도록 그려줌 */
 		function external(spec, groupInfo) {
-			// TODO
+			commonDrawLayer(spec, groupInfo);
+		}
+
+		function commonDrawLayer(spec, groupInfo) {
+			var $layerDom = $('<div class="layer"></div>');
+
+			if(typeof groupInfo !== 'undefined') {
+				var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
+				$layerDom.append(groupTitle);
+			}
+
+			for(var btnName in spec) {
+				var $btn = $('<button type="button" class="event_btn">'+btnName+'</button>');
+				$btn.click(spec[btnName]);
+				$layerDom.append($btn);
+			}
+
+			$('.ecup_section .statement_layer').append($layerDom);
 		}
 	}
 }, function() {
