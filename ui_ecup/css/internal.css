@@ -15,10 +15,12 @@
 }
 
 .__NTS_markup h2 {
+	margin: 0;
     padding: 0.8em 0.7em 0.6em;
     font-family: NanumGothic, sans-serif;
     font-weight: normal;
     font-size: 1.2em;
+	line-height: 1.25em;
     background-color: #3c3f41;
     color:#dadada;
 }
@@ -31,7 +33,9 @@
     font-size: 1em;
     line-height: 2em;
     white-space: nowrap;
+	text-decoration: none;
     color: #c7c7c7;
+	cursor: pointer;
 }
 
 .__NTS_markup .__area_btns {
@@ -56,6 +60,7 @@
     margin-bottom: 0.8em;
     background-color: #d2d2d2;
     padding: 0.3em 0.7em;
+	font-family: NanumGothic, sans-serif;
     font-weight: normal;
     font-size: 1em;
     white-space: nowrap;
