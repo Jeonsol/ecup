@@ -24,6 +24,13 @@
 			'internal': internal
 		};
 
+        var oppseOption = {
+            show: 'hide',
+            hide: 'show',
+            toggleAttr: 'toggleAttr',
+            toggleStyle: 'toggleStyle'
+        }
+
 		/* $.ecup.markupLayer() 를 통해 생성되는 함수 */
 		var markupLayerManager = function(flag) {
 
@@ -81,6 +88,7 @@
 		markupLayerManager.type = 'windows';
         markupLayerManager.buttonArray = [];
         markupLayerManager.newWindow = null;
+        markupLayerManager.oppseOption = oppseOption;
 
 		return markupLayerManager;
 
@@ -102,24 +110,22 @@
 			// 기능이 객체로 주어진 경우 함수로 변환
 			for (var btnName in options) {
 
-				var option = options[btnName];
+				var option = options[btnName],
+                    oppseOption;
 
 				if (typeof option === 'object') {
 
 					if (!option.target) option.target = commonTarget;
 					else option.target = $(option.target);
-
+                    oppseOption = oppseConvert(option);
 					option = convert(option);
-					options[btnName] = option;
+					options[btnName] = { 'origin':option, 'oppse':oppseOption };
 				}
-
 			}
-
 			return options;
 
 			/*  기능 객체를 함수로 변환 */
 			function convert(option) {
-
 				if (!option.target) throw new Error('target 이 반드시 필요합니다...');
 
 				var fn, fnPart;
@@ -137,11 +143,30 @@
 				return fn;
 
 			}
-		}
 
+            function oppseConvert(option) {
+				if (!option.target) throw new Error('target 이 반드시 필요합니다...');
+
+				var fn, fnPart;
+				var fnBody = 'var that = this;';
+
+				for (var optFn in option) {
+					if (optFn === 'target') continue;
+                    optFn =  markupLayerManager.oppseOption[optFn];
+					fnPart = "that." + optFn + "('" + option[optFn] + "');";
+					fnBody += fnPart;
+				}
+
+				fn = new Function(fnBody);
+				fn = fn.bind(option.target);
+
+				return fn;
+			}
+		}
 
 		/* 별도의 창으로 그려줌 */
 		function windows(spec, groupInfo) {
+            console.log(spec);
             if(markupLayerManager.newWindow == null)  init();
             if(groupInfo == null) groupInfo = Math.floor(Math.random(10)*100);
 
@@ -165,18 +190,35 @@
             }
 
             function groupping(btnObj) {
-                var $groups = $('<div />', { class: '__area_btns'}).append($('<strong>').text(btnObj.name));
+                var $groups = $('<div />', { class: '__area_btns'});
+                $groups.prepend($('<strong>').text(btnObj.name));
+
                 for(var btn in btnObj.button)
                     $groups.append(makeBtn(btn, btnObj.button[btn]));
+
+                $groups.on('click', 'a', function(e){
+                    var a = $(this).parent().children('a');
+                    $.each(a, function(index){
+                        if($(a[index]).attr('aria-pressed') == 'true'){
+                            $(a[index]).attr('aria-pressed', 'false');
+
+                            var name = $(a[index]).text();
+                            if(btnObj.button[name].oppse != null)
+                                btnObj.button[name].oppse();
+                        }
+                    });
+                    $(this).attr('aria-pressed','true');
+                })
                 return $groups;
             }
 
 			function makeBtn(name, func) {
                 var $a =  $('<a />', {
                     text: name,
-                    click: func,
                     role: 'button',
+                    click: func.origin,
                     class: '__checked',
+                    'aria-pressed': false,
                     href: '#'
                 });
                 $a.prepend('<span class="__view __radio"></span>');
@@ -184,7 +226,7 @@
 			}
 
             function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/ui_ecup/css/internal.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.nhncorp.com/NT11398/ecup/raw/develop/ui_ecup/css/internal.css"});
             }
 		}
 
