@@ -16,7 +16,7 @@
 	extendJQuery();
 
 	// autoApply
-	// TODO: 아마 window.onload 후, 설정을 가져와서 설정에따라 적용시킬 기능만 적용하면 될듯.
+	$(window.document).ready(autoApply);
 
 })({
 	/** ecup basic **/
@@ -196,7 +196,6 @@
 						commonDoms.push(arguments[i]);
 					}
                 }
-				console.log(arguments.length);
 				// group은 groupInfo를 먼저 생성
 				var groupInfo = {
 					groupName: this.groupName,
@@ -231,31 +230,55 @@
 			// 기능이 객체로 주어진 경우 함수로 변환
 			for (var btnName in options) {
 
-				var option = options[btnName];
+				var option = options[btnName],
+					optType = typeof option;
 
-				if (typeof option === 'object') {
+				if (optType === 'object') {
 
 					if (!option.target) option.target = commonTarget;
 					else option.target = $(option.target);
 
-					option = convert(option);
-					options[btnName] = option;
+					var originOpt = convert(option);
+					var oppositeOpt = convert(option, true);
+					options[btnName] = {
+						origin: originOpt,
+						opposite: oppositeOpt
+					};
+
+				} else if (optType === 'function') {
+					options[btnName] = {origin: options[btnName]};
 				}
 
 			}
 
 			return options;
 
+
 			/*  기능 객체를 함수로 변환 */
-			function convert(option) {
+			function convert(option, oppositeFlag) {
 
 				if (!option.target) throw new Error('target 이 반드시 필요합니다...');
+
+				var oppositeMap = {
+					'addClass': 'removeClass',
+					'removeClass': 'addClass',
+					'toggleClass': 'toggleClass',
+					'addAttr': 'removeAttr',
+					'removeAttr': 'addAttr',
+					'toggleAttr': 'toggleAttr',
+					'addStyle': 'removeStyle',
+					'toggleStyle': 'toggleStyle',
+					'show': 'hide',
+					'hide': 'show',
+					'toggle': 'toggle'
+				}
 
 				var fn, fnPart;
 				var fnBody = 'var that = this;';
 
 				for (var optFn in option) {
 					if (optFn === 'target') continue;
+					if (oppositeFlag) optFn = oppositeMap[optFn];
 					fnPart = "that." + optFn + "('" + option[optFn] + "');";
 					fnBody += fnPart;
 				}
@@ -267,7 +290,6 @@
 
 			}
 		}
-
 
 		/* 별도의 창으로 그려줌 */
 		function windows(spec, groupInfo) {
@@ -285,7 +307,6 @@
 				return btn;
 			}
 		}
-
 
 		/* 보이지 않게 내장되게 그려줌 */
 		function internal(spec, groupInfo) {
@@ -357,6 +378,7 @@
 		HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);
 	};
 
+	/** 인라인 스타일 다루기 addStyle, removeStyle, toggleStyle **/
 	/* 인라인 스타일 추가/수정 */
 	jQuery.fn.addStyle = function() {
 		jQuery.fn.addStyle.PF = function($doms, style, val) {
