@@ -323,6 +323,44 @@
 
 			$('.ecup_section .statement_layer').append($layerDom);
 		}
+	},
+
+	layerControl : function(layerDom, openTarget, closeTarget) {
+
+		$(layerDom).css('display', 'none');
+
+		$(openTarget).click(function() {
+			$(layerDom).css('display','block');
+		});
+
+		$(closeTarget).click(function() {
+			$(layerDom).css('display','none');
+		});
+
+	},
+
+	selectControl : function(btn, listBox, targetObj) {
+		$(btn).click(function() {
+			$(listBox).css('display','block').attr('aria-expanded','true');
+		});
+
+		var $target = $(Object.keys(targetObj)[0]);
+		var targetControl = targetObj[Object.keys(targetObj)[0]];
+
+		$target.click(function() {
+
+			/* aria 속성일 경우 */
+			if(targetControl.indexOf("aria")!==-1) {
+				$target.attr(targetControl,"false");
+				$(this).attr(targetControl,"true");
+			}
+
+			/* 클래스 일 경우*/
+			else {
+				$target.removeClass(targetControl);
+				$(this).addClass(targetControl);
+			}
+		});
 	}
 }, function() {
 	/** jQuery 확장 **/
