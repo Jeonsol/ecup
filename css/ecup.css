@@ -10,15 +10,15 @@
 }
 
 /*in-external layer*/
-.ecup_section {
 
-}
 .ecup_section.external {
 	display: none;
 }
 .ecup_section .statement_layer {
 	position: fixed;
-	width: 30%;
+	left: 0;
+	right: 0;
+	width: 100%;
 	z-index: 2;
 }
 .ecup_section .statement_layer.naver .layer{
@@ -110,9 +110,10 @@
 	position: absolute;
 	top: 0;
 	left: 30px;
-	width: 100px;
+	max-width: 100px;
 	padding: 0 20px;
 	z-index:1 ;
+	//transform: scale(-1, 1);
 }
 .ecup_comment .comment_area:before {
 	position: absolute;
