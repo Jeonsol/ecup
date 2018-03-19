@@ -16,7 +16,7 @@
 	extendJQuery();
 
 	// autoApply
-	// TODO: 아마 window.onload 후, 설정을 가져와서 설정에따라 적용시킬 기능만 적용하면 될듯.
+	$(window.document).ready(autoApply);
 
 })({
 	/** ecup basic **/
@@ -53,10 +53,132 @@
 		markupLayerManager.set = function(options) {
 			if (typeof options === 'object') {
 				for (var opt in options) {
-                    markupLayerManager[opt] = options[opt];
+					markupLayerManager[opt] = options[opt];
 				}
 			}
-		};
+
+			$('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
+
+			function positionSet(position) {
+				var positionInfo = position.split(" ");
+				var $ecupLayer = $('.ecup_section .statement_layer');
+
+				if(positionInfo[0] === 'center') {
+					$ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
+				}
+
+				else {
+					$ecupLayer.css(positionInfo[0],'100px').css(positionInfo[1],'100px');
+				}
+			}
+
+			if (markupLayerManager.type === 'external') {
+
+				positionSet(markupLayerManager.position);
+
+				var $ecupDom = $('.ecup_section');
+
+				$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
+				$ecupDom.find('.statement_layer').addClass(markupLayerManager.theme);
+
+				$ecupDom.on('click', '.layer_btn', function () {
+					var $target = $(this);
+
+					if ($target.hasClass('off')) {
+						$target.siblings().fadeIn(200);
+					}
+
+					else {
+						$target.siblings().fadeOut(200);
+					}
+
+					$target.toggleClass('off');
+				});
+			}
+
+			else {
+				var $ecupDom = $('.ecup_section');
+
+				$ecupDom.css({'display': 'none'}).find('.statement_layer').addClass(markupLayerManager.theme);
+
+				//pc
+				$(document).dblclick(function () {
+					$ecupDom.fadeIn(300);
+				});
+
+				//mobile - swipe
+				(function() {
+					var touchStartEvent = "touchstart",
+						touchStopEvent = "touchend",
+						touchMoveEvent = "touchmove";
+					$.event.special.swipeupdown = {
+						setup: function() {
+							var thisObject = this;
+							var $this = $(thisObject);
+							$this.bind(touchStartEvent, function(event) {
+								var data = event.originalEvent.touches ?
+										event.originalEvent.touches[ 0 ] :
+										event,
+									start = {
+										time: (new Date).getTime(),
+										coords: [ data.pageX, data.pageY ],
+										origin: $(event.target)
+									},
+									stop;
+
+								function moveHandler(event) {
+									if (!start) {
+										return;
+									}
+									var data = event.originalEvent.touches ?
+										event.originalEvent.touches[ 0 ] :
+										event;
+									stop = {
+										time: (new Date).getTime(),
+										coords: [ data.pageX, data.pageY ]
+									};
+
+									// prevent scrolling
+									if (Math.abs(start.coords[1] - stop.coords[1]) > 10) {
+										event.preventDefault();
+									}
+								}
+								$this
+									.bind(touchMoveEvent, moveHandler)
+									.one(touchStopEvent, function(event) {
+										$this.unbind(touchMoveEvent, moveHandler);
+										if (start && stop) {
+											if (stop.time - start.time < 1000 &&
+												Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
+												Math.abs(start.coords[0] - stop.coords[0]) < 75) {
+												start.origin
+													.trigger("swipeupdown")
+													.trigger(start.coords[1] > stop.coords[1] ? "swipeup" : "swipedown");
+											}
+										}
+										start = stop = undefined;
+									});
+							});
+						}
+					};
+					$.each({
+						swipedown: "swipeupdown",
+						swipeup: "swipeupdown"
+					}, function(event, sourceEvent){
+						$.event.special[event] = {
+							setup: function(){
+								$(this).bind(sourceEvent, $.noop);
+							}
+						};
+					});
+
+				})();
+
+				$(document).on('swipedown', function () {
+					$ecupDom.fadeIn(300);
+				});
+			}
+    	};
 
 		markupLayerManager.prototype = {
 			constructor: markupLayerManager,
@@ -74,11 +196,11 @@
 						commonDoms.push(arguments[i]);
 					}
                 }
-				console.log(arguments.length);
 				// group은 groupInfo를 먼저 생성
 				var groupInfo = {
 					groupName: this.groupName,
-					groupDom: commonDoms
+					groupDom: commonDoms,
+                    groupType: markupLayerManager.buttonType[this.groupName]
 				};
 				draw(options, viewModule[markupLayerManager.type], groupInfo);
 			}
@@ -86,6 +208,10 @@
 
 		// 셋팅 초기화
 		markupLayerManager.type = 'windows';
+		markupLayerManager.theme = '';
+		markupLayerManager.position = 'top right';
+        markupLayerManager.buttonArray = [];
+        markupLayerManager.newWindow = null;
 
 		return markupLayerManager;
 
@@ -107,31 +233,55 @@
 			// 기능이 객체로 주어진 경우 함수로 변환
 			for (var btnName in options) {
 
-				var option = options[btnName];
+				var option = options[btnName],
+					optType = typeof option;
 
-				if (typeof option === 'object') {
+				if (optType === 'object') {
 
 					if (!option.target) option.target = commonTarget;
 					else option.target = $(option.target);
 
-					option = convert(option);
-					options[btnName] = option;
+					var originOpt = convert(option);
+					var oppositeOpt = convert(option, true);
+					options[btnName] = {
+						origin: originOpt,
+						opposite: oppositeOpt
+					};
+
+				} else if (optType === 'function') {
+					options[btnName] = {origin: options[btnName]};
 				}
 
 			}
 
 			return options;
 
+
 			/*  기능 객체를 함수로 변환 */
-			function convert(option) {
+			function convert(option, oppositeFlag) {
 
 				if (!option.target) throw new Error('target 이 반드시 필요합니다...');
+
+				var oppositeMap = {
+					'addClass': 'removeClass',
+					'removeClass': 'addClass',
+					'toggleClass': 'toggleClass',
+					'addAttr': 'removeAttr',
+					'removeAttr': 'addAttr',
+					'toggleAttr': 'toggleAttr',
+					'addStyle': 'removeStyle',
+					'toggleStyle': 'toggleStyle',
+					'show': 'hide',
+					'hide': 'show',
+					'toggle': 'toggle'
+				}
 
 				var fn, fnPart;
 				var fnBody = 'var that = this;';
 
 				for (var optFn in option) {
 					if (optFn === 'target') continue;
+					if (oppositeFlag) optFn = oppositeMap[optFn];
 					fnPart = "that." + optFn + "('" + option[optFn] + "');";
 					fnBody += fnPart;
 				}
@@ -144,33 +294,128 @@
 			}
 		}
 
-
 		/* 별도의 창으로 그려줌 */
-		function windows(spec, groupInfo) {
-			var newWindow = window.open('', 'newWindow', 'width=300, height=500');
-			for(var obj in spec) {
-				var name = obj,
-					func = spec[obj];
-				$(newWindow.document.body).append(new makeBtn(name, func));
+        function windows(spec, groupInfo) {
+            // console.log(groupInfo)
+            var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
+            var groupType = groupInfo == null? 'check' : groupInfo.grouptype;
+
+            if(markupLayerManager.newWindow == null)  init();
+
+            markupLayerManager.buttonArray.push({name: groupName, button: spec});
+            drawing(markupLayerManager.buttonArray);
+
+            function init() {
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=500');
+                $(markupLayerManager.newWindow.document.head).append(css());
+            }
+
+            function drawing(btnArray) {
+                var $wrap = $('<div />', {
+	                class: '__NTS_markup',
+                });
+                $wrap.append($('<h2>마크업 검수 레이어</h2>'));
+                $.each(btnArray, function(index){
+                    $wrap.append(groupping(btnArray[index]));
+                })
+            	$(markupLayerManager.newWindow.document.body).html($wrap);
+            }
+
+            function groupping(btnObj) {
+                console.log(btnObj)
+                var $groups = $('<div />', { class: '__area_btns'});
+                $groups.prepend($('<strong>').text(btnObj.name));
+
+                for(var btn in btnObj.button)
+                    $groups.append(makeBtn(btn, btnObj.button[btn]));
+
+                if(groupType == 'radio'){
+                    $groups.on('click', 'a', function(e){
+                        var a = $(this).parent().children('a');
+                        $.each(a, function(index){
+                            if($(a[index]).attr('aria-pressed') == 'true'){
+                                $(a[index]).attr('aria-pressed', 'false');
+
+                                var name = $(a[index]).text();
+                                if(btnObj.button[name].opposite != null)
+                                    btnObj.button[name].opposite();
+                            }
+                        });
+                        $(this).attr('aria-pressed','true');
+                    })
+                } else {
+                    $groups.on('click', 'a', function(e){
+                        var name = $(this).text();
+                        if($(this).attr('aria-pressed') == 'true') {
+                            console.log('true');
+                            if(btnObj.button[name].opposite != null)
+                                btnObj.button[name].opposite();
+                            $(this).attr('aria-pressed','false');
+                        } else {
+                            console.log('false');
+                            btnObj.button[name].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
+                    })
+                }
+
+
+                return $groups;
+            }
+
+			function makeBtn(name, func) {
+                var $a =  $('<a />', {
+                    text: name,
+                    role: 'button',
+                    // click: func.origin,
+                    class: '__checked',
+                    'aria-pressed': false,
+                    href: '#'
+                });
+                $a.prepend('<span class="__view __radio"></span>');
+                return $a;
 			}
 
-			function makeBtn(name, func){
-				var html = '<button>' + name + '</button>';
-				var btn = $.parseHTML(html);
-				$(btn).on('click', func);
-				return btn;
-			}
+            function css(){
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.nhncorp.com/NT11398/ecup/raw/develop/ui_ecup/css/internal.css"});
+            }
 		}
-
 
 		/* 보이지 않게 내장되게 그려줌 */
 		function internal(spec, groupInfo) {
-			// TODO
+			commonDrawLayer(spec, groupInfo);
+
+			var $ecupDom = $('.ecup_section');
+
+			$ecupDom.on('click', '.dimmed', function() {
+				$ecupDom.fadeOut(200);
+			});
+
+			$ecupDom.on('click', '.event_btn', function() {
+				$ecupDom.fadeOut(200);
+			});
 		}
 
 		/* 화면상에 보이도록 그려줌 */
 		function external(spec, groupInfo) {
-			// TODO
+			commonDrawLayer(spec, groupInfo);
+		}
+
+		function commonDrawLayer(spec, groupInfo) {
+			var $layerDom = $('<div class="layer"></div>');
+
+			if(typeof groupInfo !== 'undefined') {
+				var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
+				$layerDom.append(groupTitle);
+			}
+
+			for(var btnName in spec) {
+				var $btn = $('<button type="button" class="event_btn">'+btnName+'</button>');
+				$btn.click(spec[btnName]);
+				$layerDom.append($btn);
+			}
+
+			$('.ecup_section .statement_layer').append($layerDom);
 		}
 	}
 }, function() {
@@ -206,6 +451,7 @@
 		HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);
 	};
 
+	/** 인라인 스타일 다루기 addStyle, removeStyle, toggleStyle **/
 	/* 인라인 스타일 추가/수정 */
 	jQuery.fn.addStyle = function() {
 		jQuery.fn.addStyle.PF = function($doms, style, val) {

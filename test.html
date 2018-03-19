@@ -22,7 +22,7 @@
 <div id="tester"></div>
 <div id="test_box">Hi</div>
 <script src="./js/jquery-3.3.1.min.js"></script>
-<script src="./js/import/windows.js"></script>
+<script src="./js/ecup.js"></script>
 <script>
 $('#tester').addAttr('role="button", aria-label="good"');
 $('#tester').removeAttr('role aria-label');
@@ -31,7 +31,10 @@ $('#tester').toggleAttr('role="button"', 'aria-label="good"');
 var layer = $.ecup.markupLayer();
 
 layer.set({
-    type: 'windows'
+    type: 'windows',
+    buttonType: {
+        '그룹1' : 'radio',
+    }
 });
 
 layer({
@@ -56,15 +59,15 @@ layer({
     }
 });
 
-layer({
+layer('그룹1').group({
     '숨길래': {
         target: '#test_box',
         hide: 400
     },
-    '보일래': {
+    '스타일 토글': {
         target: '#test_box',
-        show: 400
-    }
+        toggleStyle: 'background-color: blue; color: pink; font-size: 24px;'
+    },
 });
 
 </script>
