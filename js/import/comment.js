@@ -1,53 +1,48 @@
 function comment() {
 
-	var userObj;
-
-	function Main(flag) {
-
-		if (typeof  flag === 'string') {
-			userObj = new Main();
-			userObj.singleWrite(arguments[0],arguments[1]);
-		}
-
-		else if(typeof flag === 'object') {
-			userObj = new Main();
-			userObj.groupWrite(flag);
-		}
+	function commentManager() {
 
 	}
 
-	Main.prototype = {
-		constructor: Main,
-		singleWrite : function(target,msg) {
-
-			var $target = $(target);
-			var top = $target.offset().top/$(window).height()*100+'%';
-			var left = $target.offset().left/$(window).width()*100+'%';
-
-			var $commentArea = $('<div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + msg + '</div></div></div>');
-
-			commonWrite(top,left,$commentArea);
-
-		},
-		groupWrite : function(flag) {
-
-			for (var opt in flag) {
-				var top = $(opt).offset().top/$(window).height()*100+'%';
-				var left = $(opt).offset().left/$(window).width()*100+'%';
-
-				var $commentArea = $('<div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + flag[opt] + '</div></div></div>');
-
-				commonWrite(top,left,$commentArea);
-
+	commentManager.prototype = {
+		constructor: commentManager,
+		write : function(flag) {
+			if (typeof  flag === 'string') {
+				singleWrite(arguments[0],arguments[1]);
 			}
 
+			else if(typeof flag === 'object') {
+				groupWrite(flag);
+			}
 		}
 	};
 
-	comment.targetDom = $('<div class="ecup_comment_section"></div>');
-	$('body').append(comment.targetDom);
+	commentManager.targetDom = $('<div class="ecup_comment_section"></div>');
+	$('body').append(commentManager.targetDom);
 
-	return Main;
+	return new commentManager;
+
+	function singleWrite(target,msg) {
+		var $target = $(target);
+		var top = $target.offset().top/$(window).height()*100+'%';
+		var left = $target.offset().left/$(window).width()*100+'%';
+
+		var $commentArea = $('<div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + msg + '</div></div></div>');
+
+		commonWrite(top,left,$commentArea);
+	}
+
+	function groupWrite(flag) {
+		for (var opt in flag) {
+			var top = $(opt).offset().top/$(window).height()*100+'%';
+			var left = $(opt).offset().left/$(window).width()*100+'%';
+
+			var $commentArea = $('<div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + flag[opt] + '</div></div></div>');
+
+			commonWrite(top,left,$commentArea);
+
+		}
+	}
 
 	function commonWrite(top,left,$commentArea) {
 
@@ -57,10 +52,19 @@ function comment() {
 		$commentDom.append($commentBtn).append($commentArea);
 		$commentDom.css({'top': top, 'left': left});
 
-		comment.targetDom.append($commentDom);
+		commentManager.targetDom.append($commentDom);
 
 		$commentBtn.click(function() {
-			$(this).next('.comment_area').toggle();
+			var $commentArea = $(this).next('.comment_area');
+
+			$commentArea.toggle();
+
+			var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
+
+			if($(window).width() - $commentAreaRightOffset < 20) {
+				$commentArea.css({'transform': 'scale(-1, 1)','right':'0','left':'auto'});
+			}
+
 		});
 
 	}

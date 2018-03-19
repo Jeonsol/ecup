@@ -104,6 +104,14 @@
 				//pc
 				$(document).dblclick(function () {
 					$ecupDom.fadeIn(300);
+
+					var $layerWrap = $('.ecup_section .statement_layer');
+					var layerHeight = $layerWrap.height();
+
+					$layerWrap.css('top',-layerHeight);
+
+					$layerWrap.animate({top:0},1000);
+
 				});
 
 				//mobile - swipe
@@ -176,6 +184,10 @@
 
 				$(document).on('swipedown', function () {
 					$ecupDom.fadeIn(300);
+
+					var $layerWrap = $('.ecup_section .statement_layer');
+
+					$layerWrap.css('top',-$layerWrap.height()).animate({top:0},1000);
 				});
 			}
 		};
@@ -344,7 +356,54 @@
 
 			$('.ecup_section .statement_layer').append($layerDom);
 		}
-	}
+	},
+
+	layerControl : function(layerDom, openTarget, closeTarget) {
+
+		$(layerDom).css('display', 'none');
+
+		$(openTarget).click(function() {
+			$(layerDom).css('display','block');
+		});
+
+		$(closeTarget).click(function() {
+			$(layerDom).css('display','none');
+		});
+
+	},
+
+	selectControl : function(btn, listBox, targetObj) {
+		$(btn).click(function() {
+			$(listBox).css('display','block').attr('aria-expanded','true');
+		});
+
+		var $selector = $(Object.keys(targetObj)[0]);
+		var selectorControl = targetObj[Object.keys(targetObj)[0]];
+
+		$selector.click(function() {
+			var $target = $(this);
+
+			/* aria 속성일 경우 */
+			if(selectorControl.indexOf("aria")!==-1) {
+				$selector.attr(selectorControl,"false");
+				$target.attr(selectorControl,"true");
+			}
+
+			/* 클래스 일 경우*/
+			else {
+				var selector = selectorControl.split(" ");
+				if(selector[selector.length-1].substr(0,1) !== '.') throw new Error('target must be class type or WAI-ARIA');
+
+				var toggleClass = selector[selector.length-1].substr(1);
+				$selector.removeClass(toggleClass);
+				$target.addClass(toggleClass);
+			}
+
+			$(btn).text($target.text());
+			$(listBox).css('display','none');
+
+		});
+	},
 }, function() {
 	/** jQuery 확장 **/
 
