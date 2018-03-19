@@ -22,7 +22,8 @@
 <div id="tester"></div>
 <div id="test_box">Hi</div>
 <script src="./js/jquery-3.3.1.min.js"></script>
-<script src="./js/import/ie9.js"></script>
+<script src="./js/ecup.js"></script>
+<script src="./js/import/jQuery.fn/ie9.js"></script>
 <script>
 $('#tester').addAttr('role="button", aria-label="good"');
 $('#tester').removeAttr('role aria-label');
@@ -35,26 +36,63 @@ layer.set({
 });
 
 layer({
-    '박스 숨기기': {
+    '올라오기': {
         target: '#test_box',
-        hide: 400
+        addAttr: 'class="up"'
     },
-    '박스 보이기': {
+
+    '내려오기': {
         target: '#test_box',
-        show: 400
+        addAttr: 'class="down"'
     },
-    '속성 토글': {
-        target: '#test_box',
-        toggleAttr: 'role="button"'
+});
+
+
+// animation
+$('#test_box').animation({
+    0: {
+
     },
-    '스타일 토글': {
-        target: '#test_box',
-        toggleStyle: 'background-color: blue; color: pink; font-size: 24px;'
+    100: {
+
+    }
+})
+
+// keyframes
+$.animation({
+    name: 'layerUp',
+    animate: {
+        0: {
+            top: 0,
+            background: 'skyblue'
+        },
+        100: {
+            top: '50%',
+        }
     },
-    '박스 배경색 바꾸기': function() {
-        $('#test_box').css('background', 'blue');
+});
+
+$('#test_box').on('click', function(){
+    $(this).animation('layerUp', {
+        duration: '1s',
+        timing: 'linear',
+        delay: '1s'
+    });
+})
+
+
+$.animation({
+    name: 'layerDown',
+    animate: {
+        0: {
+            top: '50%',
+        },
+        100: {
+            top: 0
+        }
     }
 });
+
 
 </script>
 </body>
