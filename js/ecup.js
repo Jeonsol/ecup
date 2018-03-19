@@ -74,7 +74,6 @@
 						commonDoms.push(arguments[i]);
 					}
                 }
-				console.log(arguments.length);
 				// group은 groupInfo를 먼저 생성
 				var groupInfo = {
 					groupName: this.groupName,
