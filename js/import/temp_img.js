@@ -16,11 +16,9 @@
 
 		/* 임시이미지인 경우 */
 		// 타입 파싱
-		var typeArr = src_type.match(/#(p|l|n|사람|라이프스타일|자연)(\d?)_/);
+		var typeArr = src_type.match(/#(p|l|n|사람|라이프스타일|자연)(\d?)/);
 		type = typeArr && typeArr[1] ? getImgType(typeArr[1]) : getImgType(getRandomNumber());
 		id = typeArr && typeArr[2] ? typeArr[2] : getRandomNumber();
-
-		// 텍트스 여부
 
 		// 새 src 만들기
 		var width = img.getAttribute('width') || 100,
