@@ -57,11 +57,11 @@
 				}
 			}
 
-			$('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
+			$('body').append('<div class="__NTS_markup"><h2>NTS 마크업검수 레이어</h2><div class="__area_env"><a href="#"><span class="__view"></span>UI 주석보기</a><div class="__opacity_control"><span type="button" class="__bar"></span><button type="button" class="__controller"><span class="blind">투명도조절</span></button></div></div><div class="__area_btns"></div></div>');
 
 			function positionSet(position) {
 				var positionInfo = position.split(" ");
-				var $ecupLayer = $('.ecup_section .statement_layer');
+				var $ecupLayer = $('.__NTS_markup');
 
 				if(positionInfo[0] === 'center') {
 					$ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
@@ -76,10 +76,10 @@
 
 				positionSet(markupLayerManager.position);
 
-				var $ecupDom = $('.ecup_section');
+				var $ecupDom = $('.__NTS_markup');
 
-				$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
-				$ecupDom.find('.statement_layer').addClass(markupLayerManager.theme);
+				$ecupDom.addClass('external').prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
+				$ecupDom.addClass(markupLayerManager.theme);
 
 				$ecupDom.on('click', '.layer_btn', function () {
 					var $target = $(this);
@@ -96,21 +96,20 @@
 				});
 			}
 
-			else {
-				var $ecupDom = $('.ecup_section');
+			else if(markupLayerManager.type === 'internal') {
+				var $ecupDom = $('.__NTS_markup');
 
-				$ecupDom.css({'display': 'none'}).find('.statement_layer').addClass(markupLayerManager.theme);
+				$ecupDom.css({'display': 'none'}).find('.__area_btns').addClass(markupLayerManager.theme);
 
 				//pc
 				$(document).dblclick(function () {
-					$ecupDom.fadeIn(300);
 
-					var $layerWrap = $('.ecup_section .statement_layer');
+					var $layerWrap = $('.__NTS_markup');
 					var layerHeight = $layerWrap.height();
 
-					$layerWrap.css('top',-layerHeight);
+					$layerWrap.css({'display':'block','top':-layerHeight});
 
-					$layerWrap.animate({top:0},1000);
+					$layerWrap.animate({top:0},300);
 
 				});
 
@@ -185,7 +184,7 @@
 				$(document).on('swipedown', function () {
 					$ecupDom.fadeIn(300);
 
-					var $layerWrap = $('.ecup_section .statement_layer');
+					var $layerWrap = $('.__NTS_markup .__area_btns');
 
 					$layerWrap.css('top',-$layerWrap.height()).animate({top:0},1000);
 				});
@@ -324,11 +323,7 @@
 		function internal(spec, groupInfo) {
 			commonDrawLayer(spec, groupInfo);
 
-			var $ecupDom = $('.ecup_section');
-
-			$ecupDom.on('click', '.dimmed', function() {
-				$ecupDom.fadeOut(200);
-			});
+			var $ecupDom = $('.__NTS_markup');
 
 			$ecupDom.on('click', '.event_btn', function() {
 				$ecupDom.fadeOut(200);
@@ -341,20 +336,27 @@
 		}
 
 		function commonDrawLayer(spec, groupInfo) {
-			var $layerDom = $('<div class="layer"></div>');
+			var $layerDom = $('<div class="__area_btn"></div>');
 
 			if(typeof groupInfo !== 'undefined') {
-				var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
-				$layerDom.append(groupTitle);
+				var groupTitle = '<strong>'+groupInfo.groupName+'</strong>';
+
+				$layerDom.append(groupTitle).addClass('__area_group');
+			}
+
+			else {
+				$layerDom.addClass('__area_single');
 			}
 
 			for(var btnName in spec) {
-				var $btn = $('<button type="button" class="event_btn">'+btnName+'</button>');
-				$btn.click(spec[btnName]);
+				var $btn = $('<a href="#1" role="button" class="event_btn"><span class="__view __radio"></span>'+btnName+'</a>');
+
+				$btn.click(spec[btnName].origin);
+
 				$layerDom.append($btn);
 			}
 
-			$('.ecup_section .statement_layer').append($layerDom);
+			$('.__NTS_markup .__area_btns').append($layerDom);
 		}
 	},
 
