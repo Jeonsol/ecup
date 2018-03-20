@@ -296,44 +296,46 @@
 
 		/* 별도의 창으로 그려줌 */
         function windows(spec, groupInfo) {
-            // console.log(groupInfo)
+            // console.log(groupInfo);
+
             var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
-            var groupType = groupInfo == null? 'check' : groupInfo.grouptype;
+            var groupType = groupInfo == null? 'button' : groupInfo.groupType;
 
             if(markupLayerManager.newWindow == null)  init();
 
-            markupLayerManager.buttonArray.push({name: groupName, button: spec});
+            markupLayerManager.buttonArray.push({name: groupName, button: spec, type: groupType});
             drawing(markupLayerManager.buttonArray);
 
             function init() {
-                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=500');
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=1000');
                 $(markupLayerManager.newWindow.document.head).append(css());
             }
 
             function drawing(btnArray) {
+                console.log(btnArray);
                 var $wrap = $('<div />', {
 	                class: '__NTS_markup',
                 });
                 $wrap.append($('<h2>마크업 검수 레이어</h2>'));
                 $.each(btnArray, function(index){
-                    $wrap.append(groupping(btnArray[index]));
+                    $wrap.append(groupping(btnArray[index], btnArray[index].type));
                 })
             	$(markupLayerManager.newWindow.document.body).html($wrap);
             }
 
-            function groupping(btnObj) {
-                console.log(btnObj)
+            function groupping(btnObj, groupType) {
                 var $groups = $('<div />', { class: '__area_btns'});
                 $groups.prepend($('<strong>').text(btnObj.name));
 
                 for(var btn in btnObj.button)
                     $groups.append(makeBtn(btn, btnObj.button[btn]));
 
-                if(groupType == 'radio'){
+                if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
+                        console.log('radio');
                         var a = $(this).parent().children('a');
                         $.each(a, function(index){
-                            if($(a[index]).attr('aria-pressed') == 'true'){
+                            if($(a[index]).attr('aria-pressed') == 'true' ){
                                 $(a[index]).attr('aria-pressed', 'false');
 
                                 var name = $(a[index]).text();
@@ -341,43 +343,51 @@
                                     btnObj.button[name].opposite();
                             }
                         });
+
+                        btnObj.button[$(this).text()].origin();
                         $(this).attr('aria-pressed','true');
                     })
-                } else {
+                } else if(groupType == 'check') { // 체크박스 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
+                        console.log('check');
                         var name = $(this).text();
                         if($(this).attr('aria-pressed') == 'true') {
-                            console.log('true');
-                            if(btnObj.button[name].opposite != null)
+                            if(btnObj.button[name].opposite != null) {
                                 btnObj.button[name].opposite();
-                            $(this).attr('aria-pressed','false');
+                                $(this).attr('aria-pressed','false');
+                            }
                         } else {
-                            console.log('false');
+                            btnObj.button[name].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
+                    })
+                } else { // 디폴트 버튼 타입 이벤트
+                    $groups.on('click', 'a', function(e){
+                        console.log('button');
+                        var name = $(this).text();
+                        if($(this).attr('aria-pressed') == 'false') {
                             btnObj.button[name].origin();
                             $(this).attr('aria-pressed','true');
                         }
                     })
                 }
-
-
                 return $groups;
+
+                function makeBtn(name, func) {
+                    var $a =  $('<a />', {
+                        text: name,
+                        role: 'button',
+                        class: '__checked',
+                        'aria-pressed': false,
+                        href: '#'
+                    });
+                    $a.prepend('<span class="__view __radio"></span>');
+                    return $a;
+    			}
             }
 
-			function makeBtn(name, func) {
-                var $a =  $('<a />', {
-                    text: name,
-                    role: 'button',
-                    // click: func.origin,
-                    class: '__checked',
-                    'aria-pressed': false,
-                    href: '#'
-                });
-                $a.prepend('<span class="__view __radio"></span>');
-                return $a;
-			}
-
             function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.nhncorp.com/NT11398/ecup/raw/develop/ui_ecup/css/internal.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/testspace/css/internal.css"});
             }
 		}
 
