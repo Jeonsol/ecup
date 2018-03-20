@@ -94,11 +94,11 @@
     color: #b7b7b7;
 }
 
-.__NTS_markup .__area_btns .__chbox, .__NTS_markup .__area_btns .__radio {
+.__NTS_markup .__area_btns .__check, .__NTS_markup .__area_btns .__radio {
     width: 2em;
 }
 
-.__NTS_markup .__area_btns .__chbox::before {
+.__NTS_markup .__area_btns .__check::before {
     content: '\2713';
     font-size: 1.5em;
     color: #4a4a4a;
@@ -113,11 +113,11 @@
     background-color: #4a4a4a;
 }
 
-.__NTS_markup .__area_btns .__checked .__chbox::before {
+.__NTS_markup .__area_btns a[aria-pressed="true"] .__check::before {
     color: #b7b7b7;
 }
 
-.__NTS_markup .__area_btns .__checked .__radio::before {
+.__NTS_markup .__area_btns a[aria-pressed="true"] .__radio::before {
     background-color: #b7b7b7;
 }
 
