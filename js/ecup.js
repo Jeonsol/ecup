@@ -328,21 +328,23 @@
                 $groups.prepend($('<strong>').text(btnObj.name));
 
                 for(var btn in btnObj.button)
-                    $groups.append(makeBtn(btn, btnObj.button[btn]));
+                    $groups.append(makeBtn(btn, btnObj.button[btn],groupType));
 
                 if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
                         console.log('radio');
                         var a = $(this).parent().children('a');
-                        $.each(a, function(index){
-                            if($(a[index]).attr('aria-pressed') == 'true' ){
-                                $(a[index]).attr('aria-pressed', 'false');
 
-                                var name = $(a[index]).text();
-                                if(btnObj.button[name].opposite != null)
-                                    btnObj.button[name].opposite();
-                            }
-                        });
+                        if(!$(this).hasClass('__button'))
+                            $.each(a, function(index){
+                                if($(a[index]).attr('aria-pressed') == 'true'){
+                                    $(a[index]).attr('aria-pressed', 'false');
+
+                                    var name = $(a[index]).text();
+                                    if(btnObj.button[name].opposite != null)
+                                        btnObj.button[name].opposite();
+                                }
+                            });
 
                         btnObj.button[$(this).text()].origin();
                         $(this).attr('aria-pressed','true');
@@ -351,7 +353,7 @@
                     $groups.on('click', 'a', function(e){
                         console.log('check');
                         var name = $(this).text();
-                        if($(this).attr('aria-pressed') == 'true') {
+                        if($(this).attr('aria-pressed') == 'true' ) {
                             if(btnObj.button[name].opposite != null) {
                                 btnObj.button[name].opposite();
                                 $(this).attr('aria-pressed','false');
@@ -373,21 +375,26 @@
                 }
                 return $groups;
 
-                function makeBtn(name, func) {
+                function makeBtn(name, func, type) {
                     var $a =  $('<a />', {
                         text: name,
                         role: 'button',
-                        class: '__checked',
                         'aria-pressed': false,
                         href: '#'
                     });
-                    $a.prepend('<span class="__view __radio"></span>');
+
+                    if(func.opposite == null)
+                        $a.addClass('__button');
+                    else
+                        $a.addClass('__'+ type);
+
+                    $a.prepend('<span class="__view"></span>');
                     return $a;
     			}
             }
 
             function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/testspace/css/internal.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/feature/window/css/window.css"});
             }
 		}
 
