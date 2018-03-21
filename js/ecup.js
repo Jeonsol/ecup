@@ -405,7 +405,7 @@
             }
 
             function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/server/public/stylesheets/ecup_layer.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_layer.css"});
             }
 		}
 
