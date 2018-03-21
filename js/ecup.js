@@ -57,11 +57,11 @@
 				}
 			}
 
-			$('body').append('<div class="ecup_section"><div class="statement_layer"></div><div class="dimmed"></div></div>');
+			$('body').append('<div class="__NTS_markup"><h2>NTS 마크업검수 레이어</h2><div class="__area_env"><a href="#"><span class="__view"></span>UI 주석보기</a><div class="__opacity_control"><span type="button" class="__bar"></span><button type="button" class="__controller"><span class="blind">투명도조절</span></button></div></div><div class="__area_btns"></div></div>');
 
 			function positionSet(position) {
 				var positionInfo = position.split(" ");
-				var $ecupLayer = $('.ecup_section .statement_layer');
+				var $ecupLayer = $('.__NTS_markup');
 
 				if(positionInfo[0] === 'center') {
 					$ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
@@ -76,11 +76,10 @@
 
 				positionSet(markupLayerManager.position);
 
-				var $ecupDom = $('.ecup_section');
+				var $ecupDom = $('.__NTS_markup');
 
-				$ecupDom.prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
-				$ecupDom.find('.statement_layer').addClass(markupLayerManager.theme);
-
+				$ecupDom.addClass('external').prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
+				$ecupDom.addClass(markupLayerManager.theme);
 				$ecupDom.on('click', '.layer_btn', function () {
 					var $target = $(this);
 
@@ -95,15 +94,20 @@
 					$target.toggleClass('off');
 				});
 			}
+			else if(markupLayerManager.type === 'internal') {
+				var $ecupDom = $('.__NTS_markup');
 
-			else {
-				var $ecupDom = $('.ecup_section');
-
-				$ecupDom.css({'display': 'none'}).find('.statement_layer').addClass(markupLayerManager.theme);
+				$ecupDom.css({'display': 'none'}).find('.__area_btns').addClass(markupLayerManager.theme);
 
 				//pc
 				$(document).dblclick(function () {
-					$ecupDom.fadeIn(300);
+
+					var $layerWrap = $('.__NTS_markup');
+					var layerHeight = $layerWrap.height();
+
+					$layerWrap.css({'display':'block','top':-layerHeight});
+
+					$layerWrap.animate({top:0},300);
 				});
 
 				//mobile - swipe
@@ -176,9 +180,12 @@
 
 				$(document).on('swipedown', function () {
 					$ecupDom.fadeIn(300);
+					var $layerWrap = $('.__NTS_markup .__area_btns');
+
+					$layerWrap.css('top',-$layerWrap.height()).animate({top:0},1000);
 				});
 			}
-    	};
+		};
 
 		markupLayerManager.prototype = {
 			constructor: markupLayerManager,
@@ -299,7 +306,7 @@
             // console.log(groupInfo);
 
             var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
-            var groupType = groupInfo == null? 'button' : groupInfo.groupType;
+            var groupType = groupInfo == null? 'check' : groupInfo.groupType;
 
             if(markupLayerManager.newWindow == null)  init();
 
@@ -328,7 +335,7 @@
                 $groups.prepend($('<strong>').text(btnObj.name));
 
                 for(var btn in btnObj.button)
-                    $groups.append(makeBtn(btn, btnObj.button[btn],groupType));
+                    $groups.append(makeBtn(btn, btnObj.button[btn], groupType));
 
                 if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
@@ -353,7 +360,16 @@
                             $(this).attr('aria-pressed','true');
                         }
                     })
-                } else if(groupType == 'check') { // 체크박스 버튼 타입 이벤트
+                } else if(groupType == 'button') { // 디폴트 버튼 타입 이벤트
+                    $groups.on('click', 'a', function(e){
+                        console.log('button');
+                        var name = $(this).text();
+                        if($(this).attr('aria-pressed') == 'false') {
+                            btnObj.button[name].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
+                    })
+                } else { // 체크박스 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
                         console.log('check');
                         var name = $(this).text();
@@ -363,15 +379,6 @@
                                 $(this).attr('aria-pressed','false');
                             }
                         } else {
-                            btnObj.button[name].origin();
-                            $(this).attr('aria-pressed','true');
-                        }
-                    })
-                } else { // 디폴트 버튼 타입 이벤트
-                    $groups.on('click', 'a', function(e){
-                        console.log('button');
-                        var name = $(this).text();
-                        if($(this).attr('aria-pressed') == 'false') {
                             btnObj.button[name].origin();
                             $(this).attr('aria-pressed','true');
                         }
@@ -387,10 +394,10 @@
                         href: '#'
                     });
 
-                    if(func.opposite == null)
-                        $a.addClass('__button');
-                    else
+                    if(func.opposite != null)
                         $a.addClass('__'+ type);
+                    else
+                        $a.addClass('__button');
 
                     $a.prepend('<span class="__view"></span>');
                     return $a;
@@ -398,19 +405,14 @@
             }
 
             function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/css/window.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/server/public/stylesheets/ecup_layer.css"});
             }
 		}
 
 		/* 보이지 않게 내장되게 그려줌 */
 		function internal(spec, groupInfo) {
 			commonDrawLayer(spec, groupInfo);
-
-			var $ecupDom = $('.ecup_section');
-
-			$ecupDom.on('click', '.dimmed', function() {
-				$ecupDom.fadeOut(200);
-			});
+			var $ecupDom = $('.__NTS_markup');
 
 			$ecupDom.on('click', '.event_btn', function() {
 				$ecupDom.fadeOut(200);
@@ -423,22 +425,76 @@
 		}
 
 		function commonDrawLayer(spec, groupInfo) {
-			var $layerDom = $('<div class="layer"></div>');
+			var $layerDom = $('<div class="__area_btn"></div>');
 
 			if(typeof groupInfo !== 'undefined') {
-				var groupTitle = '<strong class="title">'+groupInfo.groupName+'</strong>'
-				$layerDom.append(groupTitle);
+				var groupTitle = '<strong>'+groupInfo.groupName+'</strong>';
+
+				$layerDom.append(groupTitle).addClass('__area_group');
+			}
+
+			else {
+				$layerDom.addClass('__area_single');
 			}
 
 			for(var btnName in spec) {
-				var $btn = $('<button type="button" class="event_btn">'+btnName+'</button>');
-				$btn.click(spec[btnName]);
+				var $btn = $('<a href="#1" role="button" class="event_btn"><span class="__view __radio"></span>'+btnName+'</a>');
+
+				$btn.click(spec[btnName].origin);
+
 				$layerDom.append($btn);
 			}
 
-			$('.ecup_section .statement_layer').append($layerDom);
+			$('.__NTS_markup .__area_btns').append($layerDom);
 		}
-	}
+	},
+
+	layerControl : function(layerDom, openTarget, closeTarget) {
+
+		$(layerDom).css('display', 'none');
+
+		$(openTarget).click(function() {
+			$(layerDom).css('display','block');
+		});
+
+		$(closeTarget).click(function() {
+			$(layerDom).css('display','none');
+		});
+
+	},
+
+	selectControl : function(btn, listBox, targetObj) {
+		$(btn).click(function() {
+			$(listBox).css('display','block').attr('aria-expanded','true');
+		});
+
+		var $selector = $(Object.keys(targetObj)[0]);
+		var selectorControl = targetObj[Object.keys(targetObj)[0]];
+
+		$selector.click(function() {
+			var $target = $(this);
+
+			/* aria 속성일 경우 */
+			if(selectorControl.indexOf("aria")!==-1) {
+				$selector.attr(selectorControl,"false");
+				$target.attr(selectorControl,"true");
+			}
+
+			/* 클래스 일 경우*/
+			else {
+				var selector = selectorControl.split(" ");
+				if(selector[selector.length-1].substr(0,1) !== '.') throw new Error('target must be class type or WAI-ARIA');
+
+				var toggleClass = selector[selector.length-1].substr(1);
+				$selector.removeClass(toggleClass);
+				$target.addClass(toggleClass);
+			}
+
+			$(btn).text($target.text());
+			$(listBox).css('display','none');
+
+		});
+	},
 }, function() {
 	/** jQuery 확장 **/
 
