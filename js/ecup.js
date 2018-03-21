@@ -251,10 +251,14 @@
 			// 기능이 객체로 주어진 경우 함수로 변환
 			for (var btnName in options) {
 
-				var option = options[btnName],
-					optType = typeof option;
+				var option = options[btnName];
 
-				if (optType === 'object') {
+				if (option instanceof Array) {
+					options[btnName] = {
+						origin: option[0],
+						opposite: option[1]
+					};
+				} else if (typeof option === 'object') {
 
 					if (!option.target) option.target = commonTarget;
 					else option.target = $(option.target);
@@ -266,7 +270,7 @@
 						opposite: oppositeOpt
 					};
 
-				} else if (optType === 'function') {
+				} else if (typeof option === 'function') {
 					options[btnName] = {origin: options[btnName]};
 				}
 			}
