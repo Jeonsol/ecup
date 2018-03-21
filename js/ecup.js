@@ -57,7 +57,7 @@
 				}
 			}
 
-			$('body').append('<div class="__NTS_markup"><h2>NTS 마크업검수 레이어</h2><div class="__area_env"><a href="#"><span class="__view"></span>UI 주석보기</a><div class="__opacity_control"><span type="button" class="__bar"></span><button type="button" class="__controller"><span class="blind">투명도조절</span></button></div></div><div class="__area_btns"></div></div>');
+			// $('body').append('<div class="__NTS_markup"><h2>NTS 마크업검수 레이어</h2><div class="__area_env"><a href="#"><span class="__view"></span>UI 주석보기</a><div class="__opacity_control"><span type="button" class="__bar"></span><button type="button" class="__controller"><span class="blind">투명도조절</span></button></div></div><div class="__area_btns"></div></div>');
 
 			function positionSet(position) {
 				var positionInfo = position.split(" ");
@@ -95,20 +95,30 @@
 				});
 			}
 			else if(markupLayerManager.type === 'internal') {
-				var $ecupDom = $('.__NTS_markup');
-
-				$ecupDom.css({'display': 'none'}).find('.__area_btns').addClass(markupLayerManager.theme);
-
-				//pc
-				$(document).dblclick(function () {
-
-					var $layerWrap = $('.__NTS_markup');
-					var layerHeight = $layerWrap.height();
-
-					$layerWrap.css({'display':'block','top':-layerHeight});
-
-					$layerWrap.animate({top:0},300);
-				});
+                //pc
+                $(document).dblclick(function (e) {
+                    e.stopPropagation();
+                    var $layerWrap = $('.__NTS_markup');
+                    var layerHeight = $layerWrap.height();
+                    if($layerWrap.css('display') == 'none') {
+                        $layerWrap.css({'display': 'block', 'top' : -layerHeight });
+                        $layerWrap.animate({top: 0},{
+                                duration: 300,
+                                done: function(){
+                                    $layerWrap.css({'top': 0});
+                                }
+                            });
+                    } else {
+                        $layerWrap.css({ 'top' : 0 });
+                        $layerWrap.animate({top: -layerHeight}, {
+                                duration: 300,
+                                done: function(){
+                                    $layerWrap.css({'display': 'none', 'top' : -layerHeight});
+                                }
+                            }
+                        );
+                    }
+                });
 
 				//mobile - swipe
 				(function() {
@@ -191,7 +201,7 @@
 			constructor: markupLayerManager,
 			single: function(options) {
 				// markupLayer.type 으로 불러온다.
-				draw(options, viewModule[markupLayerManager.type] /* 타입에따른 */);
+				draw(options, viewModule[markupLayerManager.type] /* 타입에따른 */, renderLayer);
 			},
 			group: function() {
 				// 마지막 인자가 옵션
@@ -209,7 +219,7 @@
 					groupDom: commonDoms,
                     groupType: markupLayerManager.buttonType[this.groupName]
 				};
-				draw(options, viewModule[markupLayerManager.type], groupInfo);
+				draw(options, viewModule[markupLayerManager.type], renderLayer, groupInfo);
 			}
 		};
 
@@ -227,8 +237,9 @@
 		/** 내부 함수 **/
 
 		/* 방식에 맞게 그려주는 콘트롤러 */
-		function draw(options ,callback, groupInfo /* group인 경우 groupInfo 넘어온다. */) {
-			callback(optionObj_to_eventFunc(options, groupInfo), groupInfo);
+		function draw(options ,callback, renderLayer, groupInfo /* group인 경우 groupInfo 넘어온다. */) {
+            var $wrap = renderLayer(optionObj_to_eventFunc(options, groupInfo), groupInfo);
+            callback( $wrap );
 		}
 
 		/* 옵션 객체를 이벤트 함수로 변환해서 리턴  */
@@ -258,7 +269,6 @@
 				} else if (optType === 'function') {
 					options[btnName] = {origin: options[btnName]};
 				}
-
 			}
 
 			return options;
@@ -297,37 +307,27 @@
 				fn = fn.bind(option.target);
 
 				return fn;
-
 			}
 		}
 
-		/* 별도의 창으로 그려줌 */
-        function windows(spec, groupInfo) {
-            // console.log(groupInfo);
-
+        /* 마크업 레이어 dom 생성 및 반환 */
+        function renderLayer(spec, groupInfo) {
             var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
             var groupType = groupInfo == null? 'check' : groupInfo.groupType;
 
-            if(markupLayerManager.newWindow == null)  init();
-
             markupLayerManager.buttonArray.push({name: groupName, button: spec, type: groupType});
-            drawing(markupLayerManager.buttonArray);
-
-            function init() {
-                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=1000');
-                $(markupLayerManager.newWindow.document.head).append(css());
-            }
+            return drawing(markupLayerManager.buttonArray);
 
             function drawing(btnArray) {
                 console.log(btnArray);
                 var $wrap = $('<div />', {
-	                class: '__NTS_markup',
+                    class: '__NTS_markup',
                 });
                 $wrap.append($('<h2>마크업 검수 레이어</h2>'));
                 $.each(btnArray, function(index){
                     $wrap.append(groupping(btnArray[index], btnArray[index].type));
                 })
-            	$(markupLayerManager.newWindow.document.body).html($wrap);
+                return $wrap;
             }
 
             function groupping(btnObj, groupType) {
@@ -401,52 +401,46 @@
 
                     $a.prepend('<span class="__view"></span>');
                     return $a;
-    			}
+                }
+            }
+        }
+
+        /* 별도의 창으로 그려줌 */
+        function windows($wrap) {
+            if(markupLayerManager.newWindow == null)  init();
+
+            $(markupLayerManager.newWindow.document.body).html($wrap);
+
+            function init() {
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=1000');
+                $(markupLayerManager.newWindow.document.head).append(stylesheet());
             }
 
-            function css(){
+            function stylesheet(){
                 return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_layer.css"});
             }
 		}
 
 		/* 보이지 않게 내장되게 그려줌 */
-		function internal(spec, groupInfo) {
-			commonDrawLayer(spec, groupInfo);
-			var $ecupDom = $('.__NTS_markup');
-
-			$ecupDom.on('click', '.event_btn', function() {
-				$ecupDom.fadeOut(200);
+		function internal($wrap) {
+            $wrap.on('click', '.event_btn', function() {
+				$wrap.fadeOut(200);
 			});
+
+            $wrap.css({'display': 'none'}).find('.__area_btns').addClass(markupLayerManager.theme);
+            $wrap.css({'position': 'fixed', 'width': '50%', 'z-index': '10000','top':-$wrap.height()});
+            if($(document.body).find('.__NTS_markup').length == 0){
+                $(document.body).append($wrap);
+            } else
+                $(document.body).find('.__NTS_markup').html($wrap.html());
+
 		}
 
 		/* 화면상에 보이도록 그려줌 */
 		function external(spec, groupInfo) {
-			commonDrawLayer(spec, groupInfo);
+			// commonDrawLayer(spec, groupInfo);
 		}
 
-		function commonDrawLayer(spec, groupInfo) {
-			var $layerDom = $('<div class="__area_btn"></div>');
-
-			if(typeof groupInfo !== 'undefined') {
-				var groupTitle = '<strong>'+groupInfo.groupName+'</strong>';
-
-				$layerDom.append(groupTitle).addClass('__area_group');
-			}
-
-			else {
-				$layerDom.addClass('__area_single');
-			}
-
-			for(var btnName in spec) {
-				var $btn = $('<a href="#1" role="button" class="event_btn"><span class="__view __radio"></span>'+btnName+'</a>');
-
-				$btn.click(spec[btnName].origin);
-
-				$layerDom.append($btn);
-			}
-
-			$('.__NTS_markup .__area_btns').append($layerDom);
-		}
 	},
 
 	layerControl : function(layerDom, openTarget, closeTarget) {
