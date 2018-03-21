@@ -191,7 +191,7 @@
 			constructor: markupLayerManager,
 			single: function(options) {
 				// markupLayer.type 으로 불러온다.
-				draw(options, viewModule[markupLayerManager.type] /* 타입에따른 */);
+				draw(options, viewModule[markupLayerManager.type] /* 타입에따른 */, renderLayer);
 			},
 			group: function() {
 				// 마지막 인자가 옵션
@@ -209,7 +209,7 @@
 					groupDom: commonDoms,
                     groupType: markupLayerManager.buttonType[this.groupName]
 				};
-				draw(options, viewModule[markupLayerManager.type], groupInfo);
+				draw(options, viewModule[markupLayerManager.type], renderLayer, groupInfo);
 			}
 		};
 
@@ -227,8 +227,10 @@
 		/** 내부 함수 **/
 
 		/* 방식에 맞게 그려주는 콘트롤러 */
-		function draw(options ,callback, groupInfo /* group인 경우 groupInfo 넘어온다. */) {
-			callback(optionObj_to_eventFunc(options, groupInfo), groupInfo);
+		function draw(options ,callback, renderLayer, groupInfo /* group인 경우 groupInfo 넘어온다. */) {
+            var $wrap = renderLayer(optionObj_to_eventFunc(options, groupInfo), groupInfo);
+            console.log($wrap);
+            callback( $wrap );
 		}
 
 		/* 옵션 객체를 이벤트 함수로 변환해서 리턴  */
@@ -258,7 +260,6 @@
 				} else if (optType === 'function') {
 					options[btnName] = {origin: options[btnName]};
 				}
-
 			}
 
 			return options;
@@ -297,37 +298,27 @@
 				fn = fn.bind(option.target);
 
 				return fn;
-
 			}
 		}
 
-		/* 별도의 창으로 그려줌 */
-        function windows(spec, groupInfo) {
-            // console.log(groupInfo);
-
+        /* 마크업 레이어 dom 생성 및 반환 */
+        function renderLayer(spec, groupInfo) {
             var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
             var groupType = groupInfo == null? 'check' : groupInfo.groupType;
 
-            if(markupLayerManager.newWindow == null)  init();
-
             markupLayerManager.buttonArray.push({name: groupName, button: spec, type: groupType});
-            drawing(markupLayerManager.buttonArray);
-
-            function init() {
-                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=1000');
-                $(markupLayerManager.newWindow.document.head).append(css());
-            }
+            return drawing(markupLayerManager.buttonArray);
 
             function drawing(btnArray) {
                 console.log(btnArray);
                 var $wrap = $('<div />', {
-	                class: '__NTS_markup',
+                    class: '__NTS_markup',
                 });
                 $wrap.append($('<h2>마크업 검수 레이어</h2>'));
                 $.each(btnArray, function(index){
                     $wrap.append(groupping(btnArray[index], btnArray[index].type));
                 })
-            	$(markupLayerManager.newWindow.document.body).html($wrap);
+                return $wrap;
             }
 
             function groupping(btnObj, groupType) {
@@ -401,11 +392,23 @@
 
                     $a.prepend('<span class="__view"></span>');
                     return $a;
-    			}
+                }
+            }
+        }
+
+        /* 별도의 창으로 그려줌 */
+        function windows($wrap) {
+            if(markupLayerManager.newWindow == null)  init();
+
+            $(markupLayerManager.newWindow.document.body).html($wrap);
+
+            function init() {
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=1000');
+                $(markupLayerManager.newWindow.document.head).append(stylesheet());
             }
 
-            function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/server/public/stylesheets/ecup_layer.css"});
+            function stylesheet(){
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_layer.css"});
             }
 		}
 
