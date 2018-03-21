@@ -333,11 +333,13 @@
                 if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
                         console.log('radio');
+                        var $my = $(this);
                         var a = $(this).parent().children('a');
+
 
                         if(!$(this).hasClass('__button'))
                             $.each(a, function(index){
-                                if($(a[index]).attr('aria-pressed') == 'true'){
+                                if($(a[index]).attr('aria-pressed') == 'true' && !$(a[index]).hasClass('__button')){
                                     $(a[index]).attr('aria-pressed', 'false');
 
                                     var name = $(a[index]).text();
@@ -346,8 +348,10 @@
                                 }
                             });
 
-                        btnObj.button[$(this).text()].origin();
-                        $(this).attr('aria-pressed','true');
+                        if($(this).attr('aria-pressed') == 'false') {
+                            btnObj.button[$(this).text()].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
                     })
                 } else if(groupType == 'check') { // 체크박스 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
@@ -394,7 +398,7 @@
             }
 
             function css(){
-                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/feature/window/css/window.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://10.67.16.105/suns/ecup/css/window.css"});
             }
 		}
 

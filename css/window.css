@@ -113,6 +113,10 @@
     background-color: #4a4a4a;
 }
 
+.__NTS_markup .__area_btns .__button[aria-pressed="true"] {
+    background-color: #888;
+}
+
 .__NTS_markup .__area_btns a[aria-pressed="true"].__check .__view::before {
     color: #b7b7b7;
 }
