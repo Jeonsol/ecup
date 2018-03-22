@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+/* 공통 */
+.__NTS_markup {position:fixed;top:0;right:0;z-index:10000;overflow-y:auto;width:100%;background-color:#2a2a2a;font-size:15px;line-height:1.5;color:#d2d2d2;}
+.__NTS_markup h2 {margin:0;padding:0.8em 0.7em 0.6em;font-family:NanumGothic, sans-serif;font-weight:normal;font-size:1.2em;line-height:1.25em;background-color:#3c3f41;color:#dadada;}
+.__NTS_markup a {display:block;overflow:hidden;text-overflow:ellipsis;font-family:NanumGothic, sans-serif;font-weight:500;font-size:1em;line-height:2em;white-space:nowrap;text-decoration:none;color:#c7c7c7;cursor:pointer;}
+
+
+/* 설정영역 공통 */
+.__NTS_markup .__area_env {padding:1em 0.8em;}
+.__NTS_markup .__area_env a {color:#c7c7c7;}
+.__NTS_markup .__area_env .__view {float:left;width:2.4em;height:1.4em;border-radius:0.7em;margin:0.3em 0.6em 0 0;background-color:#a7a7a7;}
+.__NTS_markup .__area_env .__view::before {content:'';float:left;width:1em;height:1em;margin:0.2em 0 0 0.2em;border-radius:50%;background-color:#555;}
+.__NTS_markup .__area_env .off .__view::before {float:right;width:0.8em;height:0.8em;margin:0.3em 0.3em 0 0;background-color:#777;}
+
+
+/* 버튼영역 레이아웃 */
+.__NTS_markup .__area_btns {padding:0 1em 1em;}
+.__NTS_markup .__area_btn {margin-top:0.7em;border-bottom:0.1em solid #444;}
+.__NTS_markup .__area_btn:first-child {margin-top:0;}
+.__NTS_markup .__area_btns a {padding:0.2em 0.6em 0.2em 0;border-bottom:0.1em solid #444;background-color:#5c5c5c;}
+.__NTS_markup .__area_btns a:hover {text-decoration:underline;}
+.__NTS_markup .__area_btns .__view {float:left;height:2em;text-align:center;}
+
+
+/* 버튼영역 내용 */
+.__NTS_markup .__area_group strong {display:block;overflow:hidden;text-overflow:ellipsis;background-color:#d2d2d2;padding:0.3em 0.7em;font-family:NanumGothic, sans-serif;font-weight:normal;font-size:1em;white-space:nowrap;color:#333;}
+.__NTS_markup .__area_btn .__btn::before {content:'';font-weight:bold;color:#b7b7b7;}
+
+.__NTS_markup .__button .__view{width:1em;}
+.__NTS_markup .__button[aria-pressed="true"] {background-color:#777;}
+
+.__NTS_markup .__check .__view {width:2em;}
+.__NTS_markup .__check .__view::before {content:'\2713';font-size:1.5em;color:#4a4a4a;}
+.__NTS_markup .__check[aria-pressed="true"] .__view::before {color:#b7b7b7;}
+
+.__NTS_markup .__radio .__view {width:2em;}
+.__NTS_markup .__radio .__view::before {content:'';display:inline-block;width:0.6em;height:0.6em;border-radius:50%;background-color:#4a4a4a;}
+.__NTS_markup .__radio[aria-pressed="true"] .__view::before {background-color:#b7b7b7;}

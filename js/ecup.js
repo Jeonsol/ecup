@@ -85,107 +85,6 @@
 					$target.toggleClass('off');
 				});
 			}
-			else if(markupLayerManager.type === 'internal') {
-                //pc
-                $(document).dblclick(function (e) {
-                    e.stopPropagation();
-                    var $layerWrap = $('.__NTS_markup');
-                    var layerHeight = $layerWrap.height();
-                    if($layerWrap.css('display') == 'none') {
-                        $layerWrap.css({'display': 'block', 'top' : -layerHeight });
-                        $layerWrap.animate({top: 0},{
-                                duration: 300,
-                                done: function(){
-                                    $layerWrap.css({'top': 0});
-                                }
-                            });
-                    } else {
-                        $layerWrap.css({ 'top' : 0 });
-                        $layerWrap.animate({top: -layerHeight}, {
-                                duration: 300,
-                                done: function(){
-                                    $layerWrap.css({'display': 'none', 'top' : -layerHeight});
-                                }
-                            }
-                        );
-                    }
-                });
-
-				//mobile - swipe
-				(function() {
-					var touchStartEvent = "touchstart",
-						touchStopEvent = "touchend",
-						touchMoveEvent = "touchmove";
-					$.event.special.swipeupdown = {
-						setup: function() {
-							var thisObject = this;
-							var $this = $(thisObject);
-							$this.bind(touchStartEvent, function(event) {
-								var data = event.originalEvent.touches ?
-										event.originalEvent.touches[ 0 ] :
-										event,
-									start = {
-										time: (new Date).getTime(),
-										coords: [ data.pageX, data.pageY ],
-										origin: $(event.target)
-									},
-									stop;
-
-								function moveHandler(event) {
-									if (!start) {
-										return;
-									}
-									var data = event.originalEvent.touches ?
-										event.originalEvent.touches[ 0 ] :
-										event;
-									stop = {
-										time: (new Date).getTime(),
-										coords: [ data.pageX, data.pageY ]
-									};
-
-									// prevent scrolling
-									if (Math.abs(start.coords[1] - stop.coords[1]) > 10) {
-										event.preventDefault();
-									}
-								}
-								$this
-									.bind(touchMoveEvent, moveHandler)
-									.one(touchStopEvent, function(event) {
-										$this.unbind(touchMoveEvent, moveHandler);
-										if (start && stop) {
-											if (stop.time - start.time < 1000 &&
-												Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
-												Math.abs(start.coords[0] - stop.coords[0]) < 75) {
-												start.origin
-													.trigger("swipeupdown")
-													.trigger(start.coords[1] > stop.coords[1] ? "swipeup" : "swipedown");
-											}
-										}
-										start = stop = undefined;
-									});
-							});
-						}
-					};
-					$.each({
-						swipedown: "swipeupdown",
-						swipeup: "swipeupdown"
-					}, function(event, sourceEvent){
-						$.event.special[event] = {
-							setup: function(){
-								$(this).bind(sourceEvent, $.noop);
-							}
-						};
-					});
-
-				})();
-
-				$(document).on('swipedown', function () {
-					$ecupDom.fadeIn(300);
-					var $layerWrap = $('.__NTS_markup .__area_btns');
-
-					$layerWrap.css('top',-$layerWrap.height()).animate({top:0},1000);
-				});
-			}
 		};
 
 		markupLayerManager.show = function() {
@@ -326,8 +225,10 @@
 					fnBody += fnPart;
 				}
 
-				fn = new Function(fnBody);
+				fn = new Function('e', fnBody);
 				fn = fn.bind(option.target);
+
+				console.log(fn);
 
 				return fn;
 			}
@@ -384,8 +285,7 @@
                     var $a =  $('<a />', {
                         text: name,
                         role: 'button',
-                        'aria-pressed': false,
-                        href: '#'
+                        'aria-pressed': false
                     });
 
                     if(func.opposite != null)
@@ -449,10 +349,11 @@
 
         /* 별도의 창으로 그려줌 */
         function windows($wrap) {
+
             if(markupLayerManager.newWindow == null) init();
 
             $(markupLayerManager.newWindow.document.body).html($wrap);
-            
+
             setTimeout(function(){
                 var height = $wrap.height();
                 markupLayerManager.newWindow.resizeTo(300, height + 70);
@@ -463,28 +364,43 @@
                 $(markupLayerManager.newWindow.document.head).append(stylesheet());
             }
 
-            function stylesheet(){
+            function stylesheet() {
                 return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_ui.css"});
             }
+
 		}
 
 		/* 보이지 않게 내장되게 그려줌 */
 		function internal($wrap) {
-            $wrap.on('click', '.event_btn', function() {
-				$wrap.fadeOut(200);
+
+			var $body = $(document.body);
+			$body.append($wrap);
+
+			var topOrigin = -$wrap.height();
+
+            $wrap.css({
+				top: topOrigin,
+				maxWidth: '400px',
+				opacity: 0.5
 			});
 
-            $wrap.css({'display': 'none'}).find('.__area_btns').addClass(markupLayerManager.theme);
-            $wrap.css({'position': 'fixed', 'width': '50%', 'z-index': '10000','top':-$wrap.height()});
-            if ($(document.body).find('.__NTS_markup').length == 0) {
-                $(document.body).append($wrap);
-            } else
-                $(document.body).find('.__NTS_markup').html($wrap.html());
+			$body.longClick(function(e) {
+				$wrap.animate({
+					top: 0,
+					opacity: 1
+				}, 300);
+			}, 1000);
 
+			$body.on('mousedown', function(e) {
+				$wrap.animate({
+					top: topOrigin,
+					opacity: 0.5
+				}, 300);
+			});
 		}
 
 		/* 화면상에 보이도록 그려줌 */
-		function external(spec, groupInfo) {
+		function external($wrap) {
 			// commonDrawLayer(spec, groupInfo);
 		}
 
@@ -648,6 +564,26 @@
 
 		});
 
+	}
+
+	jQuery.fn.longClick = function(fn, ms) {
+
+		var event;
+
+		this.on('mousedown', function(e) {
+			event = e;
+
+			setTimeout(function() {
+				var eFlag = e;
+				if (event === eFlag) {
+					fn(e);
+				}
+			}, ms);
+		});
+
+		this.on('mouseup', function(e) {
+			event = undefined;
+		});
 	}
 
 });
