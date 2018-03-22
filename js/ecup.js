@@ -362,7 +362,7 @@
 
             return paintModule($wrap);
 
-			// 버튼 그룹을 생성함
+			// 버튼 그룹 생성 및 개별 이벤트 할당
             function groupping(btnObj, groupType) {
                 var $groups = $('<div />', { class: '__area_btn'});
 
@@ -376,52 +376,10 @@
                 for(var btn in btnObj.button)
                     $groups.append(makeBtn(btn, btnObj.button[btn], groupType));
 
-                if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
-                    $groups.on('click', 'a', function(e){
-                        var $my = $(this);
-                        var a = $(this).parent().children('a');
-
-
-                        if(!$(this).hasClass('__button'))
-                            $.each(a, function(index){
-                                if($(a[index]).attr('aria-pressed') == 'true' && !$(a[index]).hasClass('__button')){
-                                    $(a[index]).attr('aria-pressed', 'false');
-
-                                    var name = $(a[index]).text();
-                                    if(btnObj.button[name].opposite != null)
-                                        btnObj.button[name].opposite();
-                                }
-                            });
-
-                        if($(this).attr('aria-pressed') == 'false') {
-                            btnObj.button[$(this).text()].origin();
-                            $(this).attr('aria-pressed','true');
-                        }
-                    })
-                } else if(groupType == 'button') { // 디폴트 버튼 타입 이벤트
-                    $groups.on('click', 'a', function(e){
-                        var name = $(this).text();
-                        if($(this).attr('aria-pressed') == 'false') {
-                            btnObj.button[name].origin();
-                            $(this).attr('aria-pressed','true');
-                        }
-                    })
-                } else { // 체크박스 버튼 타입 이벤트
-                    $groups.on('click', 'a', function(e){
-                        var name = $(this).text();
-                        if($(this).attr('aria-pressed') == 'true' ) {
-                            if(btnObj.button[name].opposite != null) {
-                                btnObj.button[name].opposite();
-                                $(this).attr('aria-pressed','false');
-                            }
-                        } else {
-                            btnObj.button[name].origin();
-                            $(this).attr('aria-pressed','true');
-                        }
-                    })
-                }
+                makeEvent();
                 return $groups;
 
+                // 그룹 내 타입별 버튼 생성
                 function makeBtn(name, func, type) {
                     var $a =  $('<a />', {
                         text: name,
@@ -438,6 +396,54 @@
                     $a.prepend('<span class="__view"></span>');
                     return $a;
                 }
+
+                // 각각의 버튼 이벤트 할당
+                function makeEvent(){
+                    if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
+                        $groups.on('click', 'a', function(e){
+                            var $my = $(this);
+                            var a = $(this).parent().children('a');
+
+
+                            if(!$(this).hasClass('__button'))
+                                $.each(a, function(index){
+                                    if($(a[index]).attr('aria-pressed') == 'true' && !$(a[index]).hasClass('__button')){
+                                        $(a[index]).attr('aria-pressed', 'false');
+
+                                        var name = $(a[index]).text();
+                                        if(btnObj.button[name].opposite != null)
+                                            btnObj.button[name].opposite();
+                                    }
+                                });
+
+                            if($(this).attr('aria-pressed') == 'false') {
+                                btnObj.button[$(this).text()].origin();
+                                $(this).attr('aria-pressed','true');
+                            }
+                        })
+                    } else if(groupType == 'button') { // 기본 버튼 타입 이벤트
+                        $groups.on('click', 'a', function(e){
+                            var name = $(this).text();
+                            if($(this).attr('aria-pressed') == 'false') {
+                                btnObj.button[name].origin();
+                                $(this).attr('aria-pressed','true');
+                            }
+                        })
+                    } else { // 체크박스 버튼 타입 이벤트 ( default )
+                        $groups.on('click', 'a', function(e){
+                            var name = $(this).text();
+                            if($(this).attr('aria-pressed') == 'true' ) {
+                                if(btnObj.button[name].opposite != null) {
+                                    btnObj.button[name].opposite();
+                                    $(this).attr('aria-pressed','false');
+                                }
+                            } else {
+                                btnObj.button[name].origin();
+                                $(this).attr('aria-pressed','true');
+                            }
+                        })
+                    }
+                }
             }
         }
 
@@ -446,6 +452,11 @@
             if(markupLayerManager.newWindow == null) init();
 
             $(markupLayerManager.newWindow.document.body).html($wrap);
+            
+            setTimeout(function(){
+                var height = $wrap.height();
+                markupLayerManager.newWindow.resizeTo(300, height + 70);
+            },100);
 
             function init() {
                 markupLayerManager.newWindow = window.open('', 'newWindow', 'width=300,height=400');
