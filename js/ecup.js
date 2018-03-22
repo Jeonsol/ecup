@@ -24,13 +24,6 @@
 	/** 마크업 검수 레이어 기능 **/
 	markupLayer: function() {
 
-        /* 뷰타입을 쉽게 참조하기 위한 모듈 */
-		var viewModule = {
-			'windows': windows,
-			'external': external,
-			'internal': internal
-		};
-
 		/* $.ecup.markupLayer() 를 통해 생성되는 함수 */
 		var markupLayerManager = function(flag) {
 
@@ -56,8 +49,6 @@
 					markupLayerManager[opt] = options[opt];
 				}
 			}
-
-			// $('body').append('<div class="__NTS_markup"><h2>NTS 마크업검수 레이어</h2><div class="__area_env"><a href="#"><span class="__view"></span>UI 주석보기</a><div class="__opacity_control"><span type="button" class="__bar"></span><button type="button" class="__controller"><span class="blind">투명도조절</span></button></div></div><div class="__area_btns"></div></div>');
 
 			function positionSet(position) {
 				var positionInfo = position.split(" ");
@@ -197,15 +188,26 @@
 			}
 		};
 
+		markupLayerManager.show = function() {
+			/* 그리기 타입을 쉽게 참조하기 위한 모듈 */
+			var paintTo = {
+				'windows': windows,
+				'external': external,
+				'internal': internal
+			};
+
+			var layer = renderLayer(paintTo[markupLayerManager.type]);
+		}
+
 		markupLayerManager.prototype = {
 			constructor: markupLayerManager,
 			single: function(options) {
-				// markupLayer.type 으로 불러온다.
-				draw(options, viewModule[markupLayerManager.type] /* 타입에따른 */, renderLayer);
+				createRenderMap(options);
 			},
 			group: function() {
 				// 마지막 인자가 옵션
 				var options = arguments[arguments.length - 1];
+
 				// 받아온 공통 dom의 selector들을 배열로 넣어서
 				if (arguments.length > 1) {
 					var commonDoms = [];
@@ -213,17 +215,19 @@
 						commonDoms.push(arguments[i]);
 					}
                 }
+
 				// group은 groupInfo를 먼저 생성
 				var groupInfo = {
 					groupName: this.groupName,
 					groupDom: commonDoms,
                     groupType: markupLayerManager.buttonType[this.groupName]
 				};
-				draw(options, viewModule[markupLayerManager.type], renderLayer, groupInfo);
-			}
+
+				createRenderMap(options, groupInfo);
+			},
 		};
 
-		// 셋팅 초기화
+		// markupLayer 셋팅 초기화
 		markupLayerManager.type = 'windows';
 		markupLayerManager.theme = '';
 		markupLayerManager.position = 'top right';
@@ -236,10 +240,13 @@
 
 		/** 내부 함수 **/
 
-		/* 방식에 맞게 그려주는 콘트롤러 */
-		function draw(options ,callback, renderLayer, groupInfo /* group인 경우 groupInfo 넘어온다. */) {
-            var $wrap = renderLayer(optionObj_to_eventFunc(options, groupInfo), groupInfo);
-            callback( $wrap );
+		/* Render Map 생성 */
+		function createRenderMap(option, groupInfo) {
+			var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
+            var groupType = groupInfo == null? 'check' : groupInfo.groupType;
+			var spec = optionObj_to_eventFunc(option, groupInfo);
+
+            markupLayerManager.buttonArray.push({name: groupName, button: spec, type: groupType});
 		}
 
 		/* 옵션 객체를 이벤트 함수로 변환해서 리턴  */
@@ -315,27 +322,37 @@
 		}
 
         /* 마크업 레이어 dom 생성 및 반환 */
-        function renderLayer(spec, groupInfo) {
-            var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
-            var groupType = groupInfo == null? 'check' : groupInfo.groupType;
+        function renderLayer(paintModule) {
 
-            markupLayerManager.buttonArray.push({name: groupName, button: spec, type: groupType});
-            return drawing(markupLayerManager.buttonArray);
+			// 최상위 DOM 생성
+            var $wrap = $('<div />', {
+                class: '__NTS_markup'
+            });
 
-            function drawing(btnArray) {
-                console.log(btnArray);
-                var $wrap = $('<div />', {
-                    class: '__NTS_markup',
-                });
-                $wrap.append($('<h2>마크업 검수 레이어</h2>'));
-                $.each(btnArray, function(index){
-                    $wrap.append(groupping(btnArray[index], btnArray[index].type));
-                })
-                return $wrap;
-            }
+			// 제어 영역 DOM 생성
+			var $controlArea = $('<div />', {
+				class: '__area_env'
+			}), $controlComment = $('<a href="#"><span class="__view"></span>UI 주석보기</a>');
+			$controlArea.append($controlComment);
 
+			// 버튼 영역 DOM 생성
+			var $btnArea = $('<div />', {
+				class: '__area_btns'
+			});
+			$.each(markupLayerManager.buttonArray, function(index, button){
+                $btnArea.append(groupping(button, button.type));
+            });
+
+			// 전체 DOM
+            $wrap.append($('<h2>마크업 검수 레이어</h2>'))
+				.append($controlArea)
+				.append($btnArea);
+
+            return paintModule($wrap);
+
+			// 버튼 그룹을 생성함
             function groupping(btnObj, groupType) {
-                var $groups = $('<div />', { class: '__area_btns'});
+                var $groups = $('<div />', { class: '__area_btn __area_group'});
                 $groups.prepend($('<strong>').text(btnObj.name));
 
                 for(var btn in btnObj.button)
@@ -416,12 +433,12 @@
             $(markupLayerManager.newWindow.document.body).html($wrap);
 
             function init() {
-                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=500, height=1000');
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=300,height=400');
                 $(markupLayerManager.newWindow.document.head).append(stylesheet());
             }
 
             function stylesheet(){
-                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_layer.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_ui.css"});
             }
 		}
 
