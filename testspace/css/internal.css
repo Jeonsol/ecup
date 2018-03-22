@@ -14,11 +14,35 @@
     color:#d2d2d2;
 }
 
+.__NTS_markup.external {
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 40%;
+}
+
+.__NTS_markup .layer_btn {
+    position: fixed;
+    top: 60px;
+    right: 100px;
+    width: 64px;
+    height: 30px;
+    border: 0;
+    background: transparent url('../../img/btn_on_64x64.png') no-repeat 50% 50%;
+    z-index: 2;
+}
+.__NTS_markup .layer_btn.off {
+    background-image: url('../../img/btn_off_64x64.png');
+}
+
 .__NTS_markup h2 {
+	margin: 0;
     padding: 0.8em 0.7em 0.6em;
     font-family: NanumGothic, sans-serif;
     font-weight: normal;
     font-size: 1.2em;
+	line-height: 1.25em;
     background-color: #3c3f41;
     color:#dadada;
 }
@@ -31,7 +55,9 @@
     font-size: 1em;
     line-height: 2em;
     white-space: nowrap;
+	text-decoration: none;
     color: #c7c7c7;
+	cursor: pointer;
 }
 
 .__NTS_markup .__area_btns {
@@ -56,6 +82,7 @@
     margin-bottom: 0.8em;
     background-color: #d2d2d2;
     padding: 0.3em 0.7em;
+	font-family: NanumGothic, sans-serif;
     font-weight: normal;
     font-size: 1em;
     white-space: nowrap;
@@ -117,6 +144,7 @@
 }
 
 .__NTS_markup .__area_env {
+    position: relative;
     padding: 0.5em 1.5em;
 }
 
@@ -149,4 +177,81 @@
     height: 0.8em;
     margin: 0.3em 0.3em 0 0;
     background-color: #777;
+}
+
+.__NTS_markup .__area_env .__opacity_control {
+    position: absolute;
+    top: 1.3em;
+    right: 1.5em;
+    width: 80px;
+}
+
+.__NTS_markup .__area_env .__opacity_control .__bar {
+    display: block;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #a7a7a7;
+}
+
+.__NTS_markup .__area_env .__opacity_control .__controller {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: -7px;
+    left: 0;
+    background-color: #555;
+    border: 0;
+    border-radius: 100%;
+}
+
+/*테마*/
+.__NTS_markup.pink {
+    background-color: #fff;
+}
+
+.__NTS_markup.pink h2{
+    background-color: #fa1a6a;
+    color: #fff;
+}
+
+.__NTS_markup.pink .__area_env .__view {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.__NTS_markup.pink .__area_env .__view::before {
+    background-color: #ff4081;
+}
+.__NTS_markup.pink .__area_env {
+    border: 1px solid #fa1a6a;
+    border-width: 0 1px;
+}
+.__NTS_markup.pink .__area_env a {
+    color: #000;
+}
+
+.__NTS_markup.pink .__area_btn {
+    border: 1px solid #fa1a6a;
+    border-width: 1px 1px 0;
+    background-color: #ff4081;
+}
+
+.__NTS_markup.pink .__area_btns strong{
+    background-color: #fa1a6a;
+    color: #fff;
+}
+
+.__NTS_markup.pink .__area_btns {
+    border: 1px solid #fa1a6a;
+    border-width: 0 1px 1px;
+}
+
+.__NTS_markup.pink .__area_btns a {
+    background-color: #fff;
+    color: #000;
+}
+
+.__NTS_markup.pink .__area_btns .__radio::before {
+    background-color: #ff80ab;
 }
