@@ -356,7 +356,7 @@
 
             setTimeout(function(){
                 var height = $wrap.height();
-                markupLayerManager.newWindow.resizeTo(300, height + 70);
+                markupLayerManager.newWindow.resizeTo(300, height + 50);
             },100);
 
             function init() {
@@ -365,7 +365,7 @@
             }
 
             function stylesheet() {
-                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/server/public/stylesheets/ecup_ui.css"});
+                return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/ui/ecup_ui.css"});
             }
 
 		}
