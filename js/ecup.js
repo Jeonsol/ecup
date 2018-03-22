@@ -224,7 +224,7 @@
 				};
 
 				createRenderMap(options, groupInfo);
-			},
+			}
 		};
 
 		// markupLayer 셋팅 초기화
@@ -242,11 +242,23 @@
 
 		/* Render Map 생성 */
 		function createRenderMap(option, groupInfo) {
-			var groupName = groupInfo == null? '단일 버튼' : groupInfo.groupName;
-            var groupType = groupInfo == null? 'check' : groupInfo.groupType;
+			var map = markupLayerManager.buttonArray;
+
+			var groupName = !groupInfo ? '__single' : groupInfo.groupName;
+            var groupType = !groupInfo ? 'check' : groupInfo.groupType;
 			var spec = optionObj_to_eventFunc(option, groupInfo);
 
-            markupLayerManager.buttonArray.push({name: groupName, button: spec, type: groupType});
+			if (groupName === '__single') {
+				if (map[0] && map[0]['name'] && map[0]['name'] === '__single') {
+					for (btnName in spec) {
+						map[0]['button'][btnName] = spec[btnName];
+					}
+				} else {
+					map.splice(0, 0, {name: groupName, button: spec, type: groupType});
+				}
+			} else {
+				map.push({name: groupName, button: spec, type: groupType});
+			}
 		}
 
 		/* 옵션 객체를 이벤트 함수로 변환해서 리턴  */
@@ -352,15 +364,20 @@
 
 			// 버튼 그룹을 생성함
             function groupping(btnObj, groupType) {
-                var $groups = $('<div />', { class: '__area_btn __area_group'});
-                $groups.prepend($('<strong>').text(btnObj.name));
+                var $groups = $('<div />', { class: '__area_btn'});
+
+				if (btnObj.name === '__single') {
+					$groups.addClass('__area_single');
+				} else {
+					$groups.addClass('__area_group')
+					$groups.prepend($('<strong>').text(btnObj.name));
+				}
 
                 for(var btn in btnObj.button)
                     $groups.append(makeBtn(btn, btnObj.button[btn], groupType));
 
                 if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
-                        console.log('radio');
                         var $my = $(this);
                         var a = $(this).parent().children('a');
 
@@ -383,7 +400,6 @@
                     })
                 } else if(groupType == 'button') { // 디폴트 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
-                        console.log('button');
                         var name = $(this).text();
                         if($(this).attr('aria-pressed') == 'false') {
                             btnObj.button[name].origin();
@@ -392,7 +408,6 @@
                     })
                 } else { // 체크박스 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
-                        console.log('check');
                         var name = $(this).text();
                         if($(this).attr('aria-pressed') == 'true' ) {
                             if(btnObj.button[name].opposite != null) {
@@ -428,7 +443,7 @@
 
         /* 별도의 창으로 그려줌 */
         function windows($wrap) {
-            if(markupLayerManager.newWindow == null)  init();
+            if(markupLayerManager.newWindow == null) init();
 
             $(markupLayerManager.newWindow.document.body).html($wrap);
 
@@ -450,7 +465,7 @@
 
             $wrap.css({'display': 'none'}).find('.__area_btns').addClass(markupLayerManager.theme);
             $wrap.css({'position': 'fixed', 'width': '50%', 'z-index': '10000','top':-$wrap.height()});
-            if($(document.body).find('.__NTS_markup').length == 0){
+            if ($(document.body).find('.__NTS_markup').length == 0) {
                 $(document.body).append($wrap);
             } else
                 $(document.body).find('.__NTS_markup').html($wrap.html());
