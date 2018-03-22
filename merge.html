@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/merge_base.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_end.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_markup.css">
+	<link rel="stylesheet" href="css/comment.css">
 </head>
 <body>
 	<nav id="u_skip" class="u_skip">
@@ -630,8 +631,12 @@
 	<script src="./js/ecup.js"></script>
 	<script>
 		var layer = $.ecup.markupLayer();
+		var comments = $.ecup.comment();
+
+		comments.write({'.article_content':'콘텐트 영역입니다.','.gnb .area_user':'로그인 영역입니다.','.content_header .content_title':'타이틀 영역입니다.','.test_layer .link':'test'});
+
 		layer.set({
-		    type: 'windows',
+		    type: 'internal',
 			buttonType: {
 		        '번역레이어': 'radio',
 				'로그인 상태': 'radio',

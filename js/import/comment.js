@@ -17,7 +17,7 @@ function comment() {
 		}
 	};
 
-	commentManager.targetDom = $('<div class="ecup_comment_section"></div>');
+	commentManager.targetDom = $('<div class="__ecup_comment_section"></div>');
 	$('body').append(commentManager.targetDom);
 
 	return new commentManager;
@@ -27,7 +27,7 @@ function comment() {
 		var top = $target.offset().top/$(window).height()*100+'%';
 		var left = $target.offset().left/$(window).width()*100+'%';
 
-		var $commentArea = $('<div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + msg + '</div></div></div>');
+		var $commentArea = $('<div class="__comment_area">' + msg + '</div>');
 
 		commonWrite(top,left,$commentArea);
 	}
@@ -37,7 +37,7 @@ function comment() {
 			var top = $(opt).offset().top/$(window).height()*100+'%';
 			var left = $(opt).offset().left/$(window).width()*100+'%';
 
-			var $commentArea = $('<div class="comment_area"><div class="outer_comment"><div class="inner_comment">' + flag[opt] + '</div></div></div>');
+			var $commentArea = $('<div class="__comment_area">' + flag[opt] + '</div>');
 
 			commonWrite(top,left,$commentArea);
 
@@ -46,8 +46,8 @@ function comment() {
 
 	function commonWrite(top,left,$commentArea) {
 
-		var $commentDom = $('<div class="ecup_comment"></div>');
-		var $commentBtn = $('<button type="button" class="comment_btn"><span class="blind">코멘트토글</span></button>');
+		var $commentDom = $('<div class="__ecup_comment"></div>');
+		var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
 
 		$commentDom.append($commentBtn).append($commentArea);
 		$commentDom.css({'top': top, 'left': left});
@@ -55,7 +55,7 @@ function comment() {
 		commentManager.targetDom.append($commentDom);
 
 		$commentBtn.click(function() {
-			var $commentArea = $(this).next('.comment_area');
+			var $commentArea = $(this).next('.__comment_area');
 
 			$commentArea.toggle();
 
