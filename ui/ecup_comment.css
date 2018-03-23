@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+/*designer comment*/
+.__ecup_comment_section {
+
+}
+.__ecup_comment {
+	position: absolute;
+	z-index: 1000;
+}
+.__ecup_comment .__comment_btn {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 24px;
+	height: 24px;
+	border-radius: 100%;
+	border: 2px solid #000;
+	background-color: #ffec00;
+}
+.__ecup_comment .__comment_area {
+	display: none;
+	max-width: 100px;
+	border: 2px solid #000;
+	border-radius: 5px;
+	background-color: #fff;
+	padding: 0.5em;
+	margin: -0.2em 0 0 2em;
+	font-size: 0.8em;
+}

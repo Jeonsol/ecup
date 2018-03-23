@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/merge_end.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_markup.css">
 	<link rel="stylesheet" href="./ui/ecup_ui.css">
+	<link rel="stylesheet" href="./ui/ecup_comment.css">
 </head>
 <body>
 	<nav id="u_skip" class="u_skip">
@@ -630,6 +631,8 @@
 	<script src="./js/jquery-3.3.1.min.js"></script>
 	<script src="./js/ecup.js"></script>
 	<script>
+		ecup.comment('.content_image','콘텐츠 이미지 영역입니다.');
+		ecup.comment({'.gnb .gnb_menu .button_user':'로그인 영역입니다','.gnb .gnb_menu .button_app':'get the app','.content_header .content_title':'제목영역입니다.'})
 		ecup.markupLayer.set({
 		    type: 'windows',
 			buttonType: {
