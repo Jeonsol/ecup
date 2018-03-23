@@ -634,6 +634,7 @@
 		var comments = $.ecup.comment();
 
 		comments.write({'.article_content':'콘텐트 영역입니다.','.gnb .area_user':'로그인 영역입니다.','.content_header .content_title':'타이틀 영역입니다.','.test_layer .link':'test'});
+		comments.write('.article_content','콘텐트 영역입니다.');
 
 		layer.set({
 		    type: 'internal',
@@ -677,6 +678,9 @@
 		});
 
 		layer.show();
+	</script>
+	<script>
+		console.log(typeof $('div'));
 	</script>
 </body>
 </html>

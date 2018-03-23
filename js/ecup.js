@@ -535,12 +535,34 @@
 		constructor: commentManager,
 		write : function(flag) {
 			if (typeof  flag === 'string') {
-				singleWrite(arguments[0],arguments[1]);
+				console.log(singleWrite(arguments[0],arguments[1]));
 			}
 
 			else if(typeof flag === 'object') {
-				groupWrite(flag);
+				console.log(groupWrite(flag));
 			}
+
+			// $(window).on("resize scroll",function() {
+			// 	if($target.length) {
+			// 		top = $target.offset().top/$(window).height()*100+'%';
+			// 		left = $target.offset().left/$(window).width()*100+'%';
+			// 	}
+			//
+			// 	$commentDom.css({'top': top, 'left': left});
+			//
+			// });
+			//
+			// var $scrolltarget = init();
+			//
+			// for(var i = 0;i < $scrolltarget.length ;i++) {
+			// 	$scrolltarget[i].on("scroll",function() {
+			// 		top = $(target).offset().top/$(window).height()*100+'%';
+			// 		left = $(target).offset().left/$(window).width()*100+'%';
+			//
+			// 		$commentDom.css({'top': top, 'left': left});
+			//
+			// 	})
+			// }
 		}
 	};
 
@@ -563,15 +585,20 @@
 	function singleWrite(target,msg) {
 		var $commentArea = $('<div class="__comment_area">' + msg + '</div>');
 
-		commonWrite(target,$commentArea);
+		return commonWrite(target,$commentArea);
 	}
 
 	function groupWrite(flag) {
+
+		var $commentDom = [];
 		for (var opt in flag) {
 			var $commentArea = $('<div class="__comment_area">' + flag[opt] + '</div>');
 
-			commonWrite(opt,$commentArea);
+			$commentDom.push(commonWrite(opt,$commentArea));
 		}
+
+		return $commentDom;
+
 	}
 
 	function commonWrite(target,$commentArea) {
@@ -582,8 +609,10 @@
 		$commentDom.append($commentBtn).append($commentArea);
 
 		var $target = $(target);
-		var top = $target.offset().top/$(window).height()*100+'%';
-		var left = $target.offset().left/$(window).width()*100+'%';
+		if($target.length) {
+			var top = $target.offset().top/$(window).height()*100+'%';
+			var left = $target.offset().left/$(window).width()*100+'%';
+		}
 
 		$commentDom.css({'top': top, 'left': left});
 
@@ -602,26 +631,8 @@
 
 		});
 
-		$(window).on("resize scroll",function() {
-			top = $(target).offset().top/$(window).height()*100+'%';
-			left = $(target).offset().left/$(window).width()*100+'%';
 
-			$commentDom.css({'top': top, 'left': left});
-
-		});
-
-		var $scrolltarget = init();
-		console.log($scrolltarget);
-		for(var i = 0;i < $scrolltarget.length ;i++) {
-			$scrolltarget[i].on("scroll",function() {
-				top = $(target).offset().top/$(window).height()*100+'%';
-				left = $(target).offset().left/$(window).width()*100+'%';
-
-				$commentDom.css({'top': top, 'left': left});
-
-			})
-		}
-
+		return $commentDom;
 	}
 
 }
