@@ -94,6 +94,9 @@
 				'external': external,
 				'internal': internal
 			};
+
+			if (!(markupLayerManager.type in paintTo)) throw new Error('layer type을 체크해주세요.');
+
 			var layer = renderLayer(paintTo[markupLayerManager.type]);
 		}
 
