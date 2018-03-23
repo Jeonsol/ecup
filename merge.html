@@ -630,27 +630,31 @@
 	<script src="./js/jquery-3.3.1.min.js"></script>
 	<script src="./js/ecup.js"></script>
 	<script>
-		var layer = $.ecup.markupLayer();
-		layer.set({
+		ecup.markupLayer.set({
 		    type: 'windows',
 			buttonType: {
-		        '번역레이어': 'radio',
-				'로그인 상태': 'radio',
+				'로그인 상태': 'radio'
 		    }
 		});
 
-		layer('로그인 상태').group({
-		    '로그인 전': function(){
+		ecup.markupLayer('로그인 상태').group({
+		    '로그인 전': [function(){
 				$(".header .button_login").show();
 				$(".header .area_user").hide();
-			},
-		    '로그인 후': function(){
+			}, function(){
 				$(".header .button_login").hide();
 				$(".header .area_user").show();
-			}
+			}],
+		    '로그인 후': [function(){
+				$(".header .button_login").hide();
+				$(".header .area_user").show();
+			}, function(){
+				$(".header .button_login").show();
+				$(".header .area_user").hide();
+			}]
 		});
 
-		layer({
+		ecup.markupLayer({
 		    '하단 로딩 바': {
 				target: '.list_article',
 				toggleClass: 'is_finish',
@@ -661,7 +665,7 @@
 		    },
 		});
 
-		layer({
+		ecup.markupLayer({
 		    '하단 로딩 바2': {
 				target: '.list_article',
 				toggleClass: 'is_finish',
@@ -672,7 +676,7 @@
 		    },
 		});
 
-		layer.show();
+		ecup.markupLayer.show();
 	</script>
 </body>
 </html>

@@ -6,11 +6,19 @@
  * Version 1.0.0
  *
  **/
-
-(function (ecupBasic, extendJQuery, autoApply) {
+(function (features, extendJQuery, autoApply) {
 
     // create $.ecup
-    jQuery.ecup = ecupBasic;
+    jQuery.Ecup = function() {
+		var modules = ['markupLayer'];
+
+		for (feature in features) {
+			if ($.inArray(feature, modules) === -1) this[feature] = features[feature];
+			else this[feature] = features[feature]();
+		}
+	};
+
+	window.ecup = new jQuery.Ecup();
 
 	// extend jQuery
 	extendJQuery();
@@ -22,7 +30,7 @@
 	/** ecup basic **/
 
 	/** 마크업 검수 레이어 기능 **/
-	markupLayer: function() {
+	markupLayer: function(args) {
 
 		/* $.ecup.markupLayer() 를 통해 생성되는 함수 */
 		var markupLayerManager = function(flag) {
@@ -42,61 +50,6 @@
 			}
 
 		};
-
-		markupLayerManager.set = function(options) {
-			if (typeof options === 'object') {
-				for (var opt in options) {
-					markupLayerManager[opt] = options[opt];
-				}
-			}
-
-			function positionSet(position) {
-				var positionInfo = position.split(" ");
-				var $ecupLayer = $('.__NTS_markup');
-
-				if(positionInfo[0] === 'center') {
-					$ecupLayer.css({'top': '50%', 'left': '50%', 'transform': 'translate(-50%, -50%)', '-webkit-transform': 'translate(-50%, -50%)', '-ms-transform': 'translate(-50%, -50%)'})
-				}
-
-				else {
-					$ecupLayer.css(positionInfo[0],'100px').css(positionInfo[1],'100px');
-				}
-			}
-
-			if (markupLayerManager.type === 'external') {
-
-				positionSet(markupLayerManager.position);
-
-				var $ecupDom = $('.__NTS_markup');
-
-				$ecupDom.addClass('external').prepend('<button type="button" class="layer_btn"><span class="blind">레이어토글</span></button>');
-				$ecupDom.addClass(markupLayerManager.theme);
-				$ecupDom.on('click', '.layer_btn', function () {
-					var $target = $(this);
-
-					if ($target.hasClass('off')) {
-						$target.siblings().fadeIn(200);
-					}
-
-					else {
-						$target.siblings().fadeOut(200);
-					}
-
-					$target.toggleClass('off');
-				});
-			}
-		};
-
-		markupLayerManager.show = function() {
-			/* 그리기 타입을 쉽게 참조하기 위한 모듈 */
-			var paintTo = {
-				'windows': windows,
-				'external': external,
-				'internal': internal
-			};
-
-			var layer = renderLayer(paintTo[markupLayerManager.type]);
-		}
 
 		markupLayerManager.prototype = {
 			constructor: markupLayerManager,
@@ -126,12 +79,30 @@
 			}
 		};
 
+		markupLayerManager.set = function(options) {
+			if (typeof options === 'object') {
+				for (var opt in options) {
+					markupLayerManager[opt] = options[opt];
+				}
+			}
+		};
+
+		markupLayerManager.show = function() {
+			/* 그리기 타입을 쉽게 참조하기 위한 모듈 */
+			var paintTo = {
+				'windows': windows,
+				'external': external,
+				'internal': internal
+			};
+			var layer = renderLayer(paintTo[markupLayerManager.type]);
+		}
+
 		// markupLayer 셋팅 초기화
 		markupLayerManager.type = 'windows';
-		markupLayerManager.theme = '';
+		markupLayerManager.theme = 'dark';
 		markupLayerManager.position = 'top right';
-        markupLayerManager.buttonArray = [];
         markupLayerManager.newWindow = null;
+		markupLayerManager.buttonType = {};
 
 		return markupLayerManager;
 
@@ -141,10 +112,10 @@
 
 		/* Render Map 생성 */
 		function createRenderMap(option, groupInfo) {
-			var map = markupLayerManager.buttonArray;
+			var map = markupLayerManager.buttonArray = markupLayerManager.buttonArray || [];
 
-			var groupName = !groupInfo ? '__single' : groupInfo.groupName;
-            var groupType = !groupInfo ? 'check' : groupInfo.groupType;
+			var groupName = groupInfo && groupInfo.groupName ? groupInfo.groupName : '__single';
+            var groupType = groupInfo && groupInfo.groupType ? groupInfo.groupType : 'check';
 			var spec = optionObj_to_eventFunc(option, groupInfo);
 
 			if (groupName === '__single') {
@@ -160,7 +131,7 @@
 			}
 		}
 
-		/* 옵션 객체를 이벤트 함수로 변환해서 리턴  */
+		/* 옵션 객체를 이벤트 함수로 변환해서 리턴 */
 		function optionObj_to_eventFunc(options, groupInfo) {
 
 			// 공통 dom 을 사용하는 경우 생성
@@ -228,8 +199,6 @@
 				fn = new Function('e', fnBody);
 				fn = fn.bind(option.target);
 
-				console.log(fn);
-
 				return fn;
 			}
 		}
@@ -263,8 +232,10 @@
 
             return paintModule($wrap);
 
+
 			// 버튼 그룹 생성 및 개별 이벤트 할당
             function groupping(btnObj, groupType) {
+				console.log(btnObj, groupType);
                 var $groups = $('<div />', { class: '__area_btn'});
 
 				if (btnObj.name === '__single') {
@@ -288,10 +259,8 @@
                         'aria-pressed': false
                     });
 
-                    if(func.opposite != null)
-                        $a.addClass('__'+ type);
-                    else
-                        $a.addClass('__button');
+                    if (func.opposite) $a.addClass('__'+ type);
+                    else $a.addClass('__button');
 
                     $a.prepend('<span class="__view"></span>');
                     return $a;
