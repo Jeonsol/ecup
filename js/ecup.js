@@ -529,43 +529,24 @@
 
 	function commentManager() {
 
+		init();
+
 	}
 
 	commentManager.prototype = {
 		constructor: commentManager,
 		write : function(flag) {
 			if (typeof  flag === 'string') {
-				console.log(singleWrite(arguments[0],arguments[1]));
+				singleWrite(arguments[0],arguments[1]);
 			}
 
 			else if(typeof flag === 'object') {
-				console.log(groupWrite(flag));
+				groupWrite(flag);
 			}
-
-			// $(window).on("resize scroll",function() {
-			// 	if($target.length) {
-			// 		top = $target.offset().top/$(window).height()*100+'%';
-			// 		left = $target.offset().left/$(window).width()*100+'%';
-			// 	}
-			//
-			// 	$commentDom.css({'top': top, 'left': left});
-			//
-			// });
-			//
-			// var $scrolltarget = init();
-			//
-			// for(var i = 0;i < $scrolltarget.length ;i++) {
-			// 	$scrolltarget[i].on("scroll",function() {
-			// 		top = $(target).offset().top/$(window).height()*100+'%';
-			// 		left = $(target).offset().left/$(window).width()*100+'%';
-			//
-			// 		$commentDom.css({'top': top, 'left': left});
-			//
-			// 	})
-			// }
 		}
 	};
 
+	commentManager.targetData = [];
 	commentManager.targetDom = $('<div class="__ecup_comment_section"></div>');
 	$('body').append(commentManager.targetDom);
 
@@ -578,27 +559,25 @@
 			if($element.css('overflow') === 'scroll' || $element.css('overflow') === 'auto' || $element.css('overflow-x') === 'scroll' || $element.css('overflow-x') === 'auto' || $element.css('overflow-y') === 'scroll' || $element.css('overflow-y') === 'auto')
 				$elementTarget.push($element);
 		}
-		return $elementTarget;
+		commentManager.overflowTarget = $elementTarget;
+
+		reRenderComment();
+
 	}
 
 
 	function singleWrite(target,msg) {
 		var $commentArea = $('<div class="__comment_area">' + msg + '</div>');
 
-		return commonWrite(target,$commentArea);
+		commonWrite(target,$commentArea);
 	}
 
 	function groupWrite(flag) {
-
-		var $commentDom = [];
 		for (var opt in flag) {
 			var $commentArea = $('<div class="__comment_area">' + flag[opt] + '</div>');
 
-			$commentDom.push(commonWrite(opt,$commentArea));
+			commonWrite(opt,$commentArea);
 		}
-
-		return $commentDom;
-
 	}
 
 	function commonWrite(target,$commentArea) {
@@ -631,10 +610,56 @@
 
 		});
 
+		commentManager.targetData.push(target);
 
-		return $commentDom;
 	}
 
+	function reRenderComment() {
+		var targetData, commentData, $targetData, $commentData, top, left, $scrolltarget;
+
+		$(window).on("resize scroll",function() {
+			targetData = commentManager.targetData || [];
+			commentData = commentManager.targetDom.find('.__ecup_comment') || [];
+
+			for (var i = 0; i < targetData.length; i++) {
+				$targetData = $(targetData[i]);
+				$commentData = $(commentData[i]);
+
+				if($targetData.length) {
+					top = $targetData.offset().top / $(window).height() * 100 + '%';
+					left = $targetData.offset().left / $(window).width() * 100 + '%';
+				}
+
+				$commentData.css({'top': top, 'left': left});
+
+			}
+		});
+
+		$(document).ready(function() {
+			$scrolltarget = commentManager.overflowTarget;
+
+			for(var t = 0;t < $scrolltarget.length ;t++) {
+				$scrolltarget[t].on("scroll",function() {
+					targetData = commentManager.targetData || [];
+					commentData = commentManager.targetDom.find('.__ecup_comment') || [];
+
+					for(var i = 0; i < targetData.length; i++) {
+						$targetData = $(targetData[i]);
+						$commentData = $(commentData[i]);
+
+						if($targetData.length) {
+							top = $targetData.offset().top / $(window).height() * 100 + '%';
+							left = $targetData.offset().left / $(window).width() * 100 + '%';
+						}
+
+						$commentData.css({'top': top, 'left': left});
+					}
+
+				})
+			}
+		})
+
+	}
 }
 }, function() {
 	/** jQuery 확장 **/
