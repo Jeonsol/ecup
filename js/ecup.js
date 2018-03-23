@@ -444,6 +444,7 @@
 
 		commentManager.targetData = [];
 		commentManager.targetDom = $('<div class="__ecup_comment_section"></div>');
+
 		$('body').append(commentManager.targetDom);
 
 		return commentManager;
@@ -478,44 +479,51 @@
 
 		function commonWrite(target,$commentArea) {
 
-			var $commentDom = $('<div class="__ecup_comment"></div>');
-			var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
+			$(document).ready(function() {
 
-			$commentDom.append($commentBtn).append($commentArea);
+				var $commentDom = $('<div class="__ecup_comment"></div>');
+				var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
 
-			var $target = $(target);
+				$commentDom.append($commentBtn).append($commentArea);
 
-			if($target.length) {
-				var top = $target.offset().top/$(window).height()*100+'%';
-				var left = $target.offset().left/$(window).width()*100+'%';
-			}
+				var $target = $(target);
 
-			$commentDom.css({'top': top, 'left': left});
-
-			if($target.css('display')==='none') {
-				$commentDom.css('display','none');
-			}
-
-			else {
-				$commentDom.css('display','block');
-			}
-
-			commentManager.targetDom.append($commentDom);
-
-			$commentBtn.click(function() {
-				var $commentArea = $(this).next('.__comment_area');
-
-				$commentArea.toggle();
-
-				var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
-
-				if($(window).width() - $commentAreaRightOffset < 20) {
-					$commentArea.css({'right':$commentAreaRightOffset,'left':'auto'});
+				if($target.length) {
+					var top = $target.offset().top/$(window).height()*100+'%';
+					var left = $target.offset().left/$(window).width()*100+'%';
 				}
 
-			});
+				$commentDom.css({'top': top, 'left': left});
 
-			commentManager.targetData.push(target);
+				if($target.css('display')==='none') {
+					$commentDom.css('display','none');
+				}
+
+				else {
+					$commentDom.css('display','block');
+				}
+
+				commentManager.targetDom.append($commentDom);
+
+				$commentBtn.click(function() {
+					var $commentArea = $(this).next('.__comment_area');
+
+					$commentArea.toggle();
+
+					var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
+
+					if($(window).width() - $commentAreaRightOffset < 20) {
+						$commentArea.css({'width':'100px','margin-left':'-101px'});
+					}
+
+					else {
+						$commentArea.css({'width':'auto','margin-left':'2em'});
+					}
+
+				});
+
+				commentManager.targetData.push(target);
+			});
 
 		}
 
