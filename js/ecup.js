@@ -373,7 +373,19 @@
 
 		/* 화면상에 보이도록 그려줌 */
 		function external($wrap) {
-			// commonDrawLayer(spec, groupInfo);
+
+			var $externalWrap = $('<div>', {class: '__NTS_markup_wrap'}),
+				$btnToggle = $('<a>', {class: '__NTS_markup_toggle', role: 'button', 'aria-label': '마크업검수 레이어 토글', text: '마크업'});
+
+			$btnToggle.click(function(e) {
+				// TODO:
+				$wrap.toggle();
+			});
+
+			$wrap.css('display', 'none');
+
+			$externalWrap.append($btnToggle).append($wrap);
+			$(document.body).append($externalWrap);
 		}
 
 	},
