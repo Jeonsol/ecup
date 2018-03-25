@@ -541,8 +541,18 @@
 	jQuery.fn.longClick = function(fn, ms) {
 
 		var event;
+        var deviceFilter = 'win16|win32|win64|mac';
 
-		this.on('mousedown', function(e) {
+        var mousedownEvent = 'mousedown',
+            mouseupEvent = 'mouseup';
+
+        // check mobile device
+        if (navigator.platform && deviceFilter.indexOf(navigator.platform.toLowerCase()) < 0) {
+            mousedownEvent = 'touchstart',
+            mouseupEvent = 'touchend';
+        }
+
+		this.on(mousedownEvent, function(e) {
 			event = e;
 
 			setTimeout(function() {
@@ -553,7 +563,7 @@
 			}, ms);
 		});
 
-		this.on('mouseup', function(e) {
+		this.on(mouseupEvent, function(e) {
 			event = undefined;
 		});
 	}
