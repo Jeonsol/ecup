@@ -380,21 +380,66 @@
 
 	layerControl : function(layerDom, openTarget, closeTarget) {
 
-		$(layerDom).css('display', 'none');
+		var $layerDom = $(layerDom);
+		var $openTarget = $(openTarget);
+		var $closeTarget = $(closeTarget);
 
-		$(openTarget).click(function() {
-			$(layerDom).css('display','block');
+		layerDomSet($layerDom,'none');
+
+		$openTarget.each(function(t, data){
+			$(data).click(function () {
+				layerDomSet($layerDom,'block');
+			});
 		});
 
-		$(closeTarget).click(function() {
-			$(layerDom).css('display','none');
+		$closeTarget.each(function(t, data){
+			$(data).click(function () {
+				layerDomSet($layerDom,'none');
+			});
 		});
+
+		function layerDomSet(layerDom, displayValue) {
+			layerDom.each(function(i, val){
+
+				if(displayValue === 'none') {
+					$(val).attr('aria-hidden','true');
+				}
+
+				else {
+					$(val).attr('aria-hidden','false');
+				}
+
+				if(typeof val ==='string') {
+					if(val.indexOf(':') === -1) {
+						$(val).css('display', displayValue);
+					}
+
+					else {
+						var style = '<style>'+val+'{display:'+displayValue+'}</style>';
+						$(style).appendTo('head');
+					}
+				}
+
+				else {
+					if($(val).attr('class').indexOf(':') === -1){
+						$(val).css('display', displayValue);
+					}
+
+					else {
+						var style = '<style>.'+val+'{display:'+displayValue+'}</style>';
+						$(style).appendTo('head');
+					}
+				}
+
+			});
+		}
 
 	},
 
 	selectControl : function(btn, listBox, targetObj) {
 		$(btn).click(function() {
-			$(listBox).css('display','block').attr('aria-expanded','true');
+			$(this).attr('aria-expanded','true');
+			$(listBox).css('display','block');
 		});
 
 		var $selector = $(Object.keys(targetObj)[0]);
