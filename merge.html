@@ -650,7 +650,12 @@
 	<script src="./js/ecup.js"></script>
 	<script>
 		ecup.markupLayer.set({
-		    type: 'internal',
+		    type: 'external',
+			external: {
+				btnText: '마크업',
+				right: 50,
+				bottom: 50
+			},
 			buttonType: {
 				'로그인 상태': 'radio'
 		    }
