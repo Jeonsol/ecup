@@ -2154,6 +2154,12 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
 	font-weight: 700;
 	font-size: 14px;
 }
+
+@media all and (max-width: 768px) {
+	.__test_select_btn {
+		display: none;
+	}
+}
 .__test_menu_dropdown {
 	display: none;
 	position: absolute;
