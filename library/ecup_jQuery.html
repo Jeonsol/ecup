@@ -98,6 +98,77 @@
                         </div>
                     </div>
                 </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_3" class="tit">$(dom).<span class="point">sprite()</span><span style="float:right">스프라이트 이미지 gif 효과</span></h5>
+                    <div class="inner">
+                        <div class="option_box">
+                            <strong>Options</strong>
+                            <p class="option_type">Type: String</p>
+                            <ul>
+                                <li>
+                                    <div class="option_name">url</div>
+                                    <div class="option_type">Type: String</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">이미지 경로</p>
+                                        <p class="t1 s1"><span class="code">• 현재 요소에 적용된 이미지 외의 다른 이미지로 변경하고자 할 때 사용</span> </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">count</div>
+                                    <div class="option_type">Type: Number ( default: 10 )</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">스프라이트 프래임 개수</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">pos</div>
+                                    <div class="option_type">Type: Number ( default: 40 )</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">프레임 하나의 이미지 크기</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">orient</div>
+                                    <div class="option_type">Type: String ( default: 'vertical')</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">프레임 이동방향</p>
+                                        <p class="t1 s1"><span class="code">• vertical: </span> background-position-x 변경 </p>
+                                        <p class="t1 s1"><span class="code">• horizontal: </span> background-position-y 변경 </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">duration</div>
+                                    <div class="option_type">Type: Number ( default : 0.1 )</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">프레임 전환 시간</p>
+                                        <p class="t1 s1"><span class="code">• 초단위 </span></p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">mode</div>
+                                    <div class="option_type">Type: String ( default: 'fix')</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">애니메이션 효과 후 이미지 상태</p>
+                                        <p class="t1 s1"><span class="code">• fix: </span> 애니메이션 동작 후 이미지 변경 상태 유지 </p>
+                                        <p class="t1 s1"><span class="code">• remove: </span> 애니메이션 동작 후 기본 상태로 돌아감</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <strong>Example</strong>
+                        <div class="box_code code_js">
+                            <p>$('.icon_select').sprite({</p>
+            				<p>	url: '../test.png',</p>
+            				<p>	count: 13,</p>
+            				<p>	pos: 40,</p>
+            				<p>	orient: 'vertical',</p>
+            				<p>	duration: 0.2,</p>
+            				<p>	mode: 'remove'</p>
+            				<p> });</p>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </main>
