@@ -514,8 +514,9 @@
 	},
 	comment: function() {
 
+		init();
+
 		function commentManager(flag) {
-			init();
 
 			if (typeof  flag === 'string') {
 				singleWrite(arguments[0],arguments[1]);
@@ -532,6 +533,7 @@
 
 		commentManager.targetData = [];
 		commentManager.targetDom = $('<div class="__ecup_comment_section"></div>');
+		commentManager.show = true;
 
 		$('body').append(commentManager.targetDom);
 
@@ -569,48 +571,51 @@
 
 			$(document).ready(function() {
 
-				var $commentDom = $('<div class="__ecup_comment"></div>');
-				var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
+				if(commentManager.show) {
 
-				$commentDom.append($commentBtn).append($commentArea);
+					var $commentDom = $('<div class="__ecup_comment"></div>');
+					var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
 
-				var $target = $(target);
+					$commentDom.append($commentBtn).append($commentArea);
 
-				if($target.length) {
-					var top = $target.offset().top/$(window).height()*100+'%';
-					var left = $target.offset().left/$(window).width()*100+'%';
-				}
+					var $target = $(target);
 
-				$commentDom.css({'top': top, 'left': left});
+					if($target.length) {
+						var top = $target.offset().top/$(window).height()*100+'%';
+						var left = $target.offset().left/$(window).width()*100+'%';
+					}
 
-				if($target.css('display')==='none') {
-					$commentDom.css('display','none');
-				}
+					$commentDom.css({'top': top, 'left': left});
 
-				else {
-					$commentDom.css('display','block');
-				}
-
-				commentManager.targetDom.append($commentDom);
-
-				$commentBtn.click(function() {
-					var $commentArea = $(this).next('.__comment_area');
-
-					$commentArea.toggle();
-
-					var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
-
-					if($(window).width() - $commentAreaRightOffset < 20) {
-						$commentArea.css({'width':'100px','margin-left':'-101px'});
+					if($target.css('display')==='none') {
+						$commentDom.css('display','none');
 					}
 
 					else {
-						$commentArea.css({'width':'auto','margin-left':'2em'});
+						$commentDom.css('display','block');
 					}
 
-				});
+					commentManager.targetDom.append($commentDom);
 
-				commentManager.targetData.push(target);
+					$commentBtn.click(function() {
+						var $commentArea = $(this).next('.__comment_area');
+
+						$commentArea.toggle();
+
+						var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
+
+						if($(window).width() - $commentAreaRightOffset < 20) {
+							$commentArea.css({'width':'100px','margin-left':'-101px'});
+						}
+
+						else {
+							$commentArea.css({'width':'auto','margin-left':'2em'});
+						}
+
+					});
+
+					commentManager.targetData.push(target);
+				}
 			});
 
 		}
