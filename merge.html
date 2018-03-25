@@ -648,6 +648,7 @@
 	</div>
 	<script src="./js/jquery-3.3.1.min.js"></script>
 	<script src="./js/ecup.js"></script>
+	<script src="./js/import/jQuery.fn/sprite.js"></script>
 	<script>
 		ecup.markupLayer.set({
 		    type: 'external',
@@ -713,6 +714,31 @@
 		ecup.selectControl('.button_language', '.list_language', {'.list_language .option':'aria-select'});
 		ecup.selectControl('.__test_select_btn', '.__test_menu_dropdown', {'.__test_link_dropdown':'.selected'});
 
+		// 이미지 스프라이트
+		$('.button_select').on('click', function(){
+			var $this = $(this);
+
+            if($this.attr('aria-pressed') == 'false') {
+				$this.attr('aria-pressed', 'true');
+				$('.icon_select').sprite({
+					count: 17,
+					pos: 40,
+					orient: 'vertical',
+					duration: 0.2,
+					mode: 'remove'
+				});
+			} else {
+				$this.attr('aria-pressed', 'false');
+				$('.icon_select').sprite({
+					url: 'http://view.gitlab.uit.navercorp.com/SELECTIVE/selective/raw/feature/end/src/img/select_out_2x_spritesheet.png',
+					count: 13,
+					pos: 40,
+					orient: 'vertical',
+					duration: 0.2,
+					mode: 'remove'
+				});
+			}
+		})
 	</script>
 </body>
 </html>
