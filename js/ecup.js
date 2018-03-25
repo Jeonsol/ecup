@@ -388,7 +388,7 @@
 			var $externalWrap = $('<div>', {class: '__NTS_markup_wrap'}),
 				$btnShow = $('<a>', {class: '__NTS_markup_show', role: 'button', 'aria-label': '마크업검수 레이어 보기'}),
 				$btnShowText = $('<span>', {text: btnShowText}),
-                $btnHide = $('<a>', {class: '__NTS_markup_hide', role: 'button', 'aria-label': '마크업검수 레이어 숨기기', text: '닫기'});
+                $btnHide = $('<a>', {class: '__NTS_markup_hide', role: 'button', 'aria-label': '마크업검수 레이어 숨기기'});
 
 			$btnShow.click(onClickListenerBtnShow);
             $btnHide.click(onClickListenerBtnHide);
