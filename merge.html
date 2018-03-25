@@ -705,11 +705,14 @@
 		ecup.comment('.content_image','콘텐츠 이미지 영역입니다.');
 		ecup.comment({'.gnb .gnb_menu .button_user':'로그인 영역 입니다.','.gnb .gnb_menu .button_app':'get the app','.content_header .content_title':'제목영역입니다.'});
 
+		ecup.comment.show = false;
+
 		ecup.layerControl('.article_menu .menu_dropdown','.article_menu .button_menu','.article_menu .menu_dropdown .link_dropdown');
 		ecup.layerControl('.__test_layer_section',['.gnb_menu .button_user .thumbnail_profile','.gnb_menu .button_app'],['.__test_close','.link_selective']);
 
-		ecup.selectControl('.button_language', '.list_language', {'.list_language .option':'aria-select'})
-		ecup.selectControl('.__test_select_btn', '.__test_menu_dropdown', {'.__test_link_dropdown':'.on'})
+		ecup.selectControl('.button_language', '.list_language', {'.list_language .option':'aria-select'});
+		ecup.selectControl('.__test_select_btn', '.__test_menu_dropdown', {'.__test_link_dropdown':'.selected'});
+
 	</script>
 </body>
 </html>
