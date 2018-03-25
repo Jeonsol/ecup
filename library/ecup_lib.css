@@ -1,4 +1,4 @@
-body,header,main,section,h1,h2,h3,h4,h5,ol,li,p {margin:0;padding:0;}
+body,header,main,section,h1,h2,h3,h4,h5,ul,ol,li,p {margin:0;padding:0;}
 body {font-family:NanumGothic, sans-serif;font-size:16px;line-height:1.8;color:#666;}
 a {text-decoration:none;}
 a:hover {text-decoration:underline;}
@@ -50,9 +50,10 @@ p em {font-style:normal;text-decoration:underline;}
 .section_content {margin-bottom:77px;}
 .section_content .s1 {font-size:0.9em;}
 .section_content .t1 {padding-left:1.5em;}
-.section_content .tit {padding:3px 7px;background-color:#f2f2f2;font-size:18px;border-bottom:1px solid;}
-.section_content .inner {margin-top:7px;padding-left:15px;}
-.section_content .box_code {margin-top:10px;padding:10px 15px;border-radius:7px;background-color:#333;font-family: 'Roboto Mono', monospace;color:#d2d2d2;}
+.section_content .tit {white-space: pre; padding:3px 7px 10px;background-color:#fefefe;font-size:20px;font-weight:800;border-bottom:1px solid #ccc;}
+.section_content .tit .point {color: #00cc27};
+.section_content .inner {margin-top:7px;padding: 0 10px;}
+.section_content .box_code {margin-top:10px;padding:10px 15px;background-color:#333;font-family: 'Roboto Mono', monospace;color:#d2d2d2;}
 .section_content .box_code p {white-space:pre-wrap;}
 .section_content .box_code a {color:#d2d2d2;}
 .section_content .box_code .cm {color:#929292;}
@@ -63,6 +64,20 @@ p em {font-style:normal;text-decoration:underline;}
 .section_content .box_code .val {color:#a5c65a;}
 .section_content .mg_top1 {margin-top:10px;}
 .section_content .mg_top2 {margin-top:20px;}
+.section_content i {font-style:normal; }
+.section_content .option_box { padding: 20px; margin: 15px 0 25px; background: #f6f6f6; }
+.section_content .option_box .options{margin-bottom: 10px;padding-top: 10px; border-top:  1px dashed #e3e3e3;}
+.section_content .option_box .options:first-child{padding-top: 0;border-top: 0;}
+.section_content .option_box ul { margin-top: 10px; margin-left: 20px;}
+.section_content .option_box li {padding: 10px 0; border-top: 1px solid #eee}
+.section_content .option_box .option_name{font-weight: bold}
+.section_content .option_box .option_name i {font-weight: normal; font-size: 12px;}
+.section_content .option_box .option_type{font-size: 12px;}
+.section_content .option_box .option_detail{padding-left: 20px; font-size: 15px;}
+.section_content .option_box .option_detail .option_desc{margin-top: 10px;font-size: 14px;color: #407ad9; font-weight: bold}
+.section_content .option_more_desc{margin-bottom: 30px; padding-left: 25px; text-indent: -25px;}
+.section_content .option_box + .option_more_desc a strong{text-decoration: underline;}
+.section_content .option_box + .option_more_desc strong{font-weight: bold;}
 
 .section_content .table {width:100%;table-layout:fixed;border-collapse:collapse;}
 .section_content .table .box_code {border-radius:0;color:#666;}

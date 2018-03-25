@@ -9,6 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="css/merge_base.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_end.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_markup.css">
+	<link rel="stylesheet" href="./ui/ecup_ui.css">
+	<link rel="stylesheet" href="./ui/ecup_comment.css">
 </head>
 <body>
 	<nav id="u_skip" class="u_skip">
@@ -47,9 +49,27 @@
 							<a href="#" role="menuitem" class="link_dropdown">PROFILE SETTINGS</a>
 							<a href="#" role="menuitem" class="link_dropdown">LOG OUT</a>
 						</div>
+						<div class="__test_layer_section">
+							<div class="__test_layer">
+								<div class="__test_thumb">
+									<img src="http://dev.ui.naver.com/tmp/?105x105_0u_n_FFFFFF_100" width="105" height="105" alt="임시 이미지" class="__test_img">
+								</div>
+								<strong class="__test_name">Ryan Gibson</strong>
+								<span class="__test_address">Los Angeles, CA</span>
+								<p class="__test_desc">Hi, my name is Ryan Gilbson from Los Angeles, CA! love to paint, read, hang out and have lot of fun.</p>
+								<button type="button" class="__test_close">X</button>
+							</div>
+						</div>
 					</div>
 					<button type="button" class="button button_login" style="display: none;">LOGIN</button>
 					<button type="button" class="button button_app">GET THE APP</button>
+					<button type="button" class="__test_select_btn" aria-expanded="false" aria-haspopup="true">SEE TRANSLATION</button>
+					<div class="__test_menu_dropdown" role="menu" aria-hidden="true">
+						<a href="#" role="menuitem" class="__test_link_dropdown">SEE TRANSLATION</a>
+						<a href="#" role="menuitem" class="__test_link_dropdown">SHARE</a>
+						<a href="#" role="menuitem" class="__test_link_dropdown">MODIFY</a>
+						<a href="#" role="menuitem" class="__test_link_dropdown">DELETE</a>
+					</div>
 				</nav>
 			</div>
 		</header>
@@ -629,27 +649,36 @@
 	<script src="./js/jquery-3.3.1.min.js"></script>
 	<script src="./js/ecup.js"></script>
 	<script>
-		var layer = $.ecup.markupLayer();
-		layer.set({
-		    type: 'internal',
+		ecup.markupLayer.set({
+		    type: 'external',
+			external: {
+				btnText: '마크업',
+				right: 50,
+				bottom: 50
+			},
 			buttonType: {
-		        '번역레이어': 'radio',
-				'로그인 상태': 'radio',
+				'로그인 상태': 'radio'
 		    }
 		});
 
-		layer('로그인 상태').group({
-		    '로그인 전': function(){
+		ecup.markupLayer('로그인 상태').group({
+		    '로그인 전': [function(){
 				$(".header .button_login").show();
 				$(".header .area_user").hide();
-			},
-		    '로그인 후': function(){
+			}, function(){
 				$(".header .button_login").hide();
 				$(".header .area_user").show();
-			}
+			}],
+		    '로그인 후': [function(){
+				$(".header .button_login").hide();
+				$(".header .area_user").show();
+			}, function(){
+				$(".header .button_login").show();
+				$(".header .area_user").hide();
+			}]
 		});
 
-		layer({
+		ecup.markupLayer({
 		    '하단 로딩 바': {
 				target: '.list_article',
 				toggleClass: 'is_finish',
@@ -659,6 +688,31 @@
 		        toggleStyle: 'display: block;'
 		    },
 		});
+
+		ecup.markupLayer({
+		    '하단 로딩 바2': {
+				target: '.list_article',
+				toggleClass: 'is_finish',
+			},
+			'번역 레이어2': {
+		        target: '.layer_translation',
+		        toggleStyle: 'display: block;'
+		    },
+		});
+
+		ecup.markupLayer.show();
+
+		ecup.comment('.content_image','콘텐츠 이미지 영역입니다.');
+		ecup.comment({'.gnb .gnb_menu .button_user':'로그인 영역 입니다.','.gnb .gnb_menu .button_app':'get the app','.content_header .content_title':'제목영역입니다.'});
+
+		ecup.comment.show = false;
+
+		ecup.layerControl('.article_menu .menu_dropdown','.article_menu .button_menu','.article_menu .menu_dropdown .link_dropdown');
+		ecup.layerControl('.__test_layer_section',['.gnb_menu .button_user .thumbnail_profile','.gnb_menu .button_app'],['.__test_close','.link_selective']);
+
+		ecup.selectControl('.button_language', '.list_language', {'.list_language .option':'aria-select'});
+		ecup.selectControl('.__test_select_btn', '.__test_menu_dropdown', {'.__test_link_dropdown':'.selected'});
+
 	</script>
 </body>
 </html>

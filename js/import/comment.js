@@ -62,7 +62,7 @@ function comment() {
 			var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
 
 			if($(window).width() - $commentAreaRightOffset < 20) {
-				$commentArea.css({'transform': 'scale(-1, 1)','right':'0','left':'auto'});
+				$commentArea.css({'right':'0','left':'auto'});
 			}
 
 		});
