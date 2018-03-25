@@ -238,7 +238,6 @@
 
 			// 버튼 그룹 생성 및 개별 이벤트 할당
             function groupping(btnObj, groupType) {
-				console.log(btnObj, groupType);
                 var $groups = $('<div />', { class: '__area_btn'});
 
 				if (btnObj.name === '__single') {
@@ -374,18 +373,50 @@
 		/* 화면상에 보이도록 그려줌 */
 		function external($wrap) {
 
+			var wrapHeight = 0,
+				wrapRight = 20,
+				wrapBottom = 20,
+				btnShowWidth = 0,
+				btnShowText = '검수';
+
+			if (markupLayerManager.external) {
+				btnShowText = markupLayerManager.external.btnText || btnShowText;
+				wrapRight = markupLayerManager.external.right || wrapRight;
+				wrapBottom = markupLayerManager.external.bottom || wrapBottom;
+			}
+
 			var $externalWrap = $('<div>', {class: '__NTS_markup_wrap'}),
-				$btnToggle = $('<a>', {class: '__NTS_markup_toggle', role: 'button', 'aria-label': '마크업검수 레이어 토글', text: '마크업'});
+				$btnShow = $('<a>', {class: '__NTS_markup_show', role: 'button', 'aria-label': '마크업검수 레이어 보기'}),
+				$btnShowText = $('<span>', {text: btnShowText}),
+                $btnHide = $('<a>', {class: '__NTS_markup_hide', role: 'button', 'aria-label': '마크업검수 레이어 숨기기', text: '닫기'});
 
-			$btnToggle.click(function(e) {
-				// TODO:
-				$wrap.toggle();
-			});
+			$btnShow.click(onClickListenerBtnShow);
+            $btnHide.click(onClickListenerBtnHide);
 
-			$wrap.css('display', 'none');
-
-			$externalWrap.append($btnToggle).append($wrap);
+			$externalWrap.css({right: wrapRight, bottom: wrapBottom});
+			$externalWrap.append($btnShow.append($btnShowText)).append($wrap.append($btnHide));
 			$(document.body).append($externalWrap);
+
+			wrapHeight = $wrap.outerHeight();
+			btnShowWidth = $btnShow.outerWidth();
+
+            $wrap.css('display', 'none');
+			$btnShow.css('width', btnShowWidth);
+
+            function onClickListenerBtnShow(e) {
+				$btnShowText.animate({opacity: 0});
+				$btnShow.animate({width: 260, height: wrapHeight}, 300, function() {
+					$wrap.fadeIn(200);
+				});
+            }
+
+			function onClickListenerBtnHide(e) {
+				$wrap.fadeOut(200, function() {
+					$btnShowText.animate({opacity: 1});
+					$btnShow.animate({width: btnShowWidth, height: 32});
+				});
+			}
+
 		}
 
 	},
