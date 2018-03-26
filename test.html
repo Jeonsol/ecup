@@ -25,49 +25,20 @@
 <script src="./js/ecup.js"></script>
 <script src="./js/import/jQuery.fn/ie9.js"></script>
 <script>
-$('#tester').addAttr('role="button", aria-label="good"');
-$('#tester').removeAttr('role aria-label');
-$('#tester').toggleAttr('role="button"', 'aria-label="good"');
-
-var layer = $.ecup.markupLayer();
-
-layer.set({
-    type: 'windows'
-});
-
-layer({
-    '올라오기': {
-        target: '#test_box',
-        addAttr: 'class="up"'
-    },
-
-    '내려오기': {
-        target: '#test_box',
-        addAttr: 'class="down"'
-    },
-});
-
-
-// animation
-$('#test_box').animation({
-    0: {
-
-    },
-    100: {
-
-    }
-})
 
 // keyframes
 $.animation({
     name: 'layerUp',
     animate: {
         0: {
-            top: 0,
-            background: 'skyblue'
+            top: '0%',
+        },
+        80: {
+            height: '10px',
         },
         100: {
-            top: '50%',
+            top: '100%',
+            width: '300px',
         }
     },
 });
@@ -81,17 +52,17 @@ $('#test_box').on('click', function(){
 })
 
 
-$.animation({
-    name: 'layerDown',
-    animate: {
-        0: {
-            top: '50%',
-        },
-        100: {
-            top: 0
-        }
-    }
-});
+// $.animation({
+//     name: 'layerDown',
+//     animate: {
+//         0: {
+//             top: '50%',
+//         },
+//         100: {
+//             top: 0
+//         }
+//     }
+// });
 
 
 </script>
