@@ -718,7 +718,7 @@
 			var $this = $(this);
 
             if($this.attr('aria-pressed') == 'false') {
-				$this.attr('aria-pressed', 'true');
+				// $this.attr('aria-pressed', 'true');
 				$('.icon_select').sprite({
 					count: 17,
 					pos: 40,
@@ -737,7 +737,7 @@
 			    });
 
 			} else {
-				$this.attr('aria-pressed', 'false');
+				// $this.attr('aria-pressed', 'false');
 				$('.icon_select').sprite({
 					url: 'http://view.gitlab.uit.navercorp.com/SELECTIVE/selective/raw/feature/end/src/img/select_out_2x_spritesheet.png',
 					count: 13,
@@ -756,6 +756,8 @@
 					delay: '0.6s',
 			    });
 			}
+
+			$this.toggleAttr('aria-pressed="true"');
 		})
 
 		// 애니메이션

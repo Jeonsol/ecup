@@ -678,6 +678,57 @@
 }, function() {
 	/** jQuery 확장 **/
 
+	/** DOM 캐시 관리자 **/
+	/* 구조
+	{
+		dom: DOM 주소값,
+		attr: {
+			attrName: attrVal,
+			...
+		},
+		style: { // 확장 예정
+			styleName: styleVal,
+			...
+		}
+	}
+	 */
+	function DomCacheManager() {
+		this.cache = [];
+	}
+
+	DomCacheManager.prototype = {
+		constructor: DomCacheManager,
+		find: function(dom) {
+			var cache = this.cache;
+			for (var i = 0; i < cache.length; ++i) {
+				if (cache[i]['dom'] === dom) return i;
+			}
+			return -1;
+		},
+		setAttr: function(domAddress, attrName, attrVal) {
+			var cache = this.cache,
+				index = this.find(domAddress);
+
+			if (index === -1) {
+				cache.push({
+					dom: domAddress,
+					attr: {}
+				});
+				index = cache.length - 1;
+			}
+			cache[index]['attr'][attrName] = attrVal;
+		},
+		getAttr: function(domAddress, attrName) {
+			var cache = this.cache,
+				index = this.find(domAddress);
+
+			if (index !== -1) return cache[index]['attr'][attrName];
+			else return undefined;
+		}
+	}
+	var
+	 domCacheStorage = new DomCacheManager();
+
 	/** 속성 다루기 addAttr, removeAttr, toggleAttr **/
 
 	/* 속성 추가/수정 */
@@ -700,10 +751,21 @@
 	/* 속성 토글 */
 	jQuery.fn.toggleAttr = function() {
 		jQuery.fn.toggleAttr.PF = function($doms, attr, val) {
+			console.log(domCacheStorage);
+
 			$.each($doms, function(i, dom) {
-				if (dom.hasAttribute(attr)) dom.removeAttribute(attr);
-				else dom.setAttribute(attr, val);
+				if (!dom.hasAttribute(attr)) {
+					dom.setAttribute(attr, val);
+				} else if (dom.getAttribute(attr) !== val) {
+					domCacheStorage.setAttr(dom, attr, dom.getAttribute(attr));
+					dom.setAttribute(attr, val);
+				} else if (dom.getAttribute(attr) === val) {
+					var rollback = domCacheStorage.getAttr(dom, attr);
+					if (rollback !== undefined) dom.setAttribute(attr, rollback);
+					else dom.removeAttribute(attr);
+				}
 			});
+
 		};
 		HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);
 	};
@@ -742,7 +804,6 @@
 		};
 		HOF_parseParam.call(this, arguments, jQuery.fn.toggleStyle.PF);
 	};
-
 
 	/* 고계 함수 - 문자열 파라미터 파싱 */
 	function HOF_parseParam(attrParams, callback) {
