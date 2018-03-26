@@ -858,12 +858,12 @@
     }
 
     /* IE9 애니메이션 지원 */
-    jQuery.fn.animation = function(animate, option = null) {
+    jQuery.fn.animation = function(animate, option) {
         var target = this;
         if(typeof animate == 'object'){
             convertAnimation(animate);
         } else {
-            var func = jQuery.animation.keyframes.get(animate);
+            var func = jQuery.animation.keyframes[animate];
             convertAnimation(target, func, option);
         }
     };
@@ -871,10 +871,9 @@
     jQuery.animation = function(code){;
         var name = code.name;
         var animate = code.animate;
-
-        jQuery.animation.keyframes.set(name, animate);
+        jQuery.animation.keyframes[code.name] = animate;
     }
-    jQuery.animation.keyframes = new Map();
+    jQuery.animation.keyframes = {};
 
     function convertTransition(animate){
         var pro = animate.property != null ? animate.property : 'all';
