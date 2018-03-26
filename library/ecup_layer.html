@@ -75,17 +75,22 @@
 
                     <strong>Initialize</strong>
                     <div class="box_code code_js">
-                        <p>// 레이어 관리자 호출 ** </p>
-                        <p>var layer = ecup.markupLayer();</p>
-                        <p> </p>
                         <p>// 레이어 환경 설정 ( ex. 노출 타입, 디자인 테마 )</p>
-                        <p>layer.set({</p>
+                        <p>ecup.markupLayer.set({</p>
                         <p>    type: 'external',</p>
                         <p>    theme: 'dark'</p>
+                        <p>    external: {</p>
+                        <p>         btnText: '마크업',</p>
+                        <p>         right: 50,</p>
+                        <p>         bottom: 50</p>
+                        <p>    },</p>
+                        <p>    buttonType: {</p>
+                        <p>         '로그인 상태': 'radio'</p>
+                        <p>    }</p>
                         <p>});</p>
                         <p> </p>
                         <p>// 버튼 생성 ( 단일 or 그룹 )</p>
-                        <p>layer({</p>
+                        <p>ecup.markupLayer({</p>
                         <p>    '버튼1 이름': function() {</p>
                         <p>        // 버튼1 기능</p>
                         <p>    },</p>
@@ -99,7 +104,7 @@
                 </section>
 
                 <section class="section_content">
-                    <h5 id="anchor_2" class="tit">ecup.markupLayer().<span class="point">set( { ... } )</span></h5>
+                    <h5 id="anchor_2" class="tit">ecup.markupLayer.<span class="point">set( { ... } )</span></h5>
                     <div class="inner">
                         <div class="option_box">
                             <strong>Options</strong>
@@ -124,7 +129,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="option_name">groupType <i>(default: check)</i></div>
+                                    <div class="option_name">buttonType <i>(default: check)</i></div>
                                     <div class="option_type">Type: string</div>
                                     <div class="option_detail">
                                         <p class="option_desc">버튼그룹의 동작방식 설정</p>
@@ -138,11 +143,10 @@
 
                         <strong>Example</strong>
                         <div class="box_code code_js">
-                            <p>var layer = ecup.markupLayer();</p>
-                            <p>layer.set({</p>
+                            <p>ecup.markupLayer.set({</p>
                             <p>    type: 'windows', // windows, external, internal</p>
                             <p>    theme: 'dark', // default, dark, naver</p>
-                            <p>    groupType: {</p>
+                            <p>    buttonType: {</p>
                             <p>        '그룹이름 1' : 'check' // 해당 그룹의 버튼들이 체크박스 처럼 동작</p>
                             <p>        '그룹이름 2' : 'radio' // 해당 그룹의 버튼들이 라디오 처럼 동작</p>
                             <p>    }</p>
@@ -176,10 +180,8 @@
                         </p>
                         <strong>Example</strong>
                         <div class="box_code code_js">
-                            <p>var layer = ecup.markupLayer();</p>
-                            <p> </p>
                             <p>// 버튼동작을 함수로 정의하기</p>
-                            <p>layer({</p>
+                            <p>ecup.markupLayer({</p>
                             <p>    '버튼1 이름': function() {</p>
                             <p>        // 버튼1 기능</p>
                             <p>    },</p>
@@ -189,7 +191,7 @@
                             <p>});</p>
                             <p> </p>
                             <p>// 버튼동작을 옵션으로 정의하기</p>
-                            <p>layer({</p>
+                            <p>ecup.markupLayer({</p>
                             <p>    '버튼1 이름': {</p>
                             <p>        target: '#div', // 옵션을 적용시킬 타깃의 셀렉터,</p>
                             <p>        addClass: 'class1 class2 class3' // 타깃에게 부여할 옵션 1 (<a href="#anchor_5">옵션의 종류 보기</a>)</p>
@@ -252,10 +254,8 @@
                         </p>
                         <strong>Example</strong>
                         <div class="box_code code_js">
-                            <p>var layer = ecup.markupLayer();</p>
-                            <p> </p>
                             <p>// 그룹화 하기</p>
-                            <p>layer('그룹 이름').group({</p>
+                            <p>ecup.markupLayer('그룹 이름').group({</p>
                             <p>    '버튼1 이름': function() {</p>
                             <p>        // 버튼1 기능</p>
                             <p>    },</p>
@@ -266,13 +266,13 @@
                             <p>});</p>
                             <p> </p>
                             <p>// 동작 방식 설정하기</p>
-                            <p>// layer.set 설정에서 한번에 설정도 가능하다. (<a href="#anchor_2">layer.set</a>)</p>
-                            <p>layer('그룹 이름').setType('radio').group({</p>
+                            <p>// ecup.markupLayer.set 설정에서 한번에 설정도 가능하다. (<a href="#anchor_2">ecup.markupLayer.set</a>)</p>
+                            <p>ecup.markupLayer('그룹 이름').setType('radio').group({</p>
                             <p>    ...</p>
                             <p>});</p>
                             <p> </p>
                             <p>// 옵션의 공통 타깃을 정의 (group 함수의 마지막 인자가 버튼정의, 그 이전의 모든 인자가 공통 타깃이 됨)</p>
-                            <p>layer('그룹 이름').group('#div', '.test', '#span', {</p>
+                            <p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
                             <p>    '버튼1 이름': function() {</p>
                             <p>        // 일반 함수로 주면 공통 타깃과 무관하게 그냥 적용.</p>
                             <p>    },</p>

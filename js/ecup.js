@@ -211,7 +211,7 @@
 
 			// 최상위 DOM 생성
             var $wrap = $('<div />', {
-                class: '__NTS_markup'
+                class: '__NTS_markup ' + markupLayerManager.theme
             });
 
 			// 제어 영역 DOM 생성
