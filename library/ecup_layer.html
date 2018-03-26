@@ -23,16 +23,18 @@
 
 
         <div class="content">
-			<div class="area_tab">
-                <a href="#" class="tab on">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
-                <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
-                <a href="./ecup_etc.html" class="tab">부가 기능</a>
+            <div class="area_nav">
+                <div class="area_tab">
+                    <a href="#" class="tab on">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                    <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
+                    <a href="./ecup_etc.html" class="tab">부가 기능</a>
+                </div>
+                <div class="area_sub_tab">
+                    <a href="#anchor_2" class="tab"># 마크업검수 레이어</a>
+                    <a href="#anchor_3" class="tab"># 코멘트</a>
+                    <a href="#anchor_4" class="tab"># UI 컴포넌트</a>
+                </div>
             </div>
-			<div class="area_sub_tab">
-				<a href="#" class="tab"># 마크업검수 레이어</a>
-				<a href="#" class="tab"># 코멘트</a>
-				<a href="#" class="tab"># UI 컴포넌트</a>
-			</div>
             <div class="area_content">
 
                 <section class="section_content">
@@ -345,14 +347,21 @@
         </div>
     </main>
 </div>
-<div class="__anchor_layer__">
-    <a href="#top">맨 위로</a>
-    <a href="#anchor_1">간단하게 레이어 사용하기</a>
-    <a href="#anchor_2">레이어 설정하기</a>
-    <a href="#anchor_3">레이어 개별버튼 정의하기</a>
-    <a href="#anchor_4">레이어 그룹버튼 정의하기</a>
-    <a href="#anchor_5">옵션의 종류보기</a>
-</div>
 <script src="./ecup_lib.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $(window).scroll(function() {
+        var $nav = $('.area_nav');
+        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+        else $nav.removeClass('nav_fixed');
+    });
+
+    $('.area_sub_tab .tab').click(function() {
+        var $hrefTarget = $($(this).attr('href'));
+        var position = $hrefTarget.offset().top-150;
+
+        $('html,body').animate({scrollTop:position}, 500);
+    });
+</script>
 </body>
 </html>
