@@ -857,6 +857,84 @@
         }
     }
 
+    /* IE9 애니메이션 지원 */
+    jQuery.fn.animation = function(animate, option = null) {
+        var target = this;
+        if(typeof animate == 'object'){
+            convertAnimation(animate);
+        } else {
+            var func = jQuery.animation.keyframes.get(animate);
+            convertAnimation(target, func, option);
+        }
+    };
+
+    jQuery.animation = function(code){;
+        var name = code.name;
+        var animate = code.animate;
+
+        jQuery.animation.keyframes.set(name, animate);
+    }
+    jQuery.animation.keyframes = new Map();
+
+    function convertTransition(animate){
+        var pro = animate.property != null ? animate.property : 'all';
+    }
+
+    function convertAnimation($target, func, option){
+        var duration = isNaN(Number(option.duration)) == true ? Number(option.duration.replace('s','')) * 1000 : Number(option.duration);
+        var fillMode = option.fillMode != null ? option.fillMode : 'none';
+        var delay = option.delay != null ? option.delay : 0,
+            delay = isNaN(Number(delay)) == true ? Number(delay.replace('s','')) * 1000 : Number(delay);
+        var animateOption = getOption(func, duration);
+
+        var animateEvent = null;
+
+        setTimeout(function(){
+            $.each(animateOption, function(index){
+                animateReturn(animateOption, index);
+            })
+        }, delay);
+
+        $target.animate();
+
+        function animateReturn(animateOption, index){
+            var point = animateOption[index].point;
+            var dur = animateOption[index].duration;
+            var css = animateOption[index].css;
+
+            if(point == 0) {
+                $target.css(css);
+            } else if(point == 100) {
+                $target.animate(css, {
+                   duration: dur,
+                   done: function(){
+                        if(fillMode == 'none')
+                            $target.removeAttr('style');
+                   }
+                })
+            } else {
+                if(animateEvent == null) {
+                    console.log(delay);
+                    animateEvent = $target.delay(delay).animate(css, {
+                       duration: dur
+                   })
+                } else {
+                   animateEvent.delay(animateOption[index-1]).animate(css, {
+                      duration: dur,
+                  })
+               }
+            }
+        }
+
+        function getOption(option, dur){
+            var opt = [];
+            for( var point in option ) {
+                opt.push({ point: Number(point) ,duration: dur / 100 * point, css: option[point]});
+            }
+            return opt;
+        }
+    }
+
 }, function() {
 
     /** document.ready 후 자동적용 되야하는 기능 **/

@@ -726,6 +726,16 @@
 					duration: 0.2,
 					mode: 'remove'
 				});
+
+				$('.type_save').animation('layerUp', {
+					duration: '0.2s',
+	   				fillMode: 'forwards'
+			    });
+				$('.type_save').animation('layerDown', {
+					duration: '0.2s',
+					delay: '0.6s',
+			    });
+
 			} else {
 				$this.attr('aria-pressed', 'false');
 				$('.icon_select').sprite({
@@ -736,8 +746,59 @@
 					duration: 0.2,
 					mode: 'remove'
 				});
+
+				$('.type_cancle').animation('layerUpGray', {
+					duration: '0.2s',
+	   				fillMode: 'forwards'
+			    });
+				$('.type_cancle').animation('layerDown', {
+					duration: '0.2s',
+					delay: '0.6s',
+			    });
 			}
 		})
+
+		// 애니메이션
+		$.animation({
+		    name: 'layerUp',
+		    animate: {
+		        0: {
+		            top: '100%',
+					background: '#ffec00',
+					color: '#000'
+		        },
+		        100: {
+		            top: '0',
+		        }
+		    },
+		});
+
+		$.animation({
+		    name: 'layerUpGray',
+		    animate: {
+		        0: {
+		            top: '100%',
+					background: '#eee',
+					color: '#000'
+		        },
+		        100: {
+		            top: '0',
+		        }
+		    },
+		});
+
+		$.animation({
+		    name: 'layerDown',
+		    animate: {
+		        0: {
+		            top: '0'
+		        },
+		        100: {
+		            top: '100%',
+		        }
+		    },
+		});
+
 	</script>
 </body>
 </html>
