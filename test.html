@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>테스트</title>
+    <style>
+        #test_box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #333;
+            margin: -100px 0 0 -100px;
+            font-size: 40px;
+            line-height: 200px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+<div id="tester"></div>
+<div id="test_box">Hi</div>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/ecup.js"></script>
+<script src="./js/import/jQuery.fn/ie9.js"></script>
+<script>
+
+// keyframes
+$.animation({
+    name: 'layerUp',
+    animate: {
+        0: {
+            top: '0%',
+        },
+        80: {
+            height: '10px',
+        },
+        100: {
+            top: '100%',
+            width: '300px',
+        }
+    },
+});
+
+$('#test_box').on('click', function(){
+    $(this).animation('layerUp', {
+        duration: '1s',
+        timing: 'linear',
+        delay: '1s'
+    });
+})
+
+
+// $.animation({
+//     name: 'layerDown',
+//     animate: {
+//         0: {
+//             top: '50%',
+//         },
+//         100: {
+//             top: 0
+//         }
+//     }
+// });
+
+
+</script>
+</body>
+</html>
