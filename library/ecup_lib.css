@@ -13,9 +13,6 @@ p em {font-style:normal;text-decoration:underline;}
 .code {font-family: 'Roboto Mono', monospace;vertical-align:top;}
 .bold {font-weight: bold;}
 
-.__anchor_layer__ {position:fixed;bottom:40px;right:40px;padding:10px;border-radius:10px;background-color:#fff;}
-.__anchor_layer__ a {display:block;text-align:right;color:#333;}
-
 .header {background:#333;}
 .header .inner {width:980px;height:60px;margin:0 auto;padding:0 20px;background:#333;}
 .header .tit {height:60px;font-size:24px;line-height:65px;color:#fff;}
@@ -38,6 +35,9 @@ p em {font-style:normal;text-decoration:underline;}
 .section_intro .list_sub .link_direct::before {content:'';display:inline-block;width:3px;height:3px;margin:13px 11px 0 0;border-radius:50%;background:#999;vertical-align:top;}
 
 .content {margin-top:50px;}
+.content .area_nav {width: 980px;background-color: #fff}
+.content .area_nav.nav_fixed {position: fixed; top: 0; box-shadow: 0 4px 6px -6px #222; -webkit-box-shadow: 0 4px 6px -6px #222; -ms-box-shadow: 0 4px 6px -6px #222}
+.content .area_nav.nav_fixed + .area_content {margin-top: 149px;}
 .content .area_tab {border-bottom:1px solid #555;}
 .content .area_tab::after {content:'';display:block;clear:both;}
 .content .area_tab .tab {float:left;height:40px;padding:0 60px;border:1px solid #555;border-width:1px 1px 0 0;font-weight:500;font-size:16px;line-height:40px;color:#555;}

@@ -23,16 +23,18 @@
 
 
         <div class="content">
-			<div class="area_tab">
-                <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
-                <a href="#" class="tab on">jQuery 확장 메서드</a>
-                <a href="./ecup_etc.html" class="tab">부가 기능</a>
+            <div class="area_nav">
+                <div class="area_tab">
+                    <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                    <a href="#" class="tab on">jQuery 확장 메서드</a>
+                    <a href="./ecup_etc.html" class="tab">부가 기능</a>
+                </div>
+                <div class="area_sub_tab">
+                    <a href="#anchor_1" class="tab"># 속성</a>
+                    <a href="#anchor_2" class="tab"># 인라인 스타일</a>
+                    <a href="#anchor_3" class="tab"># 애니메이션</a>
+                </div>
             </div>
-			<div class="area_sub_tab">
-				<a href="#" class="tab"># 속성</a>
-				<a href="#" class="tab"># 인라인 스타일</a>
-				<a href="#" class="tab"># 애니메이션</a>
-			</div>
             <div class="area_content">
 
                 <section class="section_content">
@@ -158,11 +160,21 @@
         </div>
     </main>
 </div>
-<div class="__anchor_layer__">
-    <a href="#top">맨 위로</a>
-    <a href="#anchor_1">DOM 의 속성을 다루는 메소드</a>
-    <a href="#anchor_2">DOM 의 인라인 스타일을 다루는 메소드</a>
-</div>
 <script src="./ecup_lib.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $(window).scroll(function() {
+        var $nav = $('.area_nav');
+        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+        else $nav.removeClass('nav_fixed');
+    });
+
+    $('.area_sub_tab .tab').click(function() {
+        var $hrefTarget = $($(this).attr('href'));
+        var position = $hrefTarget.offset().top-150;
+
+        $('html,body').animate({scrollTop:position}, 500);
+    });
+</script>
 </body>
 </html>
