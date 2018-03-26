@@ -320,23 +320,84 @@
 
         /* 별도의 창으로 그려줌 */
         function windows($wrap) {
-
+            var doc;
             if(markupLayerManager.newWindow == null) init();
+            if(doc.querySelector('.__NTS_markup') != null) {
+                $(doc.querySelector('.__NTS_markup')).remove();
+            }
 
-            $(markupLayerManager.newWindow.document.body).html($wrap);
+            doc.write($wrap.get(0).outerHTML);
+            doc.write(stylesheet().get(0).outerHTML);
 
             setTimeout(function(){
-                var height = $wrap.height();
-                markupLayerManager.newWindow.resizeTo(300, height + 50);
+                $.each(markupLayerManager.buttonArray, function(index, button){
+                    makeEvent(index, button, button.type);
+                });
+                markupLayerManager.newWindow.resizeTo(300,  $(doc.querySelector('.__NTS_markup')).height() + ieCheck());
             },100);
 
             function init() {
-                markupLayerManager.newWindow = window.open('', 'newWindow', 'width=300,height=400');
-                $(markupLayerManager.newWindow.document.head).append(stylesheet());
+                markupLayerManager.newWindow = window.open('', 'newWindow', 'location=no,width=300,height=400');
+                doc = markupLayerManager.newWindow.document;
+            }
+
+            function ieCheck(){
+                var agt = navigator.userAgent.toLowerCase();
+                if (agt.indexOf("chrome") != -1) return 50;
+                else return 70;
             }
 
             function stylesheet() {
                 return $("<link />", { rel: 'stylesheet', href: "http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/ui/ecup_ui.css"});
+            }
+
+            // 각각의 버튼 이벤트 할당
+            function makeEvent(index, btnObj, groupType){
+                var $groups = $(doc.querySelectorAll('.__area_btn')[index]);
+
+                if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
+                    $groups.on('click', 'a', function(e){
+                        var $my = $(this);
+                        var a = $(this).parent().children('a');
+
+                        if(!$(this).hasClass('__button'))
+                            $.each(a, function(index){
+                                if($(a[index]).attr('aria-pressed') == 'true' && !$(a[index]).hasClass('__button')){
+                                    $(a[index]).attr('aria-pressed', 'false');
+
+                                    var name = $(a[index]).text();
+                                    if(btnObj.button[name].opposite != null)
+                                        btnObj.button[name].opposite();
+                                }
+                            });
+
+                        if($(this).attr('aria-pressed') == 'false') {
+                            btnObj.button[$(this).text()].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
+                    })
+                } else if(groupType == 'button') { // 기본 버튼 타입 이벤트
+                    $groups.on('click', 'a', function(e){
+                        var name = $(this).text();
+                        if($(this).attr('aria-pressed') == 'false') {
+                            btnObj.button[name].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
+                    })
+                } else { // 체크박스 버튼 타입 이벤트 ( default )
+                    $groups.on('click', 'a', function(e){
+                        var name = $(this).text();
+                        if($(this).attr('aria-pressed') == 'true' ) {
+                            if(btnObj.button[name].opposite != null) {
+                                btnObj.button[name].opposite();
+                                $(this).attr('aria-pressed','false');
+                            }
+                        } else {
+                            btnObj.button[name].origin();
+                            $(this).attr('aria-pressed','true');
+                        }
+                    })
+                }
             }
 
 		}
