@@ -726,8 +726,7 @@
 			else return undefined;
 		}
 	}
-	var
-	 domCacheStorage = new DomCacheManager();
+	var domCacheStorage = new DomCacheManager();
 
 	/** 속성 다루기 addAttr, removeAttr, toggleAttr **/
 
@@ -751,7 +750,6 @@
 	/* 속성 토글 */
 	jQuery.fn.toggleAttr = function() {
 		jQuery.fn.toggleAttr.PF = function($doms, attr, val) {
-			console.log(domCacheStorage);
 
 			$.each($doms, function(i, dom) {
 				if (!dom.hasAttribute(attr)) {
