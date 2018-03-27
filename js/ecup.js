@@ -8,6 +8,35 @@
  **/
 (function (features, extendJQuery, autoApply) {
 
+	/** IE8 대응 **/
+	if (!Function.prototype.bind) {
+	  Function.prototype.bind = function(oThis) {
+	    if (typeof this !== 'function') {
+	      // ECMAScript 5 내부 IsCallable 함수와
+	      // 가능한 가장 가까운 것
+	      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+	    }
+
+	    var aArgs   = Array.prototype.slice.call(arguments, 1),
+	        fToBind = this,
+	        fNOP    = function() {},
+	        fBound  = function() {
+	          return fToBind.apply(this instanceof fNOP
+	                 ? this
+	                 : oThis,
+	                 aArgs.concat(Array.prototype.slice.call(arguments)));
+	        };
+
+	    if (this.prototype) {
+	      // Function.prototype은 prototype 속성이 없음
+	      fNOP.prototype = this.prototype;
+	    }
+	    fBound.prototype = new fNOP();
+
+	    return fBound;
+	  };
+	}
+
     // create $.ecup
     jQuery.Ecup = function() {
 		var modules = ['markupLayer','comment'];
@@ -416,7 +445,7 @@
 
 			// DOM 생성 초기화
 			var $body = $(document.body);
-			$btnHide = $('<a>', {class: '__NTS_markup_hide', role: 'button', 'aria-label': '마크업검수 레이어 숨기기'})
+			$btnHide = $('<a role="button" aria-label="마크업검수 레이어 숨기기" class="__NTS_markup_hide"></a>');
 			$body.append($wrap.append($btnHide));
 
 			topOrigin = -$wrap.outerHeight();
@@ -885,7 +914,9 @@
 	jQuery.fn.removeStyle = function() {
 		jQuery.fn.removeStyle.PF = function($doms, style) {
 			$.each($doms, function(index, dom) {
-				dom.style.removeProperty(style);
+				if (dom.style.removeProperty) dom.style.removeProperty(style);
+				else dom.style.removeAttribute(style);
+
 			});
 		};
 		HOF_parseParam.call(this, arguments, jQuery.fn.removeStyle.PF);
@@ -898,7 +929,8 @@
 				if(!dom.style[style] || dom.style[style] !== val) {
 					dom.style[style] = val;
 				} else {
-					dom.style.removeProperty(style);
+					if (dom.style.removeProperty) dom.style.removeProperty(style);
+					else dom.style.removeAttribute(style);
 				}
 			});
 		};
@@ -910,7 +942,7 @@
 
 		var that = this;
 
-		Array.prototype.forEach.call(attrParams, function(attrParam) {
+		$.each(attrParams, function(index, attrParam) {
 
 			var attr, val, regExp;
 
