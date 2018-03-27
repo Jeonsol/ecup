@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NTS Markup Library : 마크업검수 레이어</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="./ecup_lib.css">
+    <style>
+        .section_container {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
+            </div>
+        </header>
+        <main class="container">
+            <section class="section_intro">
+                <h2 class="tit">라이브러리 소개</h2>
+                <h3 class="develop_name">Ecup.js</h3>
+                <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
+                <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
+            </section>
+
+            <div class="content">
+                <div class="area_nav">
+                    <div class="area_tab">
+                        <a href="#" class="tab on">시작하기</a>
+                        <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                        <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
+                        <a href="./ecup_etc.html" class="tab">부가 기능</a>
+                    </div>
+                    <div class="area_sub_tab">
+                        <a href="#anchor_layer" class="tab"># 마크업검수 레이어</a>
+                    </div>
+                </div>
+                <div class="area_content">
+                    <div id="anchor_start" class="section_container">
+                        <section class="section_content">
+                            <strong>Browser support</strong>
+                            <div class="box_code">
+                                <p>IE 8+ (possibly 9 also), latest of Chrome/FF/Safari, iOS 7+ and Android 2.1+ (except 3.x)</p>
+                            </div>
+                            <br />
+
+                            <strong>Load files or import library</strong>
+                            <div class="box_code code_html">
+                                <p>src="http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/js/ecup.js"</p>
+                            </div>
+
+                            <br />
+
+                            <strong>Initialize</strong>
+                            <div class="box_code code_js">
+                                <p>// 레이어 환경 설정 ( ex. 노출 타입, 디자인 테마 )</p>
+                                <p>ecup.markupLayer.set({</p>
+                                <p> type: 'external',</p>
+                                <p> theme: 'dark'</p>
+                                <p> external: {</p>
+                                <p> btnText: '마크업',</p>
+                                <p> right: 50,</p>
+                                <p> bottom: 50</p>
+                                <p> },</p>
+                                <p> buttonType: {</p>
+                                <p> '로그인 상태': 'radio'</p>
+                                <p> }</p>
+                                <p>});</p>
+                                <p> </p>
+                                <p>// 버튼 생성 ( 단일 or 그룹 )</p>
+                                <p>ecup.markupLayer({</p>
+                                <p> '버튼1 이름': function() {</p>
+                                <p> // 버튼1 기능</p>
+                                <p> },</p>
+                                <p> '버튼2 기능': function() {</p>
+                                <p> // 버튼2 기능</p>
+                                <p> }</p>
+                                <p>});</p>
+                                <p> </p>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="./ecup_lib.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(window).scroll(function() {
+            var $nav = $('.area_nav');
+            if ($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+            else $nav.removeClass('nav_fixed');
+        });
+
+        $('.area_sub_tab .tab').on('click', function(e){
+            e.preventDefault();
+            var id = $(this).attr('href');
+            $('.section_container').each(function(){
+                $(this).css({height:0});
+            })
+            $(id).css({height:'auto'});
+
+            var $hrefTarget = $($(this).attr('href'));
+            var position = $hrefTarget.offset().top-150;
+
+            $('html,body').delay(100).animate({scrollTop:position}, 300);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,367 +1,460 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <title>NTS Markup Library : 마크업검수 레이어</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="./ecup_lib.css">
+    <style>
+        .section_container {
+            overflow: hidden;
+        }
+    </style>
 </head>
+
 <body>
-<div class="wrap">
-    <header class="header">
-        <div class="inner">
-            <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
-        </div>
-    </header>
-    <main class="container">
-        <section class="section_intro">
-            <h2 class="tit">라이브러리 소개</h2>
-            <h3 class="develop_name">Ecup.js</h3>
-			<p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
-            <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
-        </section>
+    <div class="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
+            </div>
+        </header>
+        <main class="container">
+            <section class="section_intro">
+                <h2 class="tit">라이브러리 소개</h2>
+                <h3 class="develop_name">Ecup.js</h3>
+                <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
+                <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
+            </section>
 
-
-        <div class="content">
-            <div class="area_nav">
-                <div class="area_tab">
-                    <a href="#" class="tab on">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
-                    <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
-                    <a href="./ecup_etc.html" class="tab">부가 기능</a>
+            <div class="content">
+                <div class="area_nav">
+                    <div class="area_tab">
+                        <a href="./ecup_start.html" class="tab">시작하기</a>
+                        <a href="#" class="tab on">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                        <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
+                        <a href="./ecup_etc.html" class="tab">부가 기능</a>
+                    </div>
+                    <div class="area_sub_tab">
+                        <a href="#anchor_layer" class="tab"># 마크업검수 레이어</a>
+                        <a href="#anchor_comment" class="tab"># 코멘트</a>
+                        <a href="#anchor_ui" class="tab"># UI 컴포넌트</a>
+                    </div>
                 </div>
-                <div class="area_sub_tab">
-                    <a href="#anchor_2" class="tab"># 마크업검수 레이어</a>
-                    <a href="#anchor_3" class="tab"># 코멘트</a>
-                    <a href="#anchor_4" class="tab"># UI 컴포넌트</a>
+                <div class="area_content">
+                    <div id="anchor_layer" class="section_container">
+                        <section class="section_content">
+                            <h5 id="anchor_2" class="tit">ecup.markupLayer.<span class="point">set( { ... } )</span></h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <strong>Options</strong>
+                                    <p class="option_type">Type: Obeject</p>
+                                    <ul>
+                                        <li>
+                                            <div class="option_name">type <i>(default: external)</i></div>
+                                            <div class="option_type">Type: string</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">레이어 보기 방식</p>
+                                                <p class="t1 s1"><span class="code">• external: </span>디자인을 가리지 않게 창 내부에서 보기</p>
+                                                <p class="t1 s1"><span class="code">• internal: </span>레이어 형식으로 보기</p>
+                                                <p class="t1 s1"><span class="code">• windows: </span>새창 형식으로 보기</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="option_name">theme <i>(default: dark)</i></div>
+                                            <div class="option_type">Type: string</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">레이어 디자인 색상 테마</p>
+                                                <p class="t1 s1"><span class="code">• default, dark, naver</span></p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="option_name">buttonType <i>(default: check)</i></div>
+                                            <div class="option_type">Type: string</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">버튼그룹의 동작방식 설정</p>
+                                                <p class="t1 s1"><span class="code">• check: </span>그룹내 버튼들이 체크박스처럼 토글로 동작</p>
+                                                <p class="t1 s1"><span class="code">• button: </span>그룹내 버튼들이 일반 버튼처럼 동작</p>
+                                                <p class="t1 s1"><span class="code">• radio: </span>그룹내 버튼들이 라디오처럼 동작</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <strong>Example</strong>
+                                <div class="box_code code_js">
+                                    <p>ecup.markupLayer.set({</p>
+                                    <p> type: 'windows', // windows, external, internal</p>
+                                    <p> theme: 'dark', // default, dark, naver</p>
+                                    <p> buttonType: {</p>
+                                    <p> '그룹이름 1' : 'check' // 해당 그룹의 버튼들이 체크박스 처럼 동작</p>
+                                    <p> '그룹이름 2' : 'radio' // 해당 그룹의 버튼들이 라디오 처럼 동작</p>
+                                    <p> }</p>
+                                    <p>});</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="section_content">
+                            <h5 id="anchor_3" class="tit">ecup.markupLayer(<span class="point"> { key : value, ... } </span>)</h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <strong>Options</strong>
+                                    <p class="option_type">Type: Obeject</p>
+                                    <ul>
+                                        <li>
+                                            <div class="option_name">key : value</div>
+                                            <div class="option_type">Type <br /> - key : string <br /> - value : object or function</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">단일 버튼 이벤트 제어</p>
+                                                <p class="t1 s1"><span class="code">• key: </span> 버튼 이름 (버튼의 고유 값) </p>
+                                                <p class="t1 s1"><span class="code">• value: </span>버튼 이벤트 발생 시 동작할 내용</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="option_more_desc">
+                                    ** value<br /> ecup 내에서 제공하는 <a href="#anchor_5"><strong>옵션</strong></a>을 사용하거나,<br />
+                                    <strong>직접 함수</strong>를 할당하는 2가지 방법으로 사용할 수 있습니다.
+                                </p>
+                                <strong>Example</strong>
+                                <div class="box_code code_js">
+                                    <p>// 버튼동작을 함수로 정의하기</p>
+                                    <p>ecup.markupLayer({</p>
+                                    <p> '버튼1 이름': function() {</p>
+                                    <p> // 버튼1 기능</p>
+                                    <p> },</p>
+                                    <p> '버튼2 이름': function() {</p>
+                                    <p> // 버튼2 기능</p>
+                                    <p> }</p>
+                                    <p>});</p>
+                                    <p> </p>
+                                    <p>// 버튼동작을 옵션으로 정의하기</p>
+                                    <p>ecup.markupLayer({</p>
+                                    <p> '버튼1 이름': {</p>
+                                    <p> target: '#div', // 옵션을 적용시킬 타깃의 셀렉터,</p>
+                                    <p> addClass: 'class1 class2 class3' // 타깃에게 부여할 옵션 1 (<a href="#anchor_5">옵션의 종류 보기</a>)</p>
+                                    <p> toggleAttr: 'aria-label="닫기"' // 타깃에게 부여할 옵션 2 .. (여러개 가능)</p>
+                                    <p> },</p>
+                                    <p> '버튼2 이름': ...</p>
+                                    <p>});</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="section_content">
+                            <h5 id="anchor_4" class="tit">ecup.markupLayer(<span class="point"> name </span>)<span class="point">.group</span>( <span class="point">target</span>, { key : value, ... } )</h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <div class="options">
+                                        <strong>Name</strong>
+                                        <p class="option_type">Type: String</p>
+                                        <ul>
+                                            <li>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">버튼 그룹명</p>
+                                                    <p class="t1 s1"><span class="code">• 그룹을 식별하는 고유한 키값 (언어 무관)</span></p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="options">
+                                        <strong>Group Options</strong>
+                                        <p class="option_type">Type: Obeject</p>
+                                        <ul>
+                                            <li>
+                                                <div class="option_name">target</div>
+                                                <div class="option_type">Type: String</div>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">공동 target 정의</p>
+                                                    <p class="t1 s1"><span class="code">• key: </span> 버튼 이름 (버튼의 고유 값) </p>
+                                                    <p class="t1 s1"><span class="code">• value: </span>버튼 이벤트 발생 시 동작할 내용</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="option_name">key : value</div>
+                                                <div class="option_type">Type <br /> - key : string <br /> - value : object or function</div>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">버튼 이벤트 제어</p>
+                                                    <p class="t1 s1"><span class="code">• key: </span> 버튼 이름 (버튼의 고유 값) </p>
+                                                    <p class="t1 s1"><span class="code">• value: </span>버튼 이벤트 발생 시 동작할 내용</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="option_more_desc">
+                                    ** Group Options<br /> ▪ <strong>target</strong> : 그룹내의 버튼들의 여러 공동타깃을 한번에 정의 할 수 있습니다. <br /> ▪ <strong>key : value</strong> : ecup.markupLayer( { . . . } )에서의 와 사용 방법이 동일합니다. <br />
+                                </p>
+                                <p class="option_more_desc">
+                                    ** 단일 버튼과 달리 그룹 버튼은 버튼의 타입을 지정할 수 있습니다.<br />
+                                </p>
+                                <strong>Example</strong>
+                                <div class="box_code code_js">
+                                    <p>// 그룹화 하기</p>
+                                    <p>ecup.markupLayer('그룹 이름').group({</p>
+                                    <p> '버튼1 이름': function() {</p>
+                                    <p> // 버튼1 기능</p>
+                                    <p> },</p>
+                                    <p> '버튼2 이름': {</p>
+                                    <p> target: '#div',</p>
+                                    <p> addClass: 'class1 class2 class3'</p>
+                                    <p> }</p>
+                                    <p>});</p>
+                                    <p> </p>
+                                    <p>// 동작 방식 설정하기</p>
+                                    <p>// ecup.markupLayer.set 설정에서 한번에 설정도 가능하다. (<a href="#anchor_2">ecup.markupLayer.set</a>)</p>
+                                    <p>ecup.markupLayer('그룹 이름').setType('radio').group({</p>
+                                    <p> ...</p>
+                                    <p>});</p>
+                                    <p> </p>
+                                    <p>// 옵션의 공통 타깃을 정의 (group 함수의 마지막 인자가 버튼정의, 그 이전의 모든 인자가 공통 타깃이 됨)</p>
+                                    <p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
+                                    <p> '버튼1 이름': function() {</p>
+                                    <p> // 일반 함수로 주면 공통 타깃과 무관하게 그냥 적용.</p>
+                                    <p> },</p>
+                                    <p> '버튼2 이름': { </p>
+                                    <p> // 타깃을 주지 않으면 옵션들이 공통 타깃에게 적용됨.</p>
+                                    <p> addClass: 'class1 class2 class3' // 즉, #div, .test, #span 에 적용.</p>
+                                    <p> },</p>
+                                    <p> '버튼3 이름': {</p>
+                                    <p> // 타깃을 옵션에서 새로 부여하면 공통타깃은 무시되고 현재 타깃에게 적용.</p>
+                                    <p> target: '#div',</p>
+                                    <p> hide: 400 // 즉, #div 에만 적용</p>
+                                    <p> }</p>
+                                    <p>});</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="section_content">
+                            <h5 id="anchor_5" class="tit">Button Options</h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <div class="options">
+                                        <strong>클래스</strong>
+                                        <p class="option_type">복수적용 : 공백</p>
+                                        <ul>
+                                            <li>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">추가</p>
+                                                    <p class="t1 s1"><span class="code">addClass: 'class1 class2'</span> </p>
+                                                    <p class="option_desc">삭제</p>
+                                                    <p class="t1 s1"><span class="code">removeClass: 'class1 class2'</span> </p>
+                                                    <p class="option_desc">토글</p>
+                                                    <p class="t1 s1"><span class="code">toggleClass: 'class1 class2'</span> </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="options">
+                                        <strong>속성</strong>
+                                        <p class="option_type">복수적용 : 공백 or 쉼표(,)</p>
+                                        <ul>
+                                            <li>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">추가</p>
+                                                    <p class="t1 s1"><span class="code">addAttr: 'role="button" aria-label="닫기"'</span> </p>
+                                                    <p class="option_desc">삭제</p>
+                                                    <p class="t1 s1"><span class="code">removeAttr: 'role, aria-label'</span> </p>
+                                                    <p class="option_desc">토글</p>
+                                                    <p class="t1 s1"><span class="code">toggleAttr: 'role="button", aria-label="열기"'</span> </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="options">
+                                        <strong>인라인 스타일</strong>
+                                        <p class="option_type">복수적용 : 쉼표(,)</p>
+                                        <ul>
+                                            <li>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">추가</p>
+                                                    <p class="t1 s1"><span class="code">addStyle: 'font-size: 13px; color #333;'</span> </p>
+                                                    <p class="option_desc">삭제</p>
+                                                    <p class="t1 s1"><span class="code">removeStyle: 'font-size, color'</span> </p>
+                                                    <p class="option_desc">토글</p>
+                                                    <p class="t1 s1"><span class="code">toggleStyle: 'width: 100%; background: red;'</span> </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="options">
+                                        <strong>Display</strong>
+                                        <ul>
+                                            <li>
+                                                <div class="option_detail">
+                                                    <p class="option_desc">보이기</p>
+                                                    <p class="t1 s1"><span class="code">show: 400</span> </p>
+                                                    <p class="option_desc">숨기기</p>
+                                                    <p class="t1 s1"><span class="code">hide: 0</span> </p>
+                                                    <p class="option_desc">토글</p>
+                                                    <p class="t1 s1"><span class="code">toggle: 0</span> </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="option_more_desc">
+                                    ** 마크업 디자인 검수시 <strong>자주 사용되는 동작</strong>을 미리 정의해 놓았습니다.<br />
+
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div id="anchor_comment" class="section_container">
+                        <section class="section_content">
+                            <h5 id="anchor_1" class="tit">ecup.<span class="point">comment()</span> <span style="float:right">UI 메모 남기기</span></h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <strong>Options</strong>
+                                    <p class="option_type">Type: String, String</p>
+                                    <ul>
+                                        <li>
+                                            <div class="option_name">target : comment</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">UI 코멘트 표시</p>
+                                                <p class="t1 s1"><span class="code">• target: </span> 코멘트가 표시될 dom </p>
+                                                <p class="t1 s1"><span class="code">• comment: </span> 코멘트 내용</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <strong>Property</strong>
+                                    <ul>
+                                        <li>
+                                            <div class="option_name">show</div>
+                                            <div class="option_type">Type: boolean</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">UI 코멘트 화면 표시 유무</p>
+                                                <p class="t1 s1"><span class="code">• true: </span>보이기</p>
+                                                <p class="t1 s1"><span class="code">• false: </span>숨기기</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="option_more_desc">
+                                    ** <br />
+                                    <strong>디자이너</strong>는 마크업개발자에게 제플린의 코멘트 기능을 활용해 기타 의견을 전달할 수 있지만,<br />
+                                    <strong>마크업개발자</strong>는 디자이너에게 UI 검수를 받을 때 메모를 남길 수 없어 메신저로 의견을 전달해야 했습니다.<br /> UI 메모 남기기 기능은 이러한 <strong class="bold"> 부가적인 커뮤니케이션 비용을 줄이기 위해</strong> 고안된 기능입니다.<br />
+                                </p>
+
+                                <strong>Example</strong>
+                                <div class="box_code code_js">
+                                    <p>// 단일 메모 쓰기</p>
+                                    <p>ecup.comment('#test_box', '테스트용 메모입니다.');</p>
+                                    <p> </p>
+                                    <p>// 여러 메모를 한번에 달기</p>
+                                    <p>ecup.comment({</p>
+                                    <p> '#test_box1': '첫번째 테스트박스입니다.',</p>
+                                    <p> '#test_box2': '두번째 테스트박스입니다.',</p>
+                                    <p> '#test_box3': '세번째 테스트박스입니다.'</p>
+                                    <p>});</p>
+                                    <p> </p>
+                                    <p>// 메모 화면에서 감추기</p>
+                                    <p>ecup.comment.show = false; // 감추기</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div id="anchor_ui" class="section_container">
+                        <section class="section_content">
+                            <h5 id="anchor_3" class="tit">ecup.<span class="point">layerControl()</span> <span style="float:right">Layer DOM 제어하기</span></h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <strong>Options</strong>
+                                    <p class="option_type">Type: value or array</p>
+                                    <ul>
+                                        <li>
+                                            <div class="option_name">target , show , hide</div>
+                                            <div class="option_type">Type: String</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">레이어 표시</p>
+                                                <p class="t1 s1"><span class="code">• target: </span> 제어될 레이어 Dom </p>
+                                                <p class="t1 s1"><span class="code">• show: </span> 레이어 활성화 이벤트 할당 Dom (ex. button)</p>
+                                                <p class="t1 s1"><span class="code">• hide: </span> 레이어 비활성화 이벤트 할당 Dom (ex. button)</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="option_more_desc">
+                                    ** <br /> 레이어를 보다 직관적이고, 쉽게 제어할 수 있는 기능입니다.
+                                </p>
+
+                                <strong>Example</strong>
+                                <div class="box_code code_js">
+                                    <p>// 단일 요소 제어하기</p>
+                                    <p>ecup.layerControl('.layer','.open_btn','close_btn');</p>
+                                    <p> </p>
+                                    <p>// 여러 요소 제어하기</p>
+                                    <p>ecup.layerControl(['.layer','.dimmed'],['.open_btn','.profile_img'],['close_btn','.submit_btn']);</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="section_content">
+                            <h5 id="anchor_4" class="tit">ecup.<span class="point">selectControl()</span><span style="float:right">selectbox(custom) 제어하기</span></h5>
+                            <div class="inner">
+                                <div class="option_box">
+                                    <strong>Options</strong>
+                                    <p class="option_type">Type: String</p>
+                                    <ul>
+                                        <li>
+                                            <div class="option_name">button , list , attribute</div>
+                                            <div class="option_type">Type: String</div>
+                                            <div class="option_detail">
+                                                <p class="option_desc">리스트 표시</p>
+                                                <p class="t1 s1"><span class="code">• button: </span> 리스트 활성화 시킬 이벤트 할당 Dom </p>
+                                                <p class="t1 s1"><span class="code">• show: </span> 활성화 될 리스트 Dom</p>
+                                                <p class="t1 s1"><span class="code">• hide: </span> 활성화와 함께 추가될 기타 속성 (ex. aria)</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="option_more_desc">
+                                    ** aria 속성도 함께 제어 <br /> selectbox(custom)를 보다 직관적이고, 쉽게 제어 할 수 있는 기능입니다.<br /> selectbox interaction 뿐만 아니라, aria-expanded, aria-selected, aria-hidden 과 같은 aria 속성도 함께 제어 됩니다.
+                                </p>
+
+                                <strong>Example</strong>
+                                <div class="box_code code_js">
+                                    <p>// option을 aria-select로 제어하기</p>
+                                    <p>ecup.selectControl('.button','.listbox',{'.option':'aria-selected'});</p>
+                                    <p> </p>
+                                    <p>// option을 클래스로 제어하기</p>
+                                    <p>ecup.selectControl('.button','.listbox',{'.option':'.selected'});</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
-            <div class="area_content">
+        </main>
+    </div>
+    <script src="./ecup_lib.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script>
+            $(window).scroll(function() {
+            var $nav = $('.area_nav');
+            if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+            else $nav.removeClass('nav_fixed');
+        });
 
-                <section class="section_content">
-                    <strong>Browser support</strong>
-                    <div class="box_code">
-                        <p>IE 8+ (possibly 9 also), latest of Chrome/FF/Safari, iOS 7+ and Android 2.1+ (except 3.x)</p>
-                    </div>
-                    <br />
+        $('.area_sub_tab .tab').on('click', function(e){
+            e.preventDefault();
+            var id = $(this).attr('href');
+            $('.section_container').each(function(){
+                $(this).css({height:0});
+            })
+            $(id).css({height:'auto'});
 
-                    <strong>Load files or import library</strong>
-                    <div class="box_code code_html">
-                        <p>src="http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/js/ecup.js"</p>
-                    </div>
+            var $hrefTarget = $($(this).attr('href'));
+            var position = $hrefTarget.offset().top-150;
 
-                    <br />
-
-                    <strong>Initialize</strong>
-                    <div class="box_code code_js">
-                        <p>// 레이어 환경 설정 ( ex. 노출 타입, 디자인 테마 )</p>
-                        <p>ecup.markupLayer.set({</p>
-                        <p>    type: 'external',</p>
-                        <p>    theme: 'dark'</p>
-                        <p>    external: {</p>
-                        <p>         btnText: '마크업',</p>
-                        <p>         right: 50,</p>
-                        <p>         bottom: 50</p>
-                        <p>    },</p>
-                        <p>    buttonType: {</p>
-                        <p>         '로그인 상태': 'radio'</p>
-                        <p>    }</p>
-                        <p>});</p>
-                        <p> </p>
-                        <p>// 버튼 생성 ( 단일 or 그룹 )</p>
-                        <p>ecup.markupLayer({</p>
-                        <p>    '버튼1 이름': function() {</p>
-                        <p>        // 버튼1 기능</p>
-                        <p>    },</p>
-                        <p>    '버튼2 기능': function() {</p>
-                        <p>        // 버튼2 기능</p>
-                        <p>    }</p>
-                        <p>});</p>
-                        <p> </p>
-                    </div>
-
-                </section>
-
-                <section class="section_content">
-                    <h5 id="anchor_2" class="tit">ecup.markupLayer.<span class="point">set( { ... } )</span></h5>
-                    <div class="inner">
-                        <div class="option_box">
-                            <strong>Options</strong>
-                            <p class="option_type">Type: Obeject</p>
-                            <ul>
-                                <li>
-                                    <div class="option_name">type <i>(default: external)</i></div>
-                                    <div class="option_type">Type: string</div>
-                                    <div class="option_detail">
-                                        <p class="option_desc">레이어 보기 방식</p>
-                                        <p class="t1 s1"><span class="code">• external: </span>디자인을 가리지 않게 창 내부에서 보기</p>
-                                        <p class="t1 s1"><span class="code">• internal: </span>레이어 형식으로 보기</p>
-                                        <p class="t1 s1"><span class="code">• windows: </span>새창 형식으로 보기</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="option_name">theme <i>(default: dark)</i></div>
-                                    <div class="option_type">Type: string</div>
-                                    <div class="option_detail">
-                                        <p class="option_desc">레이어 디자인 색상 테마</p>
-                                        <p class="t1 s1"><span class="code">• default, dark, naver</span></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="option_name">buttonType <i>(default: check)</i></div>
-                                    <div class="option_type">Type: string</div>
-                                    <div class="option_detail">
-                                        <p class="option_desc">버튼그룹의 동작방식 설정</p>
-                                        <p class="t1 s1"><span class="code">• check: </span>그룹내 버튼들이 체크박스처럼 토글로 동작</p>
-                                        <p class="t1 s1"><span class="code">• button: </span>그룹내 버튼들이 일반 버튼처럼 동작</p>
-                                        <p class="t1 s1"><span class="code">• radio: </span>그룹내 버튼들이 라디오처럼 동작</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <strong>Example</strong>
-                        <div class="box_code code_js">
-                            <p>ecup.markupLayer.set({</p>
-                            <p>    type: 'windows', // windows, external, internal</p>
-                            <p>    theme: 'dark', // default, dark, naver</p>
-                            <p>    buttonType: {</p>
-                            <p>        '그룹이름 1' : 'check' // 해당 그룹의 버튼들이 체크박스 처럼 동작</p>
-                            <p>        '그룹이름 2' : 'radio' // 해당 그룹의 버튼들이 라디오 처럼 동작</p>
-                            <p>    }</p>
-                            <p>});</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section_content">
-                    <h5 id="anchor_3" class="tit">ecup.markupLayer(<span class="point"> { key : value, ... } </span>)</h5>
-                    <div class="inner">
-                        <div class="option_box">
-                            <strong>Options</strong>
-                            <p class="option_type">Type: Obeject</p>
-                            <ul>
-                                <li>
-                                    <div class="option_name">key : value</div>
-                                    <div class="option_type">Type <br /> - key : string <br /> - value : object or function</div>
-                                    <div class="option_detail">
-                                        <p class="option_desc">단일 버튼 이벤트 제어</p>
-                                        <p class="t1 s1"><span class="code">• key: </span> 버튼 이름 (버튼의 고유 값) </p>
-                                        <p class="t1 s1"><span class="code">• value: </span>버튼 이벤트 발생 시 동작할 내용</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <p class="option_more_desc">
-                            ** value<br />
-                            ecup 내에서 제공하는 <a href="#anchor_5"><strong>옵션</strong></a>을 사용하거나,<br />
-                            <strong>직접 함수</strong>를 할당하는 2가지 방법으로 사용할 수 있습니다.
-                        </p>
-                        <strong>Example</strong>
-                        <div class="box_code code_js">
-                            <p>// 버튼동작을 함수로 정의하기</p>
-                            <p>ecup.markupLayer({</p>
-                            <p>    '버튼1 이름': function() {</p>
-                            <p>        // 버튼1 기능</p>
-                            <p>    },</p>
-                            <p>    '버튼2 이름': function() {</p>
-                            <p>        // 버튼2 기능</p>
-                            <p>    }</p>
-                            <p>});</p>
-                            <p> </p>
-                            <p>// 버튼동작을 옵션으로 정의하기</p>
-                            <p>ecup.markupLayer({</p>
-                            <p>    '버튼1 이름': {</p>
-                            <p>        target: '#div', // 옵션을 적용시킬 타깃의 셀렉터,</p>
-                            <p>        addClass: 'class1 class2 class3' // 타깃에게 부여할 옵션 1 (<a href="#anchor_5">옵션의 종류 보기</a>)</p>
-                            <p>        toggleAttr: 'aria-label="닫기"' // 타깃에게 부여할 옵션 2 .. (여러개 가능)</p>
-                            <p>    },</p>
-                            <p>    '버튼2 이름': ...</p>
-                            <p>});</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section_content">
-                    <h5 id="anchor_4" class="tit">ecup.markupLayer(<span class="point"> name </span>)<span class="point">.group</span>( <span class="point">target</span>, { key : value, ... } )</h5>
-                    <div class="inner">
-                        <div class="option_box">
-                            <div class="options">
-                                <strong>Name</strong>
-                                <p class="option_type">Type: String</p>
-                                <ul>
-                                    <li>
-                                        <div class="option_detail">
-                                            <p class="option_desc">버튼 그룹명</p>
-                                            <p class="t1 s1"><span class="code">• 그룹을 식별하는 고유한 키값 (언어 무관)</span></p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="options">
-                                <strong>Group Options</strong>
-                                <p class="option_type">Type: Obeject</p>
-                                <ul>
-                                    <li>
-                                        <div class="option_name">target</div>
-                                        <div class="option_type">Type: String</div>
-                                        <div class="option_detail">
-                                            <p class="option_desc">공동 target 정의</p>
-                                            <p class="t1 s1"><span class="code">• key: </span> 버튼 이름 (버튼의 고유 값) </p>
-                                            <p class="t1 s1"><span class="code">• value: </span>버튼 이벤트 발생 시 동작할 내용</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="option_name">key : value</div>
-                                        <div class="option_type">Type <br /> - key : string <br /> - value : object or function</div>
-                                        <div class="option_detail">
-                                            <p class="option_desc">버튼 이벤트 제어</p>
-                                            <p class="t1 s1"><span class="code">• key: </span> 버튼 이름 (버튼의 고유 값) </p>
-                                            <p class="t1 s1"><span class="code">• value: </span>버튼 이벤트 발생 시 동작할 내용</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p class="option_more_desc">
-                            ** Group Options<br />
-                            ▪ <strong>target</strong> : 그룹내의 버튼들의 여러 공동타깃을 한번에 정의 할 수 있습니다. <br />
-                            ▪ <strong>key : value</strong> : ecup.markupLayer( { . . . } )에서의  와 사용 방법이 동일합니다. <br />
-                        </p>
-                        <p class="option_more_desc">
-                            ** 단일 버튼과 달리 그룹 버튼은 버튼의 타입을 지정할 수 있습니다.<br />
-                        </p>
-                        <strong>Example</strong>
-                        <div class="box_code code_js">
-                            <p>// 그룹화 하기</p>
-                            <p>ecup.markupLayer('그룹 이름').group({</p>
-                            <p>    '버튼1 이름': function() {</p>
-                            <p>        // 버튼1 기능</p>
-                            <p>    },</p>
-                            <p>    '버튼2 이름': {</p>
-                            <p>        target: '#div',</p>
-                            <p>        addClass: 'class1 class2 class3'</p>
-                            <p>    }</p>
-                            <p>});</p>
-                            <p> </p>
-                            <p>// 동작 방식 설정하기</p>
-                            <p>// ecup.markupLayer.set 설정에서 한번에 설정도 가능하다. (<a href="#anchor_2">ecup.markupLayer.set</a>)</p>
-                            <p>ecup.markupLayer('그룹 이름').setType('radio').group({</p>
-                            <p>    ...</p>
-                            <p>});</p>
-                            <p> </p>
-                            <p>// 옵션의 공통 타깃을 정의 (group 함수의 마지막 인자가 버튼정의, 그 이전의 모든 인자가 공통 타깃이 됨)</p>
-                            <p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
-                            <p>    '버튼1 이름': function() {</p>
-                            <p>        // 일반 함수로 주면 공통 타깃과 무관하게 그냥 적용.</p>
-                            <p>    },</p>
-                            <p>    '버튼2 이름': { </p>
-                            <p>        // 타깃을 주지 않으면 옵션들이 공통 타깃에게 적용됨.</p>
-                            <p>        addClass: 'class1 class2 class3' // 즉, #div, .test, #span 에 적용.</p>
-                            <p>    },</p>
-                            <p>    '버튼3 이름': {</p>
-                            <p>        // 타깃을 옵션에서 새로 부여하면 공통타깃은 무시되고 현재 타깃에게 적용.</p>
-                            <p>        target: '#div',</p>
-                            <p>        hide: 400 // 즉, #div 에만 적용</p>
-                            <p>    }</p>
-                            <p>});</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="section_content">
-                    <h5 id="anchor_5" class="tit">Button Options</h5>
-                    <div class="inner">
-                        <div class="option_box">
-                            <div class="options">
-                                <strong>클래스</strong>
-                                <p class="option_type">복수적용 : 공백</p>
-                                <ul>
-                                    <li>
-                                        <div class="option_detail">
-                                            <p class="option_desc">추가</p>
-                                            <p class="t1 s1"><span class="code">addClass: 'class1 class2'</span> </p>
-                                            <p class="option_desc">삭제</p>
-                                            <p class="t1 s1"><span class="code">removeClass: 'class1 class2'</span> </p>
-                                            <p class="option_desc">토글</p>
-                                            <p class="t1 s1"><span class="code">toggleClass: 'class1 class2'</span> </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="options">
-                                <strong>속성</strong>
-                                <p class="option_type">복수적용 : 공백 or 쉼표(,)</p>
-                                <ul>
-                                    <li>
-                                        <div class="option_detail">
-                                            <p class="option_desc">추가</p>
-                                            <p class="t1 s1"><span class="code">addAttr: 'role="button" aria-label="닫기"'</span> </p>
-                                            <p class="option_desc">삭제</p>
-                                            <p class="t1 s1"><span class="code">removeAttr: 'role, aria-label'</span> </p>
-                                            <p class="option_desc">토글</p>
-                                            <p class="t1 s1"><span class="code">toggleAttr: 'role="button", aria-label="열기"'</span> </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="options">
-                                <strong>인라인 스타일</strong>
-                                <p class="option_type">복수적용 : 쉼표(,)</p>
-                                <ul>
-                                    <li>
-                                        <div class="option_detail">
-                                            <p class="option_desc">추가</p>
-                                            <p class="t1 s1"><span class="code">addStyle: 'font-size: 13px; color #333;'</span> </p>
-                                            <p class="option_desc">삭제</p>
-                                            <p class="t1 s1"><span class="code">removeStyle: 'font-size, color'</span> </p>
-                                            <p class="option_desc">토글</p>
-                                            <p class="t1 s1"><span class="code">toggleStyle: 'width: 100%; background: red;'</span> </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="options">
-                                <strong>Display</strong>
-                                <ul>
-                                    <li>
-                                        <div class="option_detail">
-                                            <p class="option_desc">보이기</p>
-                                            <p class="t1 s1"><span class="code">show: 400</span> </p>
-                                            <p class="option_desc">숨기기</p>
-                                            <p class="t1 s1"><span class="code">hide: 0</span> </p>
-                                            <p class="option_desc">토글</p>
-                                            <p class="t1 s1"><span class="code">toggle: 0</span> </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p class="option_more_desc">
-                        ** 마크업 디자인 검수시 <strong>자주 사용되는 동작</strong>을 미리 정의해 놓았습니다.<br />
-
-                        </p>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-    </main>
-</div>
-<script src="./ecup_lib.js"></script>
-<script src="../js/jquery-3.3.1.min.js"></script>
-<script>
-    $(window).scroll(function() {
-        var $nav = $('.area_nav');
-        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-        else $nav.removeClass('nav_fixed');
-    });
-
-    $('.area_sub_tab .tab').click(function() {
-        var $hrefTarget = $($(this).attr('href'));
-        var position = $hrefTarget.offset().top-150;
-
-        $('html,body').animate({scrollTop:position}, 500);
-    });
-</script>
+            $('html,body').delay(100).animate({scrollTop:position}, 300);
+        })
+    </script>
 </body>
+
 </html>
