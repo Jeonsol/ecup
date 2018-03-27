@@ -405,30 +405,69 @@
 		/* 보이지 않게 내장되게 그려줌 */
 		function internal($wrap) {
 
+			var topOrigin, showEvent, animationType;
+
+			// check browser
+			var isPC = false
+			var isIE8_IE9 = false;
+			var browser = $.checkBrowser();
+			if (browser === 'IE8' || browser === 'IE9') {
+				isPC = true;
+				isIE8_IE9 = true;
+			} else if (browser === 'PC') {
+				isPC = true;
+			}
+
+			// DOM 생성 초기화
 			var $body = $(document.body);
-			$body.append($wrap);
+			$btnHide = $('<a>', {class: '__NTS_markup_hide', role: 'button', 'aria-label': '마크업검수 레이어 숨기기'})
+			$body.append($wrap.append($btnHide));
 
-			var topOrigin = -$wrap.height();
+			topOrigin = -$wrap.outerHeight();
 
-            $wrap.css({
-				top: topOrigin,
-				maxWidth: '400px',
-				opacity: 0.5
-			});
+			// 이벤트 바인딩 - PC 와 모바일일 경우 이벤트가 다름
+			var target = markupLayerManager.internal ? $(markupLayerManager.internal) : $body;
+			$btnHide.click(hideLayer);
+			if (isPC) target.dblclick(showLayer);
+			else target.dbltouch(showLayer, 200);
 
-			$body.longClick(function(e) {
-				$wrap.animate({
-					top: 0,
-					opacity: 1
-				}, 300);
-			}, 1000);
-
-			$body.on('mousedown', function(e) {
-				$wrap.animate({
+			// IE8, IE9 일경우 transform 미지원으로 jQuery 애니메이션
+			if (isIE8_IE9) {
+				$wrap.css({
 					top: topOrigin,
+					maxWidth: '500px',
 					opacity: 0.5
-				}, 300);
-			});
+				});
+			} else {
+				$wrap.css({
+					transform: 'translateY(' + topOrigin + 'px)',
+					maxWidth: '500px',
+					opacity: 0.5,
+				});
+			}
+
+			function showLayer() {
+				setLayer(0, 1);
+			}
+
+			function hideLayer() {
+				setLayer(topOrigin, 0.5);
+			}
+
+			function setLayer(destTop, destOpacity) {
+				if (isIE8_IE9) {
+					$wrap.animate({
+						top: destTop,
+						opacity: destOpacity
+					}, 500);
+				} else {
+					$wrap.css({
+						transform: 'translateY('+ destTop + 'px)',
+						opacity: destOpacity,
+						transition: 'transform 0.5s, opacity 0.5s'
+					}, 300);
+				}
+			}
 		}
 
 		/* 화면상에 보이도록 그려줌 */
@@ -909,33 +948,18 @@
 
 	}
 
-	jQuery.fn.longClick = function(fn, ms) {
+	jQuery.fn.dbltouch = function(fn, ms) {
 
-		var event;
-        var deviceFilter = 'win16|win32|win64|mac';
+		var $target = this,
+			dbltouchFlag = false;
 
-        var mousedownEvent = 'mousedown',
-            mouseupEvent = 'mouseup';
-
-        // check mobile device
-        if (navigator.platform && deviceFilter.indexOf(navigator.platform.toLowerCase()) < 0) {
-            mousedownEvent = 'touchstart',
-            mouseupEvent = 'touchend';
-        }
-
-		this.on(mousedownEvent, function(e) {
-			event = e;
-
+		$target.on('touchstart', function(e) {
+			if (dbltouchFlag) fn();
+		}).on('touchend', function() {
+			dbltouchFlag = true;
 			setTimeout(function() {
-				var eFlag = e;
-				if (event === eFlag) {
-					fn(e);
-				}
+				dbltouchFlag = false;
 			}, ms);
-		});
-
-		this.on(mouseupEvent, function(e) {
-			event = undefined;
 		});
 	}
 
@@ -1053,6 +1077,25 @@
             return opt;
         }
     }
+
+	jQuery.checkBrowser = function() {
+
+		var browser;
+		var deviceFilter = 'win16|win32|win64|mac|macintel';
+
+		if (navigator.platform && deviceFilter.indexOf(navigator.platform.toLowerCase()) < 0) {
+			browser = 'MOBILE';
+		} else {
+			browser = 'PC'
+
+			if (navigator.appName == 'Microsoft Internet Explorer') {
+				var regExp = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+				if (regExp.exec(navigator.userAgent)) browser = 'IE' + parseFloat(RegExp.$1);
+			}
+		}
+
+		return browser;
+	}
 
 }, function() {
 
