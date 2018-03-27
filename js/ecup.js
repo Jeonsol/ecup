@@ -210,20 +210,16 @@
         function renderLayer(paintModule) {
 
 			// 최상위 DOM 생성
-            var $wrap = $('<div />', {
-                class: '__NTS_markup ' + markupLayerManager.theme
-            });
+	        var $wrap = $('<div class="__NTS_markup '+markupLayerManager.theme+'"></div>');
 
 			// 제어 영역 DOM 생성
-			var $controlArea = $('<div />', {
-				class: '__area_env'
-			}), $controlComment = $('<a href="#"><span class="__view"></span>UI 주석보기</a>');
+			var $controlArea = $('<div class = "__area_env"></div>');
+			var $controlComment = $('<a href="#"><span class="__view"></span>UI 주석보기</a>');
 			$controlArea.append($controlComment);
 
 			// 버튼 영역 DOM 생성
-			var $btnArea = $('<div />', {
-				class: '__area_btns'
-			});
+			var $btnArea = $('<div class="__area_btns"></div>');
+
 			$.each(markupLayerManager.buttonArray, function(index, button){
                 $btnArea.append(groupping(button, button.type));
             });
@@ -238,7 +234,7 @@
 
 			// 버튼 그룹 생성 및 개별 이벤트 할당
             function groupping(btnObj, groupType) {
-                var $groups = $('<div />', { class: '__area_btn'});
+                var $groups = $('<div class="__area_btn"><div/>');
 
 				if (btnObj.name === '__single') {
 					$groups.addClass('__area_single');
@@ -446,10 +442,10 @@
 				wrapBottom = markupLayerManager.external.bottom || wrapBottom;
 			}
 
-			var $externalWrap = $('<div>', {class: '__NTS_markup_wrap'}),
-				$btnShow = $('<a>', {class: '__NTS_markup_show', role: 'button', 'aria-label': '마크업검수 레이어 보기'}),
-				$btnShowText = $('<span>', {text: btnShowText}),
-                $btnHide = $('<a>', {class: '__NTS_markup_hide', role: 'button', 'aria-label': '마크업검수 레이어 숨기기'});
+			var $externalWrap = $('<div class="__NTS_markup_wrap"></div>'),
+				$btnShow = $('<a class="__NTS_markup_show" role="button" aria-label="마크업검수 레이어 보기"></a>'),
+				$btnShowText = $('<span>'+btnShowText+'</span>'),
+                $btnHide = $('<a class="__NTS_markup_hide" role="button" aria-label="마크업검수 레이어 숨기기">');
 
 			$btnShow.click(onClickListenerBtnShow);
             $btnHide.click(onClickListenerBtnHide);
@@ -546,8 +542,14 @@
 			$(listBox).css('display','block');
 		});
 
-		var $selector = $(Object.keys(targetObj)[0]);
-		var selectorControl = targetObj[Object.keys(targetObj)[0]];
+		var $selector, selector;
+
+		for(var target in targetObj) {
+			selector = target;
+			$selector = $(target);
+		}
+
+		var selectorControl = targetObj[selector];
 
 		$selector.click(function() {
 			var $target = $(this);
