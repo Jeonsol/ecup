@@ -39,25 +39,29 @@
             <div class="area_content">
                 <div id="anchor_attr" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_1" class="tit">$(dom).<span class="point">Attr()</span> <span style="float:right">요소 속성 제어</span></h5>
+                        <h5 id="anchor_1" class="tit"><span class="code">$(dom).<span class="point">handleAttr()</span></span> <span style="float:right">요소 속성 제어</span></h5>
                         <div class="inner">
-                            <p class="mg_top1">기존의 jQuery에서 <span class="code">.attr()</span> 메서드를 통해 속성을 다뤘는데</p>
-                            <p>이 기능을 좀 더 직관적이고 여러가지 속성을 한번에 다룰 수 있도록 확장시켰습니다.</p>
+							<div class="option_box">
+								<strong>Attributes</strong>
+								<p class="option_type">Type: String</p>
+								<div class="option_detail">
+									<p class="option_desc">속성값</p>
+									<p class="t1 s1 code">여러 속성을 하나의 문자열 인자로도, 여러개의 문자열 인자로도 줄 수 있다. (예시 참조)</p>
+								</div>
+								<p class="t1 s1"></p>
+							</div>
                             <p class="mg_top1">1) 속성 <strong>추가하기</strong></p>
                             <div class="box_code code_js">
-                                <p>// 예시</p>
                                 <p>$('#test').addAttr('role="button" aria-label="닫기"');</p>
                                 <p>$('#test').addAttr('role="button"', 'aria-label="닫기"');</p>
                             </div>
                             <p class="mg_top2">2) 속성 <strong>삭제하기</strong></p>
                             <div class="box_code code_js">
-                                <p>// 예시</p>
                                 <p>$('#test').removeAttr('role, aria-label');</p>
                                 <p>$('#test').removeAttr('role', 'aria-label');</p>
                             </div>
                             <p class="mg_top2">3) 속성 <strong>토글하기</strong></p>
                             <div class="box_code code_js">
-                                <p>// 예시</p>
                                 <p>$('#test').toggleAttr('role="button", aria-label="열기"');</p>
                                 <p>$('#test').toggleAttr('role="button"', 'aria-label="열기"');</p>
                             </div>
@@ -67,10 +71,17 @@
 
                 <div id="anchor_inline" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_2" class="tit">$(dom).<span class="point">Style()</span> <span style="float:right">요소 인라인 스타일 제어</span></h5>
+                        <h5 id="anchor_2" class="tit"><span class="code">$(dom).<span class="point">handleStyle()</span></span> <span style="float:right">요소 인라인 스타일 제어</span></h5>
                         <div class="inner">
-                            <p class="mg_top1">기존의 jQuery에서 <span class="code">.css()</span> 메서드를 통해 인라인스타일을 다뤘는데</p>
-                            <p>이 기능을 좀 더 직관적이고 여러가지 스타일을 한번에 다룰 수 있도록 확장시켰습니다.</p>
+							<div class="option_box">
+								<strong>Styles</strong>
+								<p class="option_type">Type: String</p>
+								<div class="option_detail">
+									<p class="option_desc">스타일값</p>
+									<p class="t1 s1 code">여러 스타일을 하나의 문자열 인자로도, 여러개의 문자열 인자로도 줄 수 있다. (예시 참조)</p>
+								</div>
+								<p class="t1 s1"></p>
+							</div>
                             <p class="mg_top1">1) 인라인스타일 <strong>추가하기</strong></p>
                             <div class="box_code code_js">
                                 <p>$('#test').addStyle('background-color: #555; color: red;');</p>
@@ -92,7 +103,7 @@
 
                 <div id="anchor_sprite" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_3" class="tit">$(dom).<span class="point">sprite()</span><span style="float:right">스프라이트 이미지 gif 효과</span></h5>
+                        <h5 id="anchor_3" class="tit"><span class="code">$(dom).<span class="point">sprite()</span></span><span style="float:right">스프라이트 이미지 gif 효과</span></h5>
                         <div class="inner">
                             <div class="option_box">
                                 <strong>Options</strong>
