@@ -722,30 +722,36 @@
 
 				if(commentManager.show) {
 
-					var $commentDom = $('<a href="#" class="__ecup_comment off"></a>');
-					var $commentLabel = $('<span class="__ecup_blind">마크업 코멘트</span>');
-					$commentDom.append($commentLabel).append($commentArea);
+					var $commentDom = $('<div class="__ecup_comment"></div>');
+					var $commentBtn = $('<button type="button" class="__comment_btn"><span class="__comment_blind">코멘트토글</span></button>');
+
+					$commentDom.append($commentBtn).append($commentArea);
 
 					var $target = $(target);
+
 					if($target.length) {
-						var top = $target.offset().top;
-						var left = $target.offset().left;
+						var top = $target.offset().top/$(window).height()*100+'%';
+						var left = $target.offset().left/$(window).width()*100+'%';
 					}
 
 					$commentDom.css({'top': top, 'left': left});
 
-					if ($target.css('display')==='none') $commentDom.css('display','none');
-					else $commentDom.css('display','block');
+					if($target.css('display')==='none') {
+						$commentDom.css('display','none');
+					}
+
+					else {
+						$commentDom.css('display','block');
+					}
 
 					commentManager.targetDom.append($commentDom);
 
-					$commentDom.click(function(e) {
-						var $targetComment = $(this);
-						e.preventDefault();
+					$commentBtn.click(function() {
+						var $commentArea = $(this).next('.__comment_area');
 
-						$targetComment.toggleClass('off');
+						$commentArea.toggle();
 
-						var $commentAreaRightOffset = $targetComment.offset().left+$targetComment.innerWidth();
+						var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
 
 						if($(window).width() - $commentAreaRightOffset < 20) {
 							$commentArea.css({'width':'100px','margin-left':'-101px'});

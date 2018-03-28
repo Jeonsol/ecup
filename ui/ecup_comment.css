@@ -1,40 +1,38 @@
 @charset "utf-8";
 
 /*designer comment*/
+.__ecup_comment_section {
+
+}
 .__ecup_comment {
-	display: block;
 	position: absolute;
-	top: -8px;
-	left: -8px;
 	z-index: 1000;
-	max-width: 200px;
-	margin: -5px 0 0 -5px;
-	padding: 10px 16px 12px 14px;
-	border: 2px solid #333;
+}
+.__ecup_comment .__comment_btn {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 24px;
+	height: 24px;
+	border-radius: 100%;
+	border: 2px solid #000;
+	background-color: #ffec00;
+}
+.__ecup_comment .__comment_area {
+	display: none;
+	max-width: 100px;
+	border: 2px solid #000;
 	border-radius: 5px;
-	background-color:yellow;
-	font-family: Helvetica, sans-serif;
-	font-size: 15px;
-	color:#333;
-	opacity: 0.95;
+	background-color: #fff;
+	padding: 0.5em;
+	margin-left: 2em;
+	font-size: 0.8em;
 }
 
-.__ecup_blind {
+.__comment_blind {
 	position: absolute;
 	clip: rect(0 0 0 0);
 	width: 1px;
 	height: 1px;
 	margin: -1px;
-}
-
-
-.__ecup_comment.off {
-	width: 18px;
-	height: 18px;
-	padding: 0;
-	border-radius:9px;
-}
-
-.__ecup_comment.off .__comment_area {
-	display:none;
 }
