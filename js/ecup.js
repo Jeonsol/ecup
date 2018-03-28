@@ -37,7 +37,10 @@
 	  };
 	}
 
-    // create $.ecup
+	// Ecup CSS 파일 추가
+	$(document.head).append($('<link rel="stylesheet" href="http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/ui/ecup_ui.css">'));
+
+    // create $.Ecup
     jQuery.Ecup = function() {
 		var modules = ['markupLayer','comment'];
 
@@ -276,7 +279,10 @@
 				.append($controlArea)
 				.append($btnArea);
 
-            return paintModule($wrap);
+			$(window).load(function() {
+				paintModule($wrap);
+			});
+            return 0;
 
 
 			// 버튼 그룹 생성 및 개별 이벤트 할당
@@ -530,7 +536,7 @@
 
 			var $externalWrap = $('<div class="__NTS_markup_wrap"></div>'),
 				$btnShow = $('<a class="__NTS_markup_show" role="button" aria-label="마크업검수 레이어 보기"></a>'),
-				$btnShowText = $('<span>'+btnShowText+'</span>'),
+				$btnShowText = $('<span>' + btnShowText + '</span>'),
                 $btnHide = $('<a class="__NTS_markup_hide" role="button" aria-label="마크업검수 레이어 숨기기">');
 
 			$btnShow.click(onClickListenerBtnShow);
@@ -1109,7 +1115,6 @@
                 })
             } else {
                 if(animateEvent == null) {
-                    console.log(delay);
                     animateEvent = $target.delay(delay).animate(css, {
                        duration: dur
                    })
