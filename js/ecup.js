@@ -1058,7 +1058,8 @@
     }
 
     function convertAnimation($target, func, option){
-        var duration = isNaN(Number(option.duration)) == true ? Number(option.duration.replace('s','')) * 1000 : Number(option.duration);
+        var duration = option.duration != null ? option.duration : 1000;
+            duration = isNaN(Number(duration)) == true ? Number(duration.replace('s','')) * 1000 : Number(duration);
         var fillMode = option.fillMode != null ? option.fillMode : 'none';
         var delay = option.delay != null ? option.delay : 0,
             delay = isNaN(Number(delay)) == true ? Number(delay.replace('s','')) * 1000 : Number(delay);
