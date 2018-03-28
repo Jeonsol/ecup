@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NTS Markup Library : jQuery 확장 메서드</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="./ecup_lib.css">
+</head>
+<body>
+<div class="wrap">
+    <header class="header">
+        <div class="inner">
+            <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="section_intro">
+            <h2 class="tit">라이브러리 소개</h2>
+            <h3 class="develop_name">Ecup.js</h3>
+            <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
+            <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
+        </section>
+
+
+        <div class="content">
+            <div class="area_nav">
+                <div class="area_tab">
+                    <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                    <a href="#" class="tab on">jQuery 확장 메서드</a>
+                    <a href="./ecup_etc.html" class="tab">부가 기능</a>
+                </div>
+                <div class="area_sub_tab">
+                    <a href="#anchor_1" class="tab"># 속성</a>
+                    <a href="#anchor_2" class="tab"># 인라인 스타일</a>
+                    <a href="#anchor_3" class="tab"># 애니메이션</a>
+                </div>
+            </div>
+            <div class="area_content">
+
+                <section class="section_content">
+                    <h5 id="anchor_1" class="tit">1. DOM 의 속성을 다루는 메서드</h5>
+                    <div class="inner">
+                        <p class="mg_top1">기존의 jQuery에서 <span class="code">.attr()</span> 메서드를 통해 속성을 다뤘는데</p>
+                        <p>이 기능을 좀 더 직관적이고 여러가지 속성을 한번에 다룰 수 있도록 확장시켰습니다.</p>
+                        <p class="mg_top1">1) 속성 <strong>추가하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>// 예시</p>
+                            <p>$('#test').addAttr('role="button" aria-label="닫기"');</p>
+                            <p>$('#test').addAttr('role="button"', 'aria-label="닫기"');</p>
+                        </div>
+                        <p class="mg_top2">2) 속성 <strong>삭제하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>// 예시</p>
+                            <p>$('#test').removeAttr('role, aria-label');</p>
+                            <p>$('#test').removeAttr('role', 'aria-label');</p>
+                        </div>
+                        <p class="mg_top2">3) 속성 <strong>토글하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>// 예시</p>
+                            <p>$('#test').toggleAttr('role="button", aria-label="열기"');</p>
+                            <p>$('#test').toggleAttr('role="button"', 'aria-label="열기"');</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_2" class="tit">2. DOM 의 인라인 스타일을 다루는 메서드</h5>
+                    <div class="inner">
+                        <p class="mg_top1">기존의 jQuery에서 <span class="code">.css()</span> 메서드를 통해 인라인스타일을 다뤘는데</p>
+                        <p>이 기능을 좀 더 직관적이고 여러가지 스타일을 한번에 다룰 수 있도록 확장시켰습니다.</p>
+                        <p class="mg_top1">1) 인라인스타일 <strong>추가하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>$('#test').addStyle('background-color: #555; color: red;');</p>
+                            <p>$('#test').addStyle('background-color: #555', 'color: red');</p>
+                        </div>
+                        <p class="mg_top2">2) 인라인스타일 <strong>삭제하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>$('#test').removeStyle('color, font-size');</p>
+                            <p>$('#test').removeStyle('color', 'font-size');</p>
+                        </div>
+                        <p class="mg_top2">3) 인라인스타일 <strong>토글하기</strong></p>
+                        <div class="box_code code_js">
+                            <p>$('#test').toggleStyle('width: 100%; height: 100%;');</p>
+                            <p>$('#test').toggleStyle('width: 100%', 'height: 100%');</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_3" class="tit">$(dom).<span class="point">sprite()</span><span style="float:right">스프라이트 이미지 gif 효과</span></h5>
+                    <div class="inner">
+                        <div class="option_box">
+                            <strong>Options</strong>
+                            <p class="option_type">Type: String</p>
+                            <ul>
+                                <li>
+                                    <div class="option_name">url</div>
+                                    <div class="option_type">Type: String</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">이미지 경로</p>
+                                        <p class="t1 s1"><span class="code">• 현재 요소에 적용된 이미지 외의 다른 이미지로 변경하고자 할 때 사용</span> </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">count</div>
+                                    <div class="option_type">Type: Number ( default: 10 )</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">스프라이트 프래임 개수</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">pos</div>
+                                    <div class="option_type">Type: Number ( default: 40 )</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">프레임 하나의 이미지 크기</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">orient</div>
+                                    <div class="option_type">Type: String ( default: 'vertical')</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">프레임 이동방향</p>
+                                        <p class="t1 s1"><span class="code">• vertical: </span> background-position-x 변경 </p>
+                                        <p class="t1 s1"><span class="code">• horizontal: </span> background-position-y 변경 </p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">duration</div>
+                                    <div class="option_type">Type: Number ( default : 0.1 )</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">프레임 전환 시간</p>
+                                        <p class="t1 s1"><span class="code">• 초단위 </span></p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="option_name">mode</div>
+                                    <div class="option_type">Type: String ( default: 'fix')</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">애니메이션 효과 후 이미지 상태</p>
+                                        <p class="t1 s1"><span class="code">• fix: </span> 애니메이션 동작 후 이미지 변경 상태 유지 </p>
+                                        <p class="t1 s1"><span class="code">• remove: </span> 애니메이션 동작 후 기본 상태로 돌아감</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <strong>Example</strong>
+                        <div class="box_code code_js">
+                            <p>$('.icon_select').sprite({</p>
+            				<p>	url: '../test.png',</p>
+            				<p>	count: 13,</p>
+            				<p>	pos: 40,</p>
+            				<p>	orient: 'vertical',</p>
+            				<p>	duration: 0.2,</p>
+            				<p>	mode: 'remove'</p>
+            				<p> });</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="./ecup_lib.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $(window).scroll(function() {
+        var $nav = $('.area_nav');
+        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+        else $nav.removeClass('nav_fixed');
+    });
+
+    $('.area_sub_tab .tab').click(function() {
+        var $hrefTarget = $($(this).attr('href'));
+        var position = $hrefTarget.offset().top-150;
+
+        $('html,body').animate({scrollTop:position}, 500);
+    });
+</script>
+</body>
+</html>

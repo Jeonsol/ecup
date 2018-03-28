@@ -9,7 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="css/merge_base.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_end.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_markup.css">
-	<link rel="stylesheet" href="css/comment.css">
+	<link rel="stylesheet" href="./ui/ecup_ui.css">
+	<link rel="stylesheet" href="./ui/ecup_comment.css">
 </head>
 <body>
 	<nav id="u_skip" class="u_skip">
@@ -48,9 +49,27 @@
 							<a href="#" role="menuitem" class="link_dropdown">PROFILE SETTINGS</a>
 							<a href="#" role="menuitem" class="link_dropdown">LOG OUT</a>
 						</div>
+						<div class="__test_layer_section">
+							<div class="__test_layer">
+								<div class="__test_thumb">
+									<img src="#p" width="105" height="105" alt="임시 이미지" class="__test_img">
+								</div>
+								<strong class="__test_name">Ryan Gibson</strong>
+								<span class="__test_address">Los Angeles, CA</span>
+								<p class="__test_desc">Hi, my name is Ryan Gilbson from Los Angeles, CA! love to paint, read, hang out and have lot of fun.</p>
+								<button type="button" class="__test_close">X</button>
+							</div>
+						</div>
 					</div>
 					<button type="button" class="button button_login" style="display: none;">LOGIN</button>
 					<button type="button" class="button button_app">GET THE APP</button>
+					<button type="button" class="__test_select_btn" aria-expanded="false" aria-haspopup="true">SEE TRANSLATION</button>
+					<div class="__test_menu_dropdown" role="menu" aria-hidden="true">
+						<a href="#" role="menuitem" class="__test_link_dropdown">SEE TRANSLATION</a>
+						<a href="#" role="menuitem" class="__test_link_dropdown">SHARE</a>
+						<a href="#" role="menuitem" class="__test_link_dropdown">MODIFY</a>
+						<a href="#" role="menuitem" class="__test_link_dropdown">DELETE</a>
+					</div>
 				</nav>
 			</div>
 		</header>
@@ -627,39 +646,41 @@
 	<div class="layer_popup" role="dialog" aria-hidden="true" tabindex="0">
 		<div class="inner"></div>
 	</div>
-	<script src="./js/jquery-3.3.1.min.js"></script>
+	<script src="./js/jquery-1.12.1.min.js"></script>
 	<script src="./js/ecup.js"></script>
 	<script>
-		var layer = $.ecup.markupLayer();
-
-		$(document).ready(function() {
-			var comments = $.ecup.comment();
-
-			comments.write({'.article_content':'콘텐트 영역입니다.','.gnb .area_user':'로그인 영역입니다.','.content_header .content_title':'타이틀 영역입니다.','.test_layer .link':'test'});
-			comments.write('.gnb .gnb_menu .button_app','콘텐트 영역입니다.');
-		});
-
-
-		layer.set({
+		ecup.markupLayer.set({
 		    type: 'internal',
+			theme: 'pink',
+			external: {
+				btnText: '마크업',
+				right: 50,
+				bottom: 50
+			},
+			internal: '#wrap',
 			buttonType: {
-		        '번역레이어': 'radio',
-				'로그인 상태': 'radio',
+				'로그인 상태': 'radio'
 		    }
 		});
 
-		layer('로그인 상태').group({
-		    '로그인 전': function(){
+		ecup.markupLayer('로그인 상태').group({
+		    '로그인 전': [function(){
 				$(".header .button_login").show();
 				$(".header .area_user").hide();
-			},
-		    '로그인 후': function(){
+			}, function(){
 				$(".header .button_login").hide();
 				$(".header .area_user").show();
-			}
+			}],
+		    '로그인 후': [function(){
+				$(".header .button_login").hide();
+				$(".header .area_user").show();
+			}, function(){
+				$(".header .button_login").show();
+				$(".header .area_user").hide();
+			}]
 		});
 
-		layer({
+		ecup.markupLayer({
 		    '하단 로딩 바': {
 				target: '.list_article',
 				toggleClass: 'is_finish',
@@ -670,7 +691,7 @@
 		    },
 		});
 
-		layer({
+		ecup.markupLayer({
 		    '하단 로딩 바2': {
 				target: '.list_article',
 				toggleClass: 'is_finish',
@@ -681,7 +702,109 @@
 		    },
 		});
 
-		layer.show();
+		ecup.markupLayer.show();
+
+		ecup.comment({
+			'.gnb .gnb_menu .button_app':'get the app',
+			'.gnb .gnb_menu .button_user':'로그인 영역 입니다.',
+			'.content_header .content_title':'제목영역입니다.'
+		});
+		ecup.comment('.content_image','레이블 이미지가 수정되었습니다. 설명문구도 수정되었습니다.');
+
+		ecup.layerControl('.article_menu .menu_dropdown','.article_menu .button_menu','.article_menu .menu_dropdown .link_dropdown');
+		ecup.layerControl('.__test_layer_section',['.gnb_menu .button_user .thumbnail_profile','.gnb_menu .button_app'],['.__test_close','.link_selective']);
+
+		ecup.selectControl('.button_language', '.list_language', {'.list_language .option':'aria-select'});
+		ecup.selectControl('.__test_select_btn', '.__test_menu_dropdown', {'.__test_link_dropdown':'.selected'});
+
+		// 이미지 스프라이트
+		$('.button_select').on('click', function(){
+			var $this = $(this);
+
+            if($this.attr('aria-pressed') == 'false') {
+				// $this.attr('aria-pressed', 'true');
+				$('.icon_select').sprite({
+					count: 17,
+					pos: 40,
+					orient: 'vertical',
+					duration: 0.2,
+					mode: 'remove'
+				});
+
+				$('.type_save').animation('layerUp', {
+					duration: '0.2s',
+	   				fillMode: 'forwards'
+			    });
+				$('.type_save').animation('layerDown', {
+					duration: '0.2s',
+					delay: '0.6s',
+			    });
+
+			} else {
+				// $this.attr('aria-pressed', 'false');
+				$('.icon_select').sprite({
+					url: 'http://view.gitlab.uit.navercorp.com/SELECTIVE/selective/raw/feature/end/src/img/select_out_2x_spritesheet.png',
+					count: 13,
+					pos: 40,
+					orient: 'vertical',
+					duration: 0.2,
+					mode: 'remove'
+				});
+
+				$('.type_cancle').animation('layerUpGray', {
+					duration: '0.2s',
+	   				fillMode: 'forwards'
+			    });
+				$('.type_cancle').animation('layerDown', {
+					duration: '0.2s',
+					delay: '0.6s',
+			    });
+			}
+
+			$this.toggleAttr('aria-pressed="true"');
+		})
+
+		// 애니메이션
+		$.animation({
+		    name: 'layerUp',
+		    animate: {
+		        0: {
+		            top: '100%',
+					background: '#ffec00',
+					color: '#000'
+		        },
+		        100: {
+		            top: '0',
+		        }
+		    },
+		});
+
+		$.animation({
+		    name: 'layerUpGray',
+		    animate: {
+		        0: {
+		            top: '100%',
+					background: '#eee',
+					color: '#000'
+		        },
+		        100: {
+		            top: '0',
+		        }
+		    },
+		});
+
+		$.animation({
+		    name: 'layerDown',
+		    animate: {
+		        0: {
+		            top: '0'
+		        },
+		        100: {
+		            top: '100%',
+		        }
+		    },
+		});
+
 	</script>
 </body>
 </html>

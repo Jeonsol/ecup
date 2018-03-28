@@ -18,6 +18,6 @@ for (var i = 0; i < html_boxs.length; ++i) {
     var newHTML = box.innerHTML.replace(/("[^"]*")/g, '<span class="val">$1</span>'); // 속성
     newHTML = newHTML.replace(/(&lt;[a-zA-Z]+)(?=&gt;|\s)/g, '<span class="tag">$1</span>'); // 태그
     newHTML = newHTML.replace(/(\/&gt;)/g, '<span class="tag">$1</span>'); // 태그
-    newHTML = newHTML.replace(/(\/\/[^\n]*(?=<\/p>))/gm, '<span class="cm">$1</span>'); // 주석
+    newHTML = newHTML.replace(/<p>(\/\/[^\n]*(?=<\/p>))/gm, '<p><span class="cm">$1</span>'); // 주석
     box.innerHTML = newHTML;
 }

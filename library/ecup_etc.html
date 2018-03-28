@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NTS Markup Library : 부가 기능</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="./ecup_lib.css">
+</head>
+<body>
+<div class="wrap">
+    <header class="header">
+        <div class="inner">
+            <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="section_intro">
+            <h2 class="tit">라이브러리 소개</h2>
+            <h3 class="develop_name">Ecup.js</h3>
+            <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
+            <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
+        </section>
+
+
+        <div class="content">
+            <div class="area_nav">
+                <div class="area_tab">
+                    <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                    <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
+                    <a href="#" class="tab on">부가 기능</a>
+                </div>
+                <div class="area_sub_tab">
+                    <a href="#anchor_1" class="tab"># 임시 이미지</a>
+                </div>
+            </div>
+            <div class="area_content">
+
+                <section class="section_content">
+                    <h5 id="anchor_1" class="tit">ecup.<span class="point">comment()</span> <span style="float:right">UI 메모 남기기</span></h5>
+                    <div class="inner">
+                        <div class="option_box">
+                            <strong>Options</strong>
+                            <p class="option_type">Type: String, String</p>
+                            <ul>
+                                <li>
+                                    <div class="option_name">target : comment</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">UI 코멘트 표시</p>
+                                        <p class="t1 s1"><span class="code">• target: </span> 코멘트가 표시될 dom </p>
+                                        <p class="t1 s1"><span class="code">• comment: </span> 코멘트 내용</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <strong>Property</strong>
+                            <ul>
+                                <li>
+                                    <div class="option_name">show</div>
+                                    <div class="option_type">Type: boolean</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">UI 코멘트 화면 표시 유무</p>
+                                        <p class="t1 s1"><span class="code">• true: </span>보이기</p>
+                                        <p class="t1 s1"><span class="code">• false: </span>숨기기</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="option_more_desc">
+                            ** <br />
+                            <strong>디자이너</strong>는 마크업개발자에게 제플린의 코멘트 기능을 활용해 기타 의견을 전달할 수 있지만,<br />
+                            <strong>마크업개발자</strong>는 디자이너에게 UI 검수를 받을 때 메모를 남길 수 없어 메신저로 의견을 전달해야 했습니다.<br />
+                            UI 메모 남기기 기능은 이러한 <strong class="bold"> 부가적인 커뮤니케이션 비용을 줄이기 위해</strong> 고안된 기능입니다.<br />
+                        </p>
+
+                        <strong>Example</strong>
+                        <div class="box_code code_js">
+                            <p>// 단일 메모 쓰기</p>
+                            <p>ecup.comment('#test_box', '테스트용 메모입니다.');</p>
+                            <p> </p>
+                            <p>// 여러 메모를 한번에 달기</p>
+                            <p>ecup.comment({</p>
+                            <p>    '#test_box1': '첫번째 테스트박스입니다.',</p>
+                            <p>    '#test_box2': '두번째 테스트박스입니다.',</p>
+                            <p>    '#test_box3': '세번째 테스트박스입니다.'</p>
+                            <p>});</p>
+                            <p> </p>
+                            <p>// 메모 화면에서 감추기</p>
+                            <p>ecup.comment.show = false; // 감추기</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_2" class="tit">&lt;img src=<span class="point">"#"</span> /&gt; <span style="float:right">임시이미지 자동적용 기능</span></h5>
+                    <div class="inner">
+                        <p class="mg_top1">사내에서 이미 임시이미지 기능이 구현된 웹사이트가 있습니다.</p>
+                        <p><a href="http://dev.ui.naver.com/tmp/generator.html" target="_blank">http://dev.ui.naver.com/tmp/generator.html</a> 이 사이트로 여러 옵션을 선택해서 생성한 태그를 복사 해오시면 됩니다.</p>
+                        <p><em>"이 조차도 귀찮다!"</em> 하시는 분들을 위해 만든 기능으로</p>
+                        <p>사내 임시이미지 사이트를 통해 동작하며, <span class="code">jQuery.js</span> 와 <span class="code">Ecup.js</span>가 추가되있으면 <strong class="code">src="#"</strong> 만으로 임시 이미지를 불러옵니다.</p>
+                        <p>다만 현재는 1:1 비율의 이미지만을 지원하며 주로 프로필 사진이나 썸네일 사진에서 활용하기 좋을 것이라 생각됩니다.</p>
+
+                        <strong class="mg_top2" style="display:block;">Example</strong>
+                        <div class="box_code code_html">
+                            <p>// 랜덤 이미지 ( 인물, 라이프스타일, 배경 )</p>
+                            <p>&lt;img src="#" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p> </p>
+                            <p>// 인물 랜덤 이미지</p>
+                            <p>&lt;img src="#p" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p>&lt;img src="#사람" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p> </p>
+                            <p>// 라이프스타일 랜덤 이미지</p>
+                            <p>&lt;img src="#l" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p>&lt;img src="#라이프스타일" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p> </p>
+                            <p>// 자연 랜덤 이미지</p>
+                            <p>&lt;img src="#n" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p>&lt;img src="#자연" width="100" height="100" alt="임시이미지"/&gt;</p>
+							<p> </p>
+							<p>// 고정 이미지 (뒤에 숫자 1 ~ 3)</p>
+							<p>&lt;img src="#p1" width="100" height="100" alt="임시이미지"/&gt;</p>
+							<p>&lt;img src="#자연3" width="100" height="100" alt="임시이미지"/&gt;</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_3" class="tit">ecup.<span class="point">layerControl()</span> <span style="float:right">Layer DOM 제어하기</span></h5>
+                    <div class="inner">
+                        <div class="option_box">
+                            <strong>Options</strong>
+                            <p class="option_type">Type: value or array</p>
+                            <ul>
+                                <li>
+                                    <div class="option_name">target , show , hide</div>
+                                    <div class="option_type">Type: String</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">레이어 표시</p>
+                                        <p class="t1 s1"><span class="code">• target: </span> 제어될 레이어 Dom </p>
+                                        <p class="t1 s1"><span class="code">• show: </span> 레이어 활성화 이벤트 할당 Dom (ex. button)</p>
+                                        <p class="t1 s1"><span class="code">• hide: </span> 레이어 비활성화 이벤트 할당 Dom (ex. button)</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="option_more_desc">
+                            ** <br />
+                            레이어를 보다 직관적이고, 쉽게 제어할 수 있는 기능입니다.
+                        </p>
+
+                        <strong>Example</strong>
+                        <div class="box_code code_js">
+                            <p>// 단일 요소 제어하기</p>
+                            <p>ecup.layerControl('.layer','.open_btn','close_btn');</p>
+                            <p> </p>
+                            <p>// 여러 요소 제어하기</p>
+                            <p>ecup.layerControl(['.layer','.dimmed'],['.open_btn','.profile_img'],['close_btn','.submit_btn']);</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_content">
+                    <h5 id="anchor_4" class="tit">ecup.<span class="point">selectControl()</span><span style="float:right">selectbox(custom) 제어하기</span></h5>
+                    <div class="inner">
+                        <div class="option_box">
+                            <strong>Options</strong>
+                            <p class="option_type">Type: String</p>
+                            <ul>
+                                <li>
+                                    <div class="option_name">button , list , attribute</div>
+                                    <div class="option_type">Type: String</div>
+                                    <div class="option_detail">
+                                        <p class="option_desc">리스트 표시</p>
+                                        <p class="t1 s1"><span class="code">• button: </span> 리스트 활성화 시킬 이벤트 할당 Dom </p>
+                                        <p class="t1 s1"><span class="code">• show: </span> 활성화 될 리스트 Dom</p>
+                                        <p class="t1 s1"><span class="code">• hide: </span> 활성화와 함께 추가될 기타 속성 (ex. aria)</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="option_more_desc">
+                            ** aria 속성도 함께 제어 <br />
+                            selectbox(custom)를 보다 직관적이고, 쉽게 제어 할 수 있는 기능입니다.<br />
+                            selectbox interaction 뿐만 아니라, aria-expanded, aria-selected, aria-hidden 과 같은 aria 속성도 함께 제어 됩니다.
+                        </p>
+
+                        <strong>Example</strong>
+                        <div class="box_code code_js">
+                            <p>// option을 aria-select로 제어하기</p>
+                            <p>ecup.selectControl('.button','.listbox',{'.option':'aria-selected'});</p>
+                            <p> </p>
+                            <p>// option을 클래스로 제어하기</p>
+                            <p>ecup.selectControl('.button','.listbox',{'.option':'.selected'});</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+</div>
+<script src="./ecup_lib.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $(window).scroll(function() {
+        var $nav = $('.area_nav');
+        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+        else $nav.removeClass('nav_fixed');
+    });
+
+    $('.area_sub_tab .tab').click(function() {
+        var $hrefTarget = $($(this).attr('href'));
+        var position = $hrefTarget.offset().top-150;
+
+        $('html,body').animate({scrollTop:position}, 500);
+    });
+</script>
+</body>
+</html>
