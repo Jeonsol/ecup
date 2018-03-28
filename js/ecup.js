@@ -451,10 +451,11 @@
 			topOrigin = -$wrap.outerHeight();
 
 			// 이벤트 바인딩 - PC 와 모바일일 경우 이벤트가 다름
-			var target = markupLayerManager.internal ? $(markupLayerManager.internal) : $body;
+			var $target = markupLayerManager.internal ? $(markupLayerManager.internal) : $body;
+			if ($target !== $body) $target.on('click touchstart', hideLayer);
 			$btnHide.click(hideLayer);
-			if (isPC) target.dblclick(showLayer);
-			else target.dbltouch(showLayer, 200);
+			if (isPC) $target.dblclick(showLayer);
+			else $target.dbltouch(showLayer, 200);
 
 			// IE8, IE9 일경우 transform 미지원으로 jQuery 애니메이션
 			if (isIE8_IE9) {
@@ -471,15 +472,18 @@
 				});
 			}
 
-			function showLayer() {
-				setLayer(0, 1);
+			function showLayer(e) {
+				setLayer(0, 1, 'true');
 			}
 
-			function hideLayer() {
-				setLayer(topOrigin, 0.5);
+			function hideLayer(e) {
+				if ($wrap.attr('data-show') === 'true') {
+					setLayer(topOrigin, 0.5, 'false');
+				}
+
 			}
 
-			function setLayer(destTop, destOpacity) {
+			function setLayer(destTop, destOpacity, data) {
 				if (isIE8_IE9) {
 					$wrap.animate({
 						top: destTop,
@@ -490,8 +494,11 @@
 						transform: 'translateY('+ destTop + 'px)',
 						opacity: destOpacity,
 						transition: 'transform 0.5s, opacity 0.5s'
-					}, 300);
+					});
 				}
+				setTimeout(function() {
+					$wrap.attr('data-show', data);
+				}, 500);
 			}
 		}
 
@@ -988,7 +995,7 @@
 			dbltouchFlag = false;
 
 		$target.on('touchstart', function(e) {
-			if (dbltouchFlag) fn();
+			if (dbltouchFlag) fn(e);
 		}).on('touchend', function() {
 			dbltouchFlag = true;
 			setTimeout(function() {
