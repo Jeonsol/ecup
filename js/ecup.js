@@ -167,7 +167,13 @@
 		function optionObj_to_eventFunc(options, groupInfo) {
 
 			// 공통 dom 을 사용하는 경우 생성
-			if (groupInfo && groupInfo.groupDom) var commonTarget = $(groupInfo.groupDom.join(','));
+			if (groupInfo && groupInfo.groupDom) {
+				var commonTarget = $(groupInfo.groupDom.join(','));
+				var commonList = [];
+				$.each(groupInfo.groupDom, function(index, selector) {
+					commonList.push($(selector));
+				});
+			}
 
 			// 기능이 객체로 주어진 경우 함수로 변환
 			for (var btnName in options) {
@@ -176,11 +182,10 @@
 
 				if (option instanceof Array) {
 					options[btnName] = {
-						origin: option[0],
-						opposite: option[1]
+						origin: convertFn(option[0], commonList),
+						opposite: convertFn(option[1], commonList)
 					};
 				} else if (typeof option === 'object') {
-
 					if (!option.target) option.target = commonTarget;
 					else option.target = $(option.target);
 
@@ -192,7 +197,7 @@
 					};
 
 				} else if (typeof option === 'function') {
-					options[btnName] = {origin: options[btnName]};
+					options[btnName] = {origin: convertFn(options[btnName], commonList)};
 				}
 			}
 
@@ -232,6 +237,19 @@
 				fn = fn.bind(option.target);
 
 				return fn;
+			}
+
+			function convertFn(fn, groupDom) {
+				var newFn = fn;
+				var fnBody = fn.toString();
+				fnBody = fnBody.substring(fnBody.indexOf('{') + 1, fnBody.lastIndexOf('}'));
+
+				if (fnBody.search(/\$\$\d/) !== -1) {
+					newFn = new Function('$$1', '$$2', '$$3', '$$4', '$$5', '$$6', '$$7', '$$8', '$$9', fnBody);
+					newFn = newFn.bind({}, groupDom[0], groupDom[1], groupDom[2], groupDom[3], groupDom[4], groupDom[5], groupDom[6], groupDom[7], groupDom[8]);
+				}
+
+				return newFn;
 			}
 		}
 

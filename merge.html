@@ -650,7 +650,7 @@
 	<script src="./js/ecup.js"></script>
 	<script>
 		ecup.markupLayer.set({
-		    type: 'internal',
+		    type: 'external',
 			theme: 'pink',
 			external: {
 				btnText: '마크업',
@@ -663,20 +663,20 @@
 		    }
 		});
 
-		ecup.markupLayer('로그인 상태').group({
+		ecup.markupLayer('로그인 상태').group('.header .button_login', '.header .area_user',{
 		    '로그인 전': [function(){
-				$(".header .button_login").show();
-				$(".header .area_user").hide();
+				$$1.show();
+				$$2.hide();
 			}, function(){
-				$(".header .button_login").hide();
-				$(".header .area_user").show();
+				$$1.hide();
+				$$2.show();
 			}],
 		    '로그인 후': [function(){
-				$(".header .button_login").hide();
-				$(".header .area_user").show();
+				$$1.hide();
+				$$2.show();
 			}, function(){
-				$(".header .button_login").show();
-				$(".header .area_user").hide();
+				$$1.show();
+				$$2.hide();
 			}]
 		});
 
