@@ -243,7 +243,25 @@
 
 			// 제어 영역 DOM 생성
 			var $controlArea = $('<div class = "__area_env"></div>');
-			var $controlComment = $('<a href="#"><span class="__view"></span>UI 주석보기</a>');
+			var $controlComment = $('<a href="#"><span class="__view"></span><span class="__text">UI 주석끄기</span></a>');
+
+			$controlComment.click(function() {
+				var $commentToggleBtn = $(this);
+
+				$commentToggleBtn.toggleClass('off');
+
+				if($commentToggleBtn.hasClass('off')) {
+					$commentToggleBtn.find('.__text').text('UI 주석보기');
+					$('.__ecup_comment_section').css('display','none');
+				}
+
+				else {
+					$commentToggleBtn.find('.__text').text('UI 주석끄기');
+					$('.__ecup_comment_section').css('display','block');
+				}
+
+			});
+
 			$controlArea.append($controlComment);
 
 			// 버튼 영역 DOM 생성
@@ -710,8 +728,8 @@
 
 					var $target = $(target);
 					if($target.length) {
-						var top = $target.offset().top/$(window).height()*100+'%';
-						var left = $target.offset().left/$(window).width()*100+'%';
+						var top = $target.offset().top;
+						var left = $target.offset().left;
 					}
 
 					$commentDom.css({'top': top, 'left': left});
@@ -722,8 +740,21 @@
 					commentManager.targetDom.append($commentDom);
 
 					$commentDom.click(function(e) {
+						var $targetComment = $(this);
 						e.preventDefault();
-						$(this).toggleClass('off');
+
+						$targetComment.toggleClass('off');
+
+						var $commentAreaRightOffset = $targetComment.offset().left+$targetComment.innerWidth();
+
+						if($(window).width() - $commentAreaRightOffset < 20) {
+							$commentArea.css({'width':'100px','margin-left':'-101px'});
+						}
+
+						else {
+							$commentArea.css({'width':'auto','margin-left':'2em'});
+						}
+
 					});
 
 					commentManager.targetData.push(target);
@@ -752,8 +783,8 @@
 					}
 
 					if($targetData.length) {
-						top = $targetData.offset().top / $(window).height() * 100 + '%';
-						left = $targetData.offset().left / $(window).width() * 100 + '%';
+						top = $targetData.offset().top;
+						left = $targetData.offset().left;
 					}
 
 					$commentData.css({'top': top, 'left': left});
@@ -774,8 +805,8 @@
 							$commentData = $(commentData[i]);
 
 							if($targetData.length) {
-								top = $targetData.offset().top / $(window).height() * 100 + '%';
-								left = $targetData.offset().left / $(window).width() * 100 + '%';
+								top = $targetData.offset().top;
+								left = $targetData.offset().left;
 							}
 
 							$commentData.css({'top': top, 'left': left});
