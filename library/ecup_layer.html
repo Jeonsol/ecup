@@ -201,35 +201,32 @@
                                 <div class="box_code code_js">
                                     <p>// 그룹화 하기</p>
                                     <p>ecup.markupLayer('그룹 이름').group({</p>
-                                    <p> '버튼1 이름': function() {</p>
-                                    <p> // 버튼1 기능</p>
-                                    <p> },</p>
-                                    <p> '버튼2 이름': {</p>
-                                    <p> target: '#div',</p>
-                                    <p> addClass: 'class1 class2 class3'</p>
-                                    <p> }</p>
+                                    <p>   '버튼1 이름': function() {</p>
+                                    <p>      // 버튼1 기능</p>
+                                    <p>   },</p>
+                                    <p>   '버튼2 이름': {</p>
+                                    <p>      target: '#div',</p>
+                                    <p>      addClass: 'class1 class2 class3'</p>
+                                    <p>   }</p>
                                     <p>});</p>
                                     <p> </p>
-                                    <p>// 동작 방식 설정하기</p>
-                                    <p>// ecup.markupLayer.set 설정에서 한번에 설정도 가능하다. (<a href="#anchor_2">ecup.markupLayer.set</a>)</p>
-                                    <p>ecup.markupLayer('그룹 이름').setType('radio').group({</p>
-                                    <p> ...</p>
-                                    <p>});</p>
-                                    <p> </p>
-                                    <p>// 옵션의 공통 타깃을 정의 (group 함수의 마지막 인자가 버튼정의, 그 이전의 모든 인자가 공통 타깃이 됨)</p>
+									<p>// 이벤트 함수일때 그룹 DOM 사용하기 ($$ + 순서)</p>
+									<p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
+									<p>   '버튼1 이름': function() {</p>
+									<p>      $$1.addClass('good'); // #div에 적용</p>
+									<p>      $$2.removeClass('test'); // .test에 적용</p>
+									<p>   }</p>
+									<p>});</p>
+									<p> </p>
+                                    <p>// 이벤트 옵션일때 그룹 DOM 사용하기</p>
                                     <p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
-                                    <p> '버튼1 이름': function() {</p>
-                                    <p> // 일반 함수로 주면 공통 타깃과 무관하게 그냥 적용.</p>
-                                    <p> },</p>
-                                    <p> '버튼2 이름': { </p>
-                                    <p> // 타깃을 주지 않으면 옵션들이 공통 타깃에게 적용됨.</p>
-                                    <p> addClass: 'class1 class2 class3' // 즉, #div, .test, #span 에 적용.</p>
-                                    <p> },</p>
-                                    <p> '버튼3 이름': {</p>
-                                    <p> // 타깃을 옵션에서 새로 부여하면 공통타깃은 무시되고 현재 타깃에게 적용.</p>
-                                    <p> target: '#div',</p>
-                                    <p> hide: 400 // 즉, #div 에만 적용</p>
-                                    <p> }</p>
+                                    <p>   '버튼1 이름': {</p>
+                                    <p>      hide: 400 // 그룹 DOM (#div, .test, #span) 에 적용됨</p>
+                                    <p>   },</p>
+									<p>   '버튼2 이름': {</p>
+									<p>      target: '#wrap'</p>
+									<p>      addClass: 'hello' // #wrap에 적용</p>
+									<p>   }</p>
                                     <p>});</p>
                                 </div>
                             </div>
