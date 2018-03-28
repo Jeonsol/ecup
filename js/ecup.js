@@ -674,7 +674,7 @@
 			var $elementTarget = [];
 			for(var i = 0; i < document.all.length; i++) {
 				var $element = $(document.all[i]);
-				if($element.css('overflow') === 'scroll' || $element.css('overflow') === 'auto' || $element.css('overflow-x') === 'scroll' || $element.css('overflow-x') === 'auto' || $element.css('overflow-y') === 'scroll' || $element.css('overflow-y') === 'auto')
+				if($element.css('overflow-x') === 'scroll' || $element.css('overflow-x') === 'auto' || $element.css('overflow-y') === 'scroll' || $element.css('overflow-y') === 'auto')
 					$elementTarget.push($element);
 			}
 			commentManager.overflowTarget = $elementTarget;
@@ -685,14 +685,14 @@
 
 
 		function singleWrite(target,msg) {
-			var $commentArea = $('<div class="__comment_area">' + msg + '</div>');
+			var $commentArea = $('<p class="__comment_area">' + msg + '</p>');
 
 			commonWrite(target,$commentArea);
 		}
 
 		function groupWrite(flag) {
 			for (var opt in flag) {
-				var $commentArea = $('<div class="__comment_area">' + flag[opt] + '</div>');
+				var $commentArea = $('<p class="__comment_area">' + flag[opt] + '</p>');
 
 				commonWrite(opt,$commentArea);
 			}
@@ -704,13 +704,11 @@
 
 				if(commentManager.show) {
 
-					var $commentDom = $('<div class="__ecup_comment"></div>');
-					var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
-
-					$commentDom.append($commentBtn).append($commentArea);
+					var $commentDom = $('<a href="#" class="__ecup_comment off"></a>');
+					var $commentLabel = $('<span class="__ecup_blind">마크업 코멘트</span>');
+					$commentDom.append($commentLabel).append($commentArea);
 
 					var $target = $(target);
-
 					if($target.length) {
 						var top = $target.offset().top/$(window).height()*100+'%';
 						var left = $target.offset().left/$(window).width()*100+'%';
@@ -718,31 +716,14 @@
 
 					$commentDom.css({'top': top, 'left': left});
 
-					if($target.css('display')==='none') {
-						$commentDom.css('display','none');
-					}
-
-					else {
-						$commentDom.css('display','block');
-					}
+					if ($target.css('display')==='none') $commentDom.css('display','none');
+					else $commentDom.css('display','block');
 
 					commentManager.targetDom.append($commentDom);
 
-					$commentBtn.click(function() {
-						var $commentArea = $(this).next('.__comment_area');
-
-						$commentArea.toggle();
-
-						var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
-
-						if($(window).width() - $commentAreaRightOffset < 20) {
-							$commentArea.css({'width':'100px','margin-left':'-101px'});
-						}
-
-						else {
-							$commentArea.css({'width':'auto','margin-left':'2em'});
-						}
-
+					$commentDom.click(function(e) {
+						e.preventDefault();
+						$(this).toggleClass('off');
 					});
 
 					commentManager.targetData.push(target);
