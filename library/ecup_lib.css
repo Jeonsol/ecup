@@ -85,7 +85,7 @@ p em {font-style:normal;text-decoration:underline;}
 .section_content .option_box .option_detail .option_desc{margin-top: 10px;font-size: 14px;color: #407ad9; font-weight: bold}
 .section_content .option_more_desc{margin-bottom: 30px; padding-left: 25px; text-indent: -25px;}
 .section_content .option_box + .option_more_desc a strong{text-decoration: underline;}
-.section_content .option_box + .option_more_desc strong{font-weight: bold;}
+.section_content .option_box ~ .option_more_desc strong{font-weight: bold;}
 
 .section_content .table {width:100%;table-layout:fixed;border-collapse:collapse;}
 .section_content .table .box_code {border-radius:0;color:#666;}
