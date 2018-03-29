@@ -649,14 +649,13 @@
 	<script src="./js/ecup.js"></script>
 	<script>
 		ecup.markupLayer.set({
-		    type: 'external',
-			theme: 'pink',
+		    type: 'windows',
+			theme: 'naver',
 			external: {
 				btnText: '마크업',
 				right: 50,
 				bottom: 50
 			},
-			internal: '#wrap',
 			buttonType: {
 				'로그인 상태': 'radio'
 		    }
@@ -686,18 +685,9 @@
 			},
 			'번역 레이어': {
 		        target: '.layer_translation',
-		        toggleStyle: 'display: block;'
-		    },
-		});
-
-		ecup.markupLayer({
-		    '하단 로딩 바2': {
-				target: '.list_article',
-				toggleClass: 'is_finish',
-			},
-			'번역 레이어2': {
-		        target: '.layer_translation',
-		        toggleStyle: 'display: block;'
+		        toggleStyle: {
+		            display: 'block'
+				}
 		    },
 		});
 
