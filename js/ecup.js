@@ -890,82 +890,62 @@
 	}
 	var domCacheStorage = new DomCacheManager();
 
-	/** 속성 다루기 addAttr, removeAttr, toggleAttr **/
+	jQuery.fn.addAttr = function() {HOF_parseParam.call(this, arguments, jQuery.fn.addAttr.PF);};
+	jQuery.fn.removeAttrOrigin = jQuery.fn.removeAttr;
+	jQuery.fn.removeAttr = function() {HOF_parseParam.call(this, arguments, jQuery.fn.removeAttr.PF);};
+	jQuery.fn.toggleAttr = function() {HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);};
+	jQuery.fn.addStyle = function() {HOF_parseParam.call(this, arguments, jQuery.fn.addStyle.PF);};
+	jQuery.fn.removeStyle = function() {HOF_parseParam.call(this, arguments, jQuery.fn.removeStyle.PF);};
+	jQuery.fn.toggleStyle = function() {HOF_parseParam.call(this, arguments, jQuery.fn.toggleStyle.PF);};
 
 	/* 속성 추가/수정 */
-	jQuery.fn.addAttr = function() {
-		jQuery.fn.addAttr.PF = function($dom, attr, val) {
-			$dom.attr(attr, val);
-		};
-		HOF_parseParam.call(this, arguments, jQuery.fn.addAttr.PF);
+	jQuery.fn.addAttr.PF = function($dom, attr, val) {
+		$dom.attr(attr, val);
 	};
-
 	/* 속성 삭제 */
-	jQuery.fn.removeAttrOrigin = jQuery.fn.removeAttr;
-	jQuery.fn.removeAttr = function() {
-		jQuery.fn.removeAttr.PF = function($dom, attr) {
-			$dom.removeAttrOrigin(attr);
-		};
-		HOF_parseParam.call(this, arguments, jQuery.fn.removeAttr.PF);
+	jQuery.fn.removeAttr.PF = function($dom, attr) {
+		$dom.removeAttrOrigin(attr);
 	};
-
 	/* 속성 토글 */
-	jQuery.fn.toggleAttr = function() {
-		jQuery.fn.toggleAttr.PF = function($doms, attr, val) {
+	jQuery.fn.toggleAttr.PF = function($doms, attr, val) {
+		$.each($doms, function(i, dom) {
+			if (!dom.hasAttribute(attr)) {
+				dom.setAttribute(attr, val);
+			} else if (dom.getAttribute(attr) !== val) {
+				domCacheStorage.setAttr(dom, attr, dom.getAttribute(attr));
+				dom.setAttribute(attr, val);
+			} else if (dom.getAttribute(attr) === val) {
+				var rollback = domCacheStorage.getAttr(dom, attr);
+				if (rollback !== undefined && rollback !== val) dom.setAttribute(attr, rollback);
+				else dom.removeAttribute(attr);
+			}
+		});
 
-			$.each($doms, function(i, dom) {
-				if (!dom.hasAttribute(attr)) {
-					dom.setAttribute(attr, val);
-				} else if (dom.getAttribute(attr) !== val) {
-					domCacheStorage.setAttr(dom, attr, dom.getAttribute(attr));
-					dom.setAttribute(attr, val);
-				} else if (dom.getAttribute(attr) === val) {
-					var rollback = domCacheStorage.getAttr(dom, attr);
-					if (rollback !== undefined) dom.setAttribute(attr, rollback);
-					else dom.removeAttribute(attr);
-				}
-			});
-
-		};
-		HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);
 	};
-
-	/** 인라인 스타일 다루기 addStyle, removeStyle, toggleStyle **/
 	/* 인라인 스타일 추가/수정 */
-	jQuery.fn.addStyle = function() {
-		jQuery.fn.addStyle.PF = function($doms, style, val) {
-			$.each($doms, function(i, dom) {
-				dom.style[style] = val;
-			});
-		};
-		HOF_parseParam.call(this, arguments, jQuery.fn.addStyle.PF);
+	jQuery.fn.addStyle.PF = function($doms, style, val) {
+		$.each($doms, function(i, dom) {
+			dom.style[style] = val;
+		});
 	};
-
 	/* 인라인 스타일 삭제 */
-	jQuery.fn.removeStyle = function() {
-		jQuery.fn.removeStyle.PF = function($doms, style) {
-			$.each($doms, function(index, dom) {
+	jQuery.fn.removeStyle.PF = function($doms, style) {
+		$.each($doms, function(index, dom) {
+			if (dom.style.removeProperty) dom.style.removeProperty(style);
+			else dom.style.removeAttribute(style);
+
+		});
+	};
+	/* 인라인 스타일 토글 */
+	jQuery.fn.toggleStyle.PF = function($doms, style, val) {
+		$.each($doms, function(index, dom) {
+			if(!dom.style[style] || dom.style[style] !== val) {
+				dom.style[style] = val;
+			} else {
 				if (dom.style.removeProperty) dom.style.removeProperty(style);
 				else dom.style.removeAttribute(style);
-
-			});
-		};
-		HOF_parseParam.call(this, arguments, jQuery.fn.removeStyle.PF);
-	};
-
-	/* 인라인 스타일 토글 */
-	jQuery.fn.toggleStyle = function() {
-		jQuery.fn.toggleStyle.PF = function($doms, style, val) {
-			$.each($doms, function(index, dom) {
-				if(!dom.style[style] || dom.style[style] !== val) {
-					dom.style[style] = val;
-				} else {
-					if (dom.style.removeProperty) dom.style.removeProperty(style);
-					else dom.style.removeAttribute(style);
-				}
-			});
-		};
-		HOF_parseParam.call(this, arguments, jQuery.fn.toggleStyle.PF);
+			}
+		});
 	};
 
 	/* 고계 함수 - 문자열 파라미터 파싱 */
