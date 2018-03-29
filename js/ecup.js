@@ -247,8 +247,6 @@
 					fnBody += fnPart;
 				}
 
-				console.log(fnBody);
-
 				fn = new Function('e', fnBody);
 				fn = fn.bind(option.target);
 
@@ -848,7 +846,7 @@
 					$commentData.css({'top': top, 'left': left});
 
 					var $commentAreaRightOffset = $commentArea.offset().left + $commentArea.outerWidth();
-					console.log($commentArea);
+
 					if ($window.width() - $commentAreaRightOffset < 110) $commentArea.css({'width':'100px','margin-left':'-101px'});
 					else $commentArea.css({'width':'auto','margin-left':'2em'});
 				}
