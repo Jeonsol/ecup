@@ -277,7 +277,7 @@
 
 			// 제어 영역 DOM 생성
 			var $controlArea = $('<div class = "__area_env"></div>');
-			var $controlComment = $('<a href="#"><span class="__view"></span><span class="__text">UI 주석끄기</span></a>');
+			var $controlComment = $('<a href="#" class="__commentBtn"><span class="__view"></span><span class="__text">UI 주석끄기</span></a>');
 
 			$controlComment.click(function() {
 				var $commentToggleBtn = $(this);
@@ -414,7 +414,24 @@
                     makeEvent(index, button, button.type);
                 });
                 markupLayerManager.newWindow.resizeTo(300,  $(doc.querySelector('.__NTS_markup')).height() + ieCheck());
-            },100);
+            },200);
+
+            $(doc.querySelector('.__commentBtn')).click(function() {
+                var $commentToggleBtn = $(this);
+
+                $commentToggleBtn.toggleClass('off');
+
+                if($commentToggleBtn.hasClass('off')) {
+                    $commentToggleBtn.find('.__text').text('UI 주석보기');
+                    $('.__ecup_comment_section').css('display','none');
+                }
+
+                else {
+                    $commentToggleBtn.find('.__text').text('UI 주석끄기');
+                    $('.__ecup_comment_section').css('display','block');
+                }
+
+            });
 
             function init() {
                 markupLayerManager.newWindow = window.open('', 'newWindow', 'location=no,width=300,height=400');
