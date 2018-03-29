@@ -58,15 +58,23 @@ p em {font-style:normal;text-decoration:underline;}
 .section_content .tit .point {color: #00cc27;}
 .section_content .tit .sub_tit{font-size: 14px;}
 .section_content .inner {margin-top:7px;padding: 0 10px;}
-.section_content .box_code {margin:10px 0;padding:10px 15px;background-color:#333;font-family: 'Roboto Mono', monospace;color:#d2d2d2;}
-.section_content .box_code p {white-space:pre-wrap; word-break: break-all}
+.section_content .box_code {margin-top:10px;font-family: 'Roboto Mono', monospace;}
+.section_content .tit_code {padding:5px 8px;border:1px solid #e5e5e5;border-bottom:0;background:#f5f5f5;font-size:14px;color:#555;}
+.section_content .inner_code {position:relative;overflow:auto;padding:8px 0;border:1px solid #e5e5e5;color:#333;}
+.section_content .inner_code::before {content:'';position:absolute;top:0;left:0;z-index:-1;width:46px;height:100%;border-right:1px solid #e5e5e5;background:#f5f5f5;}
+.section_content .box_code p {font-size:14px;line-height:26px;white-space:nowrap;}
 .section_content .box_code a {color:#d2d2d2;}
-.section_content .box_code .cm {color:#929292;}
-.section_content .box_code .id {color:#cc7832;}
-.section_content .box_code .str {color:#6a8759;}
-.section_content .box_code .fn {color:#e8bf6a;}
-.section_content .box_code .tag {color:#e8bf6a;}
-.section_content .box_code .val {color:#a5c65a;}
+.section_content .box_code span {vertical-align: top;}
+.section_content .box_code .tab {display:inline-block;width:2em;height:26px;}
+.section_content .box_code .line {display:inline-block;width:50px;height:26px;margin-right:8px;text-align:center;color:#acacac;}
+.section_content .box_code .cm {color:#808080;}
+.section_content .box_code .kw {color:#07a;}
+.section_content .box_code .str {color:#008000;}
+.section_content .box_code .mtd {color:#dd4a68;}
+.section_content .box_code .num {color:#6897bb;}
+.section_content .box_code .tag {color:#905;}
+.section_content .box_code .attr {color:#853303;}
+.section_content .box_code .val {color:#130095;}
 .section_content .mg_top1 {margin-top:10px;}
 .section_content .mg_top2 {margin-top:20px;}
 .section_content i {font-style:normal; }

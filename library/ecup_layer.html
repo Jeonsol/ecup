@@ -83,16 +83,18 @@
                                     </ul>
                                 </div>
 
-                                <strong>Example</strong>
                                 <div class="box_code code_js">
-                                    <p>ecup.markupLayer.set({</p>
-                                    <p>    type: 'windows',</p>
-                                    <p>    theme: 'dark',</p>
-                                    <p>    buttonType: {</p>
-                                    <p>        '그룹이름 1' : 'check' // 해당 그룹내 버튼타입 체크박스</p>
-                                    <p>        '그룹이름 2' : 'radio' // 해당 그룹내 버튼타입 라디오</p>
-                                    <p>    }</p>
-                                    <p>});</p>
+									<div class="tit_code">Example</div>
+									<div class="inner_code">
+										<p>ecup.markupLayer.set({</p>
+	                                    <p>    type: 'windows',</p>
+	                                    <p>    theme: 'dark',</p>
+	                                    <p>    buttonType: {</p>
+	                                    <p>        '그룹이름 1' : 'check' // 해당 그룹내 버튼타입 체크박스</p>
+	                                    <p>        '그룹이름 2' : 'radio' // 해당 그룹내 버튼타입 라디오</p>
+	                                    <p>    }</p>
+	                                    <p>});</p>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -126,39 +128,41 @@
                                     ** Event<br /> ecup 내에서 제공하는 <a href="#anchor_5"><strong>옵션</strong></a>을 사용하거나,<br />
                                     <strong>직접 함수</strong>를 할당하는 2가지 방법으로 사용할 수 있습니다.
                                 </p>
-                                <strong>Example</strong>
                                 <div class="box_code code_js">
-                                    <p>// 버튼동작을 함수로 정의하기</p>
-                                    <p>ecup.markupLayer({</p>
-                                    <p>    '버튼1 이름': function() {</p>
-                                    <p>        // 버튼1 기능</p>
-                                    <p>     },</p>
-                                    <p>    '버튼2 이름': function() {</p>
-                                    <p>        // 버튼2 기능</p>
-                                    <p>     }</p>
-                                    <p>});</p>
-                                    <p> </p>
-                                    <p>// 사용자 함수시 토글 이벤트 할당하기</p>
-                                    <p>ecup.markupLayer({</p>
-                                    <p>    '버튼1 이름': [ </p>
-                                    <p>        function() {</p>
-                                    <p>            // on 기능</p>
-                                    <p>        },</p>
-                                    <p>        function() {</p>
-                                    <p>            // off 기능</p>
-                                    <p>        }</p>
-                                    <p>    ],</p>
-                                    <p>});</p>
-                                    <p> </p>
-                                    <p>// 버튼동작을 옵션으로 정의하기</p>
-                                    <p>ecup.markupLayer({</p>
-                                    <p>    '버튼1 이름': {</p>
-                                    <p>        target: '#div', // 옵션을 적용시킬 타깃의 셀렉터,</p>
-                                    <p>        addClass: 'class1 class2 class3' // 타깃에게 부여할 옵션 1 (<a href="#anchor_5">옵션의 종류 보기</a>)</p>
-                                    <p>        toggleAttr: 'aria-label="닫기"' // 타깃에게 부여할 옵션 2 .. (여러개 가능)</p>
-                                    <p>    },</p>
-                                    <p>    '버튼2 이름': { ... }</p>
-                                    <p>});</p>
+									<div class="tit_code">Example</div>
+									<div class="inner_code">
+										<p>// 버튼동작을 함수로 정의하기</p>
+	                                    <p>ecup.markupLayer({</p>
+	                                    <p>    '버튼1 이름': function() {</p>
+	                                    <p>        // 버튼1 기능</p>
+	                                    <p>     },</p>
+	                                    <p>    '버튼2 이름': function() {</p>
+	                                    <p>        // 버튼2 기능</p>
+	                                    <p>     }</p>
+	                                    <p>});</p>
+	                                    <p> </p>
+	                                    <p>// 사용자 함수시 토글 이벤트 할당하기</p>
+	                                    <p>ecup.markupLayer({</p>
+	                                    <p>    '버튼1 이름': [ </p>
+	                                    <p>        function() {</p>
+	                                    <p>            // on 기능</p>
+	                                    <p>        },</p>
+	                                    <p>        function() {</p>
+	                                    <p>            // off 기능</p>
+	                                    <p>        }</p>
+	                                    <p>    ],</p>
+	                                    <p>});</p>
+	                                    <p> </p>
+	                                    <p>// 버튼동작을 옵션으로 정의하기</p>
+	                                    <p>ecup.markupLayer({</p>
+	                                    <p>    '버튼1 이름': {</p>
+	                                    <p>        target: '#div', // 옵션을 적용시킬 타깃의 셀렉터,</p>
+	                                    <p>        addClass: 'class1 class2 class3' // 타깃에게 부여할 옵션 1 (<a href="#anchor_5">옵션의 종류 보기</a>)</p>
+	                                    <p>        toggleAttr: 'aria-label="닫기"' // 타깃에게 부여할 옵션 2 .. (여러개 가능)</p>
+	                                    <p>    },</p>
+	                                    <p>    '버튼2 이름': { ... }</p>
+	                                    <p>});</p>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -210,37 +214,39 @@
                                 <p class="option_more_desc">
                                     ** 단일 버튼과 달리 그룹 버튼은 버튼의 타입을 지정할 수 있습니다.<br />
                                 </p>
-                                <strong>Example</strong>
                                 <div class="box_code code_js">
-                                    <p>// 그룹화 하기</p>
-                                    <p>ecup.markupLayer('그룹 이름').group({</p>
-                                    <p>   '버튼1 이름': function() {</p>
-                                    <p>      // 버튼1 기능</p>
-                                    <p>   },</p>
-                                    <p>   '버튼2 이름': {</p>
-                                    <p>      target: '#div',</p>
-                                    <p>      addClass: 'class1 class2 class3'</p>
-                                    <p>   }</p>
-                                    <p>});</p>
-                                    <p> </p>
-									<p>// 이벤트 함수일때 그룹 DOM 사용하기 ($$ + 순서)</p>
-									<p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
-									<p>   '버튼1 이름': function() {</p>
-									<p>      $$1.addClass('good'); // #div에 적용</p>
-									<p>      $$2.removeClass('test'); // .test에 적용</p>
-									<p>   }</p>
-									<p>});</p>
-									<p> </p>
-                                    <p>// 이벤트 옵션일때 그룹 DOM 사용하기</p>
-                                    <p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
-                                    <p>   '버튼1 이름': {</p>
-                                    <p>      hide: 400 // 그룹 DOM (#div, .test, #span) 에 적용됨</p>
-                                    <p>   },</p>
-									<p>   '버튼2 이름': {</p>
-									<p>      target: '#wrap'</p>
-									<p>      addClass: 'hello' // #wrap에 적용</p>
-									<p>   }</p>
-                                    <p>});</p>
+									<div class="tit_code">Example</div>
+									<div class="inner_code">
+										<p>// 그룹화 하기</p>
+	                                    <p>ecup.markupLayer('그룹 이름').group({</p>
+	                                    <p>   '버튼1 이름': function() {</p>
+	                                    <p>      // 버튼1 기능</p>
+	                                    <p>   },</p>
+	                                    <p>   '버튼2 이름': {</p>
+	                                    <p>      target: '#div',</p>
+	                                    <p>      addClass: 'class1 class2 class3'</p>
+	                                    <p>   }</p>
+	                                    <p>});</p>
+	                                    <p> </p>
+										<p>// 이벤트 함수일때 그룹 DOM 사용하기 ($$ + 순서)</p>
+										<p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
+										<p>   '버튼1 이름': function() {</p>
+										<p>      $$1.addClass('good'); // #div에 적용</p>
+										<p>      $$2.removeClass('test'); // .test에 적용</p>
+										<p>   }</p>
+										<p>});</p>
+										<p> </p>
+	                                    <p>// 이벤트 옵션일때 그룹 DOM 사용하기</p>
+	                                    <p>ecup.markupLayer('그룹 이름').group('#div', '.test', '#span', {</p>
+	                                    <p>   '버튼1 이름': {</p>
+	                                    <p>      hide: 400 // 그룹 DOM (#div, .test, #span) 에 적용됨</p>
+	                                    <p>   },</p>
+										<p>   '버튼2 이름': {</p>
+										<p>      target: '#wrap'</p>
+										<p>      addClass: 'hello' // #wrap에 적용</p>
+										<p>   }</p>
+	                                    <p>});</p>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -375,20 +381,22 @@
                                     <strong>마크업개발자</strong>는 디자이너에게 UI 검수를 받을 때 메모를 남길 수 없어 메신저로 의견을 전달해야 했습니다.<br /> UI 메모 남기기 기능은 이러한 <strong class="bold"> 부가적인 커뮤니케이션 비용을 줄이기 위해</strong> 고안된 기능입니다.<br />
                                 </p>
 
-                                <strong>Example</strong>
                                 <div class="box_code code_js">
-                                    <p>// 단일로 사용할 경우 아래와 같이 사용가능</p>
-                                    <p>ecup.comment('#test_box', '테스트용 메모입니다.');</p>
-                                    <p> </p>
-                                    <p>// 단일 또는 다중 메모 남기기</p>
-                                    <p>ecup.comment({</p>
-                                    <p>    '#test_box1': '첫번째 테스트박스입니다.',</p>
-                                    <p>    '#test_box2': '두번째 테스트박스입니다.',</p>
-                                    <p>    '#test_box3': '세번째 테스트박스입니다.'</p>
-                                    <p>});</p>
-                                    <p> </p>
-                                    <p>// 메모 화면에서 감추기</p>
-                                    <p>ecup.comment.show = false; // 감추기</p>
+									<div class="tit_code">Example</div>
+									<div class="inner_code">
+										<p>// 단일로 사용할 경우 아래와 같이 사용가능</p>
+	                                    <p>ecup.comment('#test_box', '테스트용 메모입니다.');</p>
+	                                    <p> </p>
+	                                    <p>// 단일 또는 다중 메모 남기기</p>
+	                                    <p>ecup.comment({</p>
+	                                    <p>    '#test_box1': '첫번째 테스트박스입니다.',</p>
+	                                    <p>    '#test_box2': '두번째 테스트박스입니다.',</p>
+	                                    <p>    '#test_box3': '세번째 테스트박스입니다.'</p>
+	                                    <p>});</p>
+	                                    <p> </p>
+	                                    <p>// 메모 화면에서 감추기</p>
+	                                    <p>ecup.comment.show = false; // 감추기</p>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -421,13 +429,15 @@
                                     ** <strong>여러 요소</strong> 제어<br /> 여러개의 레이어 제어시 배열
                                 </p>
 
-                                <strong>Example</strong>
                                 <div class="box_code code_js">
-                                    <p>// 단일 요소 제어하기</p>
-                                    <p>ecup.layerControl('.layer','.open_btn','close_btn');</p>
-                                    <p> </p>
-                                    <p>// 여러 요소 제어하기</p>
-                                    <p>ecup.layerControl(['.layer','.dimmed'],['.open_btn','.profile_img']);</p>
+									<div class="tit_code">Example</div>
+									<div class="inner_code">
+										<p>// 단일 요소 제어하기</p>
+	                                    <p>ecup.layerControl('.layer','.open_btn','close_btn');</p>
+	                                    <p> </p>
+	                                    <p>// 여러 요소 제어하기</p>
+	                                    <p>ecup.layerControl(['.layer','.dimmed'],['.open_btn','.profile_img']);</p>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -467,13 +477,15 @@
                                     ** aria 속성도 함께 제어 <br /> selectbox(custom)를 보다 직관적이고, 쉽게 제어 할 수 있는 기능입니다.<br /> selectbox interaction 뿐만 아니라, aria-expanded, aria-selected, aria-hidden 과 같은 aria 속성도 함께 제어 됩니다.
                                 </p>
 
-                                <strong>Example</strong>
                                 <div class="box_code code_js">
-                                    <p>// option을 aria-select로 제어하기</p>
-                                    <p>ecup.selectControl('.button','.listbox',{'.option':'aria-selected'});</p>
-                                    <p> </p>
-                                    <p>// option을 클래스로 제어하기</p>
-                                    <p>ecup.selectControl('.button','.listbox',{'.option':'.selected'});</p>
+									<div class="tit_code">Example</div>
+									<div class="inner_code">
+										<p>// option을 aria-select로 제어하기</p>
+	                                    <p>ecup.selectControl('.button','.listbox',{'.option':'aria-selected'});</p>
+	                                    <p> </p>
+	                                    <p>// option을 클래스로 제어하기</p>
+	                                    <p>ecup.selectControl('.button','.listbox',{'.option':'.selected'});</p>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -482,8 +494,8 @@
             </div>
         </main>
     </div>
-    <script src="./ecup_lib.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="./ecup_lib.js"></script>
     <script>
 	    var isMobile = /Android|webOS|iPhone|BlackBerry/i.test(navigator.userAgent) ? true : false;
 

@@ -41,7 +41,7 @@
             <div class="area_content">
                 <div id="anchor_attr" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_1" class="tit">$(selector).<span class="point">handleAttr(</span> attributes <span class="point">)</span> <div class="sub_tit">요소 속성 제어</div></h5>
+                        <h5 id="anchor_1" class="tit">$(selector).<span class="point">$handleAttr(</span> attributes <span class="point">)</span> <div class="sub_tit">요소 속성 제어</div></h5>
                         <div class="inner">
 							<div class="option_box">
 								<strong>Attributes</strong>
@@ -52,21 +52,34 @@
 								</div>
 								<p class="t1 s1"></p>
 							</div>
-                            <strong>Example</strong>
                             <p class="mg_top1">** 속성 <strong>추가</strong></p>
                             <div class="box_code code_js">
-                                <p>$('#test').addAttr('role="button" aria-label="닫기"');</p>
-                                <p>$('#test').addAttr('role="button"', 'aria-label="닫기"');</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$('#test').$addAttr('role', 'button');</p>
+	                                <p>$('#test').$addAttr({</p>
+									<p>    role: 'button',</p>
+									<p>    'aria-label': '닫기'</p>
+									<p>});</p>
+								</div>
                             </div>
                             <p class="mg_top2">** 속성 <strong>삭제</strong></p>
                             <div class="box_code code_js">
-                                <p>$('#test').removeAttr('role, aria-label');</p>
-                                <p>$('#test').removeAttr('role', 'aria-label');</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+	                                <p>$('#test').$removeAttr('role', 'aria-label');</p>
+								</div>
                             </div>
                             <p class="mg_top2">** 속성 <strong>토글</strong></p>
                             <div class="box_code code_js">
-                                <p>$('#test').toggleAttr('role="button", aria-label="열기"');</p>
-                                <p>$('#test').toggleAttr('role="button"', 'aria-label="열기"');</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$('#test').$toggleAttr('role', 'button');</p>
+	                                <p>$('#test').$toggleAttr({</p>
+									<p>    'aria-pressed': 'true',</p>
+									<p>    'aria-label': '테스트'</p>
+									<p>});</p>
+								</div>
                             </div>
                         </div>
                     </section>
@@ -74,7 +87,7 @@
 
                 <div id="anchor_inline" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_2" class="tit">$(selector).<span class="point">handleStyle(</span> styles <span class="point">)</span> <div class="sub_tit">요소 인라인 스타일 제어</div></h5>
+                        <h5 id="anchor_2" class="tit">$(selector).<span class="point">$handleStyle(</span> styles <span class="point">)</span> <div class="sub_tit">요소 인라인 스타일 제어</div></h5>
                         <div class="inner">
 							<div class="option_box">
 								<strong>Styles</strong>
@@ -85,21 +98,34 @@
 								</div>
 								<p class="t1 s1"></p>
 							</div>
-                            <strong>Example</strong>
                             <p class="mg_top1">** 인라인스타일 <strong>추가</strong></p>
                             <div class="box_code code_js">
-                                <p>$('#test').addStyle('background-color: #555; color: red;');</p>
-                                <p>$('#test').addStyle('background-color: #555', 'color: red');</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$('#test').$addStyle('background-color', '#555');</p>
+	                                <p>$('#test').$addStyle({</p>
+									<p>   display: 'block',</p>
+									<p>   color: '#333'</p>
+									<p>});</p>
+								</div>
                             </div>
                             <p class="mg_top2">** 인라인스타일 <strong>삭제</strong></p>
                             <div class="box_code code_js">
-                                <p>$('#test').removeStyle('color, font-size');</p>
-                                <p>$('#test').removeStyle('color', 'font-size');</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+	                                <p>$('#test').$removeStyle('color', 'font-size');</p>
+								</div>
                             </div>
                             <p class="mg_top2">** 인라인스타일 <strong>토글</strong></p>
                             <div class="box_code code_js">
-                                <p>$('#test').toggleStyle('width: 100%; height: 100%;');</p>
-                                <p>$('#test').toggleStyle('width: 100%', 'height: 100%');</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$('#test').$toggleStyle('background-color', '#555');</p>
+	                                <p>$('#test').$toggleStyle({</p>
+									<p>   display: 'block',</p>
+									<p>   color: '#333'</p>
+									<p>});</p>
+								</div>
                             </div>
                         </div>
                     </section>
@@ -163,16 +189,18 @@
                                     </li>
                                 </ul>
                             </div>
-                            <strong>Example</strong>
                             <div class="box_code code_js">
-                                <p>$('.icon_select').sprite({</p>
-                                <p>    url: '../test.png',</p>
-                                <p>    count: 13,</p>
-                                <p>    pos: 40,</p>
-                                <p>    orient: 'vertical',</p>
-                                <p>    duration: 0.2,</p>
-                                <p>    mode: 'remove'</p>
-                                <p>});</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$('.icon_select').sprite({</p>
+	                                <p>    url: '../test.png',</p>
+	                                <p>    count: 13,</p>
+	                                <p>    pos: 40,</p>
+	                                <p>    orient: 'vertical',</p>
+	                                <p>    duration: 0.2,</p>
+	                                <p>    mode: 'remove'</p>
+	                                <p>});</p>
+								</div>
                             </div>
                         </div>
                     </section>
@@ -202,19 +230,21 @@
                                     </li>
                                 </ul>
                             </div>
-                            <strong>Example</strong>
                             <div class="box_code code_js">
-                                <p>$.animation({</p>
-                                <p>    name: 'layerUp',</p>
-                                <p>    animate: {</p>
-                                <p>        0: {</p>
-                                <p>            top: '100%',</p>
-                                <p>        },</p>
-                                <p>        100: {</p>
-                                <p>           top: '0',</p>
-                                <p>        }</p>
-                                <p>    },</p>
-                                <p>});</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$.animation({</p>
+	                                <p>    name: 'layerUp',</p>
+	                                <p>    animate: {</p>
+	                                <p>        0: {</p>
+	                                <p>            top: '100%',</p>
+	                                <p>        },</p>
+	                                <p>        100: {</p>
+	                                <p>           top: '0',</p>
+	                                <p>        }</p>
+	                                <p>    },</p>
+	                                <p>});</p>
+								</div>
                             </div>
                         </div>
                     </section>
@@ -249,12 +279,14 @@
                                     </li>
                                 </ul>
                             </div>
-                            <strong>Example</strong>
                             <div class="box_code code_js">
-                                <p>$(selector).animation('layerUp', {</p>
-                                <p>    duration: '0.2s' or 200,</p>
-                                <p>    delay: '0.6s', or 600</p>
-                                <p>});</p>
+								<div class="tit_code">Example</div>
+								<div class="inner_code">
+									<p>$(selector).animation('layerUp', {</p>
+	                                <p>    duration: '0.2s' or 200,</p>
+	                                <p>    delay: '0.6s', or 600</p>
+	                                <p>});</p>
+								</div>
                             </div>
                         </div>
                     </section>
@@ -263,8 +295,8 @@
         </div>
     </main>
 </div>
-<script src="./ecup_lib.js"></script>
 <script src="../js/jquery-3.3.1.min.js"></script>
+<script src="./ecup_lib.js"></script>
 <script>
 	var isMobile = /Android|webOS|iPhone|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
