@@ -2,7 +2,7 @@
 
 /** Markup Layer **/
 /* 공통 */
-.__NTS_markup {position:fixed;top:0;right:0;z-index:10000;overflow-y:auto;width:100%;max-height:100%;border:0.2em solid #3c3f41;background-color:#2a2a2a;font-size:15px;line-height:1.5;color:#d2d2d2;}
+.__NTS_markup {position:fixed;top:0;right:0;z-index:10000;overflow-y:auto;width:100%;max-height:100%;border:0.2em solid #3c3f41;background-color:#2a2a2a;font-size:15px;line-height:1.5;color:#d2d2d2;opacity: 0.9}
 .__NTS_markup h2 {margin:0;padding:0.8em 0.7em 0.6em;font-family:NanumGothic, sans-serif;font-weight:normal;font-size:1.2em;line-height:1.25em;background-color:#3c3f41;color:#dadada;}
 .__NTS_markup a {display:block;overflow:hidden;text-overflow:ellipsis;font-family:NanumGothic, sans-serif;font-weight:500;font-size:1em;line-height:2em;white-space:nowrap;text-decoration:none;color:#c7c7c7;cursor:pointer;}
 
@@ -40,7 +40,7 @@
 .__NTS_markup .__radio[aria-pressed="true"] .__view::before {background-color:#b7b7b7;}
 
 /* external */
-.__NTS_markup_wrap {position:fixed;z-index:10000;}
+.__NTS_markup_wrap {position:fixed;z-index:10000;opacity: 0.9;}
 .__NTS_markup_wrap .__NTS_markup {position:absolute;top:auto;right:0;bottom:0;width:260px;max-height:none;}
 .__NTS_markup_wrap .__NTS_markup_show {display:block;box-sizing:border-box;height:32px;padding:0 7px;border:2px solid #3c3f41;background-color:#2a2a2a;font-family:NanumGothic, sans-serif;font-weight:bold;font-size:16px;line-height:28px;color:#c7c7c7;white-space:nowrap;cursor:pointer;}
 .__NTS_markup_wrap .__NTS_markup_show:hover {text-decoration:none;color:#c7c7c7;}
@@ -48,27 +48,23 @@
 .__NTS_markup_hide::before {content:'';display:inline-block;width:1em;height:1em;margin-top:1.2em;background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/dark/btn_close.png) no-repeat 50% 50%/100% 100%;}
 
 /** Comment **/
-.__ecup_comment {
-	position: absolute;
-	z-index: 1000;
-}
-.__ecup_comment .__comment_btn {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 24px;
-	height: 24px;
-	border-radius: 100%;
-	border: 2px solid #000;
-	background-color: #ffec00;
-}
-.__ecup_comment .__comment_area {
-	display: none;
-	max-width: 100px;
-	border: 2px solid #000;
-	border-radius: 5px;
-	background-color: #fff;
-	padding: 0.5em;
-	margin-left: 2em;
-	font-size: 0.8em;
-}
+.__ecup_comment {position: absolute;z-index: 1000;}
+.__ecup_comment .__comment_btn {position: absolute;top: 0;left: 0;width: 24px;height: 24px;border-radius: 100%;border: 2px solid #000;background-color: #ffec00;}
+.__ecup_comment .__comment_area {display: none;max-width: 100px;border: 2px solid #000;border-radius: 5px;background-color: #fff;padding: 0.5em;margin-left: 2em;font-size: 0.8em;}
+
+/** Naver 테마 **/
+.__NTS_markup_wrap.naver .__NTS_markup_show {background-color: #00c73c;color: #fff;border: 1px solid #00c73c;}
+.__NTS_markup_wrap.naver .__NTS_markup_show:hover {color: #000;}
+.__NTS_markup.naver {background-color: #fff;border: 1px solid #00c73c;}
+.__NTS_markup.naver h2 {background-color: #00c73c;color: #fff;}
+.__NTS_markup.naver .__area_env a{color: #000;}
+.__NTS_markup.naver .__area_env .__view {background-color: #00c73c;}
+.__NTS_markup.naver .__area_env .__view:before {background-color: #fff;}
+.__NTS_markup.naver .__area_env .off .__view:before {background-color: #fff;}
+.__NTS_markup.naver .__area_group strong {background-color: #00c73c;margin-bottom: 4px;color: #fff;}
+.__NTS_markup.naver .__area_btn {border-bottom: 0;}
+.__NTS_markup.naver .__area_btns a {background-color: #fff;border: 1px dotted #00c73c;border-radius: 6px;margin-bottom: 4px;color: #000;}
+.__NTS_markup.naver .__check .__view:before {color: #000;}
+.__NTS_markup.naver .__check[aria-pressed="true"] .__view::before {color: #00c73c;}
+.__NTS_markup.naver .__radio .__view:before {background-color: #5a5959;}
+.__NTS_markup.naver .__radio[aria-pressed="true"] .__view:before {background-color: #00c73c;}

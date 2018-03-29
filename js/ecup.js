@@ -505,7 +505,7 @@
 			var topOrigin, showEvent, animationType;
 
 			// check browser
-			var isPC = false
+			var isPC = false;
 			var isIE8_IE9 = false;
 			var browser = $.checkBrowser();
 			if (browser === 'IE8' || browser === 'IE9') {
@@ -545,7 +545,7 @@
 			}
 
 			function showLayer(e) {
-				setLayer(0, 1, 'true');
+				setLayer(0, 0.9, 'true');
 			}
 
 			function hideLayer(e) {
@@ -589,7 +589,7 @@
 				wrapBottom = markupLayerManager.external.bottom || wrapBottom;
 			}
 
-			var $externalWrap = $('<div class="__NTS_markup_wrap"></div>'),
+			var $externalWrap = $('<div class="__NTS_markup_wrap '+markupLayerManager.theme+'"></div>'),
 				$btnShow = $('<a class="__NTS_markup_show" role="button" aria-label="마크업검수 레이어 보기"></a>'),
 				$btnShowText = $('<span>' + btnShowText + '</span>'),
                 $btnHide = $('<a class="__NTS_markup_hide" role="button" aria-label="마크업검수 레이어 숨기기">');

@@ -649,7 +649,7 @@
 	<script src="./js/ecup.js"></script>
 	<script>
 		ecup.markupLayer.set({
-		    type: 'internal',
+		    type: 'external',
 			theme: 'pink',
 			external: {
 				btnText: '마크업',
@@ -686,9 +686,18 @@
 			},
 			'번역 레이어': {
 		        target: '.layer_translation',
-		        toggleStyle: {
-		            display: 'block'
-				}
+		        toggleStyle: 'display: block;'
+		    },
+		});
+
+		ecup.markupLayer({
+		    '하단 로딩 바2': {
+				target: '.list_article',
+				toggleClass: 'is_finish',
+			},
+			'번역 레이어2': {
+		        target: '.layer_translation',
+		        toggleStyle: 'display: block;'
 		    },
 		});
 
