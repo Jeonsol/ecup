@@ -277,7 +277,25 @@
 
 			// 제어 영역 DOM 생성
 			var $controlArea = $('<div class = "__area_env"></div>');
-			var $controlComment = $('<a href="#"><span class="__view"></span>UI 주석보기</a>');
+			var $controlComment = $('<a href="#"><span class="__view"></span><span class="__text">UI 주석끄기</span></a>');
+
+			$controlComment.click(function() {
+				var $commentToggleBtn = $(this);
+
+				$commentToggleBtn.toggleClass('off');
+
+				if($commentToggleBtn.hasClass('off')) {
+					$commentToggleBtn.find('.__text').text('UI 주석보기');
+					$('.__ecup_comment_section').css('display','none');
+				}
+
+				else {
+					$commentToggleBtn.find('.__text').text('UI 주석끄기');
+					$('.__ecup_comment_section').css('display','block');
+				}
+
+			});
+
 			$controlArea.append($controlComment);
 
 			// 버튼 영역 DOM 생성
@@ -718,7 +736,7 @@
 			var $elementTarget = [];
 			for(var i = 0; i < document.all.length; i++) {
 				var $element = $(document.all[i]);
-				if($element.css('overflow') === 'scroll' || $element.css('overflow') === 'auto' || $element.css('overflow-x') === 'scroll' || $element.css('overflow-x') === 'auto' || $element.css('overflow-y') === 'scroll' || $element.css('overflow-y') === 'auto')
+				if($element.css('overflow-x') === 'scroll' || $element.css('overflow-x') === 'auto' || $element.css('overflow-y') === 'scroll' || $element.css('overflow-y') === 'auto')
 					$elementTarget.push($element);
 			}
 			commentManager.overflowTarget = $elementTarget;
@@ -729,14 +747,14 @@
 
 
 		function singleWrite(target,msg) {
-			var $commentArea = $('<div class="__comment_area">' + msg + '</div>');
+			var $commentArea = $('<p class="__comment_area">' + msg + '</p>');
 
 			commonWrite(target,$commentArea);
 		}
 
 		function groupWrite(flag) {
 			for (var opt in flag) {
-				var $commentArea = $('<div class="__comment_area">' + flag[opt] + '</div>');
+				var $commentArea = $('<p class="__comment_area">' + flag[opt] + '</p>');
 
 				commonWrite(opt,$commentArea);
 			}
@@ -744,20 +762,20 @@
 
 		function commonWrite(target,$commentArea) {
 
-			$(document).ready(function() {
+			$(window).load(function() {
 
 				if(commentManager.show) {
 
 					var $commentDom = $('<div class="__ecup_comment"></div>');
-					var $commentBtn = $('<button type="button" class="__comment_btn"><span class="blind">코멘트토글</span></button>');
+					var $commentBtn = $('<button type="button" class="__comment_btn"><span class="__comment_blind">코멘트토글</span></button>');
 
 					$commentDom.append($commentBtn).append($commentArea);
 
 					var $target = $(target);
 
 					if($target.length) {
-						var top = $target.offset().top/$(window).height()*100+'%';
-						var left = $target.offset().left/$(window).width()*100+'%';
+						var top = $target.offset().top;
+						var left = $target.offset().left;
 					}
 
 					$commentDom.css({'top': top, 'left': left});
@@ -773,20 +791,8 @@
 					commentManager.targetDom.append($commentDom);
 
 					$commentBtn.click(function() {
-						var $commentArea = $(this).next('.__comment_area');
-
-						$commentArea.toggle();
-
-						var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
-
-						if($(window).width() - $commentAreaRightOffset < 20) {
-							$commentArea.css({'width':'100px','margin-left':'-101px'});
-						}
-
-						else {
-							$commentArea.css({'width':'auto','margin-left':'2em'});
-						}
-
+						$(this).siblings('.__comment_area').toggle();
+						$(window).scroll();
 					});
 
 					commentManager.targetData.push(target);
@@ -796,15 +802,18 @@
 		}
 
 		function reRenderComment() {
-			var targetData, commentData, $targetData, $commentData, top, left, $scrolltarget;
+			var targetData, commentData, $targetData, $commentData, top, left, $scrolltarget, $commentArea;
+			var $window = $(window);
 
-			$(window).on("resize scroll",function() {
+			$window.on("resize scroll",function() {
+
 				targetData = commentManager.targetData || [];
 				commentData = commentManager.targetDom.find('.__ecup_comment') || [];
 
 				for (var i = 0; i < targetData.length; i++) {
 					$targetData = $(targetData[i]);
 					$commentData = $(commentData[i]);
+					$commentArea = $commentData.find('.__comment_area');
 
 					if($targetData.css('display')==='none') {
 						$commentData.css('display','none');
@@ -815,12 +824,16 @@
 					}
 
 					if($targetData.length) {
-						top = $targetData.offset().top / $(window).height() * 100 + '%';
-						left = $targetData.offset().left / $(window).width() * 100 + '%';
+						top = $targetData.offset().top;
+						left = $targetData.offset().left;
 					}
 
 					$commentData.css({'top': top, 'left': left});
 
+					var $commentAreaRightOffset = $commentArea.offset().left + $commentArea.outerWidth();
+					console.log($commentArea);
+					if ($window.width() - $commentAreaRightOffset < 110) $commentArea.css({'width':'100px','margin-left':'-101px'});
+					else $commentArea.css({'width':'auto','margin-left':'2em'});
 				}
 			});
 
@@ -837,8 +850,8 @@
 							$commentData = $(commentData[i]);
 
 							if($targetData.length) {
-								top = $targetData.offset().top / $(window).height() * 100 + '%';
-								left = $targetData.offset().left / $(window).width() * 100 + '%';
+								top = $targetData.offset().top;
+								left = $targetData.offset().left;
 							}
 
 							$commentData.css({'top': top, 'left': left});

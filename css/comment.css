@@ -20,19 +20,10 @@
 }
 .__ecup_comment .__comment_area {
 	display: none;
-	max-width: 100px;
 	border: 2px solid #000;
 	border-radius: 5px;
 	background-color: #fff;
 	padding: 0.5em;
-	margin-left: 2em;
+	margin: -0.2em 0 0 2em;
 	font-size: 0.8em;
-}
-
-.__comment_blind {
-	position: absolute;
-	clip: rect(0 0 0 0);
-	width: 1px;
-	height: 1px;
-	margin: -1px;
 }
