@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>NTS Markup Library : jQuery 확장 메서드</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="./ecup_lib.css">
@@ -26,7 +27,7 @@
             <div class="area_nav">
                 <div class="area_tab">
                     <a href="./ecup_start.html" class="tab">시작하기</a>
-                    <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                    <a href="./ecup_layer.html" class="tab">Ecup</span></a>
                     <a href="#" class="tab on">jQuery 확장 메서드</a>
                     <a href="./ecup_etc.html" class="tab">부가 기능</a>
                 </div>
@@ -40,7 +41,7 @@
             <div class="area_content">
                 <div id="anchor_attr" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_1" class="tit">$(selector).<span class="point">handleAttr(</span> attributes <span class="point">)</span> <span style="float:right">요소 속성 제어</span></h5>
+                        <h5 id="anchor_1" class="tit">$(selector).<span class="point">handleAttr(</span> attributes <span class="point">)</span> <div class="sub_tit">요소 속성 제어</div></h5>
                         <div class="inner">
 							<div class="option_box">
 								<strong>Attributes</strong>
@@ -73,7 +74,7 @@
 
                 <div id="anchor_inline" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_2" class="tit">$(selector).<span class="point">handleStyle(</span> styles <span class="point">)</span> <span style="float:right">요소 인라인 스타일 제어</span></h5>
+                        <h5 id="anchor_2" class="tit">$(selector).<span class="point">handleStyle(</span> styles <span class="point">)</span> <div class="sub_tit">요소 인라인 스타일 제어</div></h5>
                         <div class="inner">
 							<div class="option_box">
 								<strong>Styles</strong>
@@ -106,7 +107,7 @@
 
                 <div id="anchor_sprite" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_3" class="tit">$(selector).<span class="point">sprite(</span> options <span class="point">)</span><span style="float:right">스프라이트 이미지 gif 효과</span></h5>
+                        <h5 id="anchor_3" class="tit">$(selector).<span class="point">sprite(</span> options <span class="point">)</span><div class="sub_tit">스프라이트 이미지 gif 효과</div></h5>
                         <div class="inner">
                             <div class="option_box">
                                 <strong>Options</strong>
@@ -179,7 +180,7 @@
 
                 <div id="anchor_animation" class="section_container">
                     <section class="section_content">
-                        <h5 id="anchor_4" class="tit">$.<span class="point">animation( name</span> : '...', <span class="point">animate</span> : { ... } <span class="point">)</span><span style="float:right">IE9 이하 애니메이션 - keyframe</span></h5>
+                        <h5 id="anchor_4" class="tit">$.<span class="point">animation( name</span> : '...', <span class="point">animate</span> : { ... } <span class="point">)</span><div class="sub_tit">IE9 이하 애니메이션 - keyframe</div></h5>
                         <div class="inner">
                             <div class="option_box">
                                 <strong>Keyframes 정의</strong>
@@ -218,7 +219,7 @@
                         </div>
                     </section>
                     <section class="section_content">
-                        <h5 id="anchor_5" class="tit">$(selector).<span class="point">animation( keyFrameName</span> , { options } <span class="point">)</span> <span style="float:right">IE9 이하 애니메이션 - keyframe 적용</span></h5>
+                        <h5 id="anchor_5" class="tit">$(selector).<span class="point">animation( keyFrameName</span> , { options } <span class="point">)</span> <div class="sub_tit">IE9 이하 애니메이션 - keyframe 적용</div></h5>
                         <div class="inner">
                             <div class="option_box">
                                 <strong>KeyframeName</strong>
@@ -265,25 +266,34 @@
 <script src="./ecup_lib.js"></script>
 <script src="../js/jquery-3.3.1.min.js"></script>
 <script>
-    $(window).scroll(function() {
-        var $nav = $('.area_nav');
-        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-        else $nav.removeClass('nav_fixed');
-    });
+	var isMobile = /Android|webOS|iPhone|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
-    $('.area_sub_tab .tab').on('click', function(e){
-        e.preventDefault();
-        var id = $(this).attr('href');
-        $('.section_container').each(function(){
-            $(this).css({height:0});
-        })
-        $(id).css({height:'auto'});
+	$(window).scroll(function() {
+		var $nav = $('.area_nav');
+		if(isMobile) {
+			console.log($(this).scrollTop());
+			if($(this).scrollTop() >= 288) $nav.addClass('nav_fixed');
+			else $nav.removeClass('nav_fixed');
+		}
+		else {
+			if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+			else $nav.removeClass('nav_fixed');
+		}
+	});
 
-        var $hrefTarget = $($(this).attr('href'));
-        var position = $hrefTarget.offset().top-150;
+	$('.area_sub_tab .tab').on('click', function(e){
+		e.preventDefault();
+		var id = $(this).attr('href');
+		$('.section_container').each(function(){
+			$(this).css({height:0});
+		})
+		$(id).css({height:'auto'});
 
-        $('html,body').delay(100).animate({scrollTop:position}, 300);
-    })
+		var $hrefTarget = $($(this).attr('href'));
+		var position = $hrefTarget.offset().top-150;
+
+		$('html,body').delay(100).animate({scrollTop:position}, 300);
+	})
 </script>
 </body>
 </html>

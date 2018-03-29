@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>NTS Markup Library : Ecup 시작하기</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="./ecup_lib.css">
@@ -37,12 +38,12 @@
                 <div class="area_nav">
                     <div class="area_tab">
                         <a href="#" class="tab on">시작하기</a>
-                        <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                        <a href="./ecup_layer.html" class="tab">Ecup</a>
                         <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
                         <a href="./ecup_etc.html" class="tab">부가 기능</a>
                     </div>
                 </div>
-                <div class="area_content">
+                <div class="area_content start">
                     <div id="anchor_start" class="section_container">
                         <section class="section_content">
                             <strong>Browser support</strong>
@@ -210,25 +211,34 @@
     <script src="./ecup_lib.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script>
-        $(window).scroll(function() {
-            var $nav = $('.area_nav');
-            if ($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-            else $nav.removeClass('nav_fixed');
-        });
+	    var isMobile = /Android|webOS|iPhone|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
-        $('.area_sub_tab .tab').on('click', function(e){
-            e.preventDefault();
-            var id = $(this).attr('href');
-            $('.section_container').each(function(){
-                $(this).css({height:0});
-            })
-            $(id).css({height:'auto'});
+	    $(window).scroll(function() {
+		    var $nav = $('.area_nav');
+		    if(isMobile) {
+			    console.log($(this).scrollTop());
+			    if($(this).scrollTop() >= 288) $nav.addClass('nav_fixed');
+			    else $nav.removeClass('nav_fixed');
+		    }
+		    else {
+			    if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+			    else $nav.removeClass('nav_fixed');
+		    }
+	    });
 
-            var $hrefTarget = $($(this).attr('href'));
-            var position = $hrefTarget.offset().top-150;
+	    $('.area_sub_tab .tab').on('click', function(e){
+		    e.preventDefault();
+		    var id = $(this).attr('href');
+		    $('.section_container').each(function(){
+			    $(this).css({height:0});
+		    })
+		    $(id).css({height:'auto'});
 
-            $('html,body').delay(100).animate({scrollTop:position}, 300);
-        })
+		    var $hrefTarget = $($(this).attr('href'));
+		    var position = $hrefTarget.offset().top-150;
+
+		    $('html,body').delay(100).animate({scrollTop:position}, 300);
+	    })
     </script>
 </body>
 

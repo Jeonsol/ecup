@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>NTS Markup Library : 마크업검수 레이어</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="./ecup_lib.css">
@@ -32,7 +33,7 @@
                 <div class="area_nav">
                     <div class="area_tab">
                         <a href="./ecup_start.html" class="tab">시작하기</a>
-                        <a href="#" class="tab on">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                        <a href="#" class="tab on">Ecup</a>
                         <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
                         <a href="./ecup_etc.html" class="tab">부가 기능</a>
                     </div>
@@ -334,7 +335,7 @@
 
                     <div id="anchor_comment" class="section_container">
                         <section class="section_content">
-                            <h5 id="anchor_1" class="tit">ecup.<span class="point">comment(</span> { target : comment } <span class="point">)</span> <span style="float:right">UI 코멘트 남기기</span></h5>
+                            <h5 id="anchor_1" class="tit">ecup.<span class="point">comment(</span> { target : comment } <span class="point">)</span> <div class="sub_tit">UI 코멘트 남기기</div></h5>
                             <div class="inner">
                                 <div class="option_box">
                                     <strong>Arguments</strong>
@@ -395,7 +396,7 @@
 
                     <div id="anchor_ui" class="section_container">
                         <section class="section_content">
-                            <h5 id="anchor_layerControl" class="tit">ecup.<span class="point">layerControl(</span> target, show, hide <span class="point">) </span><span style="float:right">Layer DOM 제어하기</span></h5>
+                            <h5 id="anchor_layerControl" class="tit">ecup.<span class="point">layerControl(</span> target, show, hide <span class="point">) </span><div class="sub_tit">Layer DOM 제어하기</div></h5>
                             <div class="inner">
                                 <div class="option_box">
                                     <strong>Arguments</strong>
@@ -432,7 +433,7 @@
                         </section>
 
                         <section class="section_content">
-                            <h5 id="anchor_selectControl" class="tit">ecup.<span class="point">selectControl(</span> button, list, { attribute } <span class="point">)</span><span style="float:right">selectbox(custom) 제어하기</span></h5>
+                            <h5 id="anchor_selectControl" class="tit">ecup.<span class="point">selectControl(</span> button, list, { attribute } <span class="point">)</span><div class="sub_tit">selectbox(custom) 제어하기</div></h5>
                             <div class="inner">
                                 <div class="option_box">
                                     <strong>Arguments</strong>
@@ -484,25 +485,34 @@
     <script src="./ecup_lib.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script>
-            $(window).scroll(function() {
-            var $nav = $('.area_nav');
-            if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-            else $nav.removeClass('nav_fixed');
-        });
+	    var isMobile = /Android|webOS|iPhone|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
-        $('.area_sub_tab .tab').on('click', function(e){
-            e.preventDefault();
-            var id = $(this).attr('href');
-            $('.section_container').each(function(){
-                $(this).css({height:0});
-            })
-            $(id).css({height:'auto'});
+	    $(window).scroll(function() {
+		    var $nav = $('.area_nav');
+		    if(isMobile) {
+			    console.log($(this).scrollTop());
+			    if($(this).scrollTop() >= 288) $nav.addClass('nav_fixed');
+			    else $nav.removeClass('nav_fixed');
+		    }
+		    else {
+			    if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+			    else $nav.removeClass('nav_fixed');
+		    }
+	    });
 
-            var $hrefTarget = $($(this).attr('href'));
-            var position = $hrefTarget.offset().top-150;
+	    $('.area_sub_tab .tab').on('click', function(e){
+		    e.preventDefault();
+		    var id = $(this).attr('href');
+		    $('.section_container').each(function(){
+			    $(this).css({height:0});
+		    })
+		    $(id).css({height:'auto'});
 
-            $('html,body').delay(100).animate({scrollTop:position}, 300);
-        })
+		    var $hrefTarget = $($(this).attr('href'));
+		    var position = $hrefTarget.offset().top-150;
+
+		    $('html,body').delay(100).animate({scrollTop:position}, 300);
+	    })
     </script>
 </body>
 
