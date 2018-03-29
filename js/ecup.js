@@ -718,7 +718,7 @@
 
 		function commonWrite(target,$commentArea) {
 
-			$(document).ready(function() {
+			$(window).load(function() {
 
 				if(commentManager.show) {
 
@@ -730,8 +730,8 @@
 					var $target = $(target);
 
 					if($target.length) {
-						var top = $target.offset().top/$(window).height()*100+'%';
-						var left = $target.offset().left/$(window).width()*100+'%';
+						var top = $target.offset().top;
+						var left = $target.offset().left;
 					}
 
 					$commentDom.css({'top': top, 'left': left});
@@ -747,20 +747,8 @@
 					commentManager.targetDom.append($commentDom);
 
 					$commentBtn.click(function() {
-						var $commentArea = $(this).next('.__comment_area');
-
-						$commentArea.toggle();
-
-						var $commentAreaRightOffset = $commentArea.offset().left+$commentArea.innerWidth();
-
-						if($(window).width() - $commentAreaRightOffset < 20) {
-							$commentArea.css({'width':'100px','margin-left':'-101px'});
-						}
-
-						else {
-							$commentArea.css({'width':'auto','margin-left':'2em'});
-						}
-
+						$(this).siblings('.__comment_area').toggle();
+						$(window).scroll();
 					});
 
 					commentManager.targetData.push(target);
@@ -770,15 +758,18 @@
 		}
 
 		function reRenderComment() {
-			var targetData, commentData, $targetData, $commentData, top, left, $scrolltarget;
+			var targetData, commentData, $targetData, $commentData, top, left, $scrolltarget, $commentArea;
+			var $window = $(window);
 
-			$(window).on("resize scroll",function() {
+			$window.on("resize scroll",function() {
+
 				targetData = commentManager.targetData || [];
 				commentData = commentManager.targetDom.find('.__ecup_comment') || [];
 
 				for (var i = 0; i < targetData.length; i++) {
 					$targetData = $(targetData[i]);
 					$commentData = $(commentData[i]);
+					$commentArea = $commentData.find('.__comment_area');
 
 					if($targetData.css('display')==='none') {
 						$commentData.css('display','none');
@@ -795,6 +786,10 @@
 
 					$commentData.css({'top': top, 'left': left});
 
+					var $commentAreaRightOffset = $commentArea.offset().left + $commentArea.outerWidth();
+					console.log($commentArea);
+					if ($window.width() - $commentAreaRightOffset < 110) $commentArea.css({'width':'100px','margin-left':'-101px'});
+					else $commentArea.css({'width':'auto','margin-left':'2em'});
 				}
 			});
 
