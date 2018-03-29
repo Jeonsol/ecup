@@ -68,3 +68,71 @@
 .__NTS_markup.naver .__check[aria-pressed="true"] .__view::before {color: #00c73c;}
 .__NTS_markup.naver .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.naver .__radio[aria-pressed="true"] .__view:before {background-color: #00c73c;}
+
+/** PURPLE 테마 **/
+.__NTS_markup_wrap.purple .__NTS_markup_show {background-color: #cd65dc;color: #fff;border: 1px solid #cd65dc;}
+.__NTS_markup_wrap.purple .__NTS_markup_show:hover {color: #000;}
+.__NTS_markup.purple {background-color: #fff;border: 1px solid #cd65dc;}
+.__NTS_markup.purple h2 {background-color: #cd65dc;color: #fff;}
+.__NTS_markup.purple .__area_env a{color: #000;}
+.__NTS_markup.purple .__area_env .__view {background-color: #cd65dc;}
+.__NTS_markup.purple .__area_env .__view:before {background-color: #fff;}
+.__NTS_markup.purple .__area_env .off .__view:before {background-color: #fff;}
+.__NTS_markup.purple .__area_group strong {background-color: #cd65dc;margin-bottom: 4px;color: #fff;}
+.__NTS_markup.purple .__area_btn {border-bottom: 0;}
+.__NTS_markup.purple .__area_btns a {background-color: #fff;border: 1px dotted #cd65dc;border-radius: 6px;margin-bottom: 4px;color: #000;}
+.__NTS_markup.purple .__check .__view:before {color: #000;}
+.__NTS_markup.purple .__check[aria-pressed="true"] .__view::before {color: #cd65dc;}
+.__NTS_markup.purple .__radio .__view:before {background-color: #5a5959;}
+.__NTS_markup.purple .__radio[aria-pressed="true"] .__view:before {background-color: #cd65dc;}
+
+/** YELLOW 테마 **/
+.__NTS_markup_wrap.yellow .__NTS_markup_show {background-color: #fbec46;color: #fff;border: 1px solid #fbec46;}
+.__NTS_markup_wrap.yellow .__NTS_markup_show:hover {color: #000;}
+.__NTS_markup.yellow {background-color: #fff;border: 1px solid #fbec46;}
+.__NTS_markup.yellow h2 {background-color: #fbec46;color: #000;}
+.__NTS_markup.yellow .__area_env a{color: #000;}
+.__NTS_markup.yellow .__area_env .__view {background-color: #fbec46;}
+.__NTS_markup.yellow .__area_env .__view:before {background-color: #fff;}
+.__NTS_markup.yellow .__area_env .off .__view:before {background-color: #fff;}
+.__NTS_markup.yellow .__area_group strong {background-color: #fbec46;margin-bottom: 4px;color: #000;}
+.__NTS_markup.yellow .__area_btn {border-bottom: 0;}
+.__NTS_markup.yellow .__area_btns a {background-color: #fff;border: 1px dotted #efdf2d;border-radius: 6px;margin-bottom: 4px;color: #000;}
+.__NTS_markup.yellow .__check .__view:before {color: #000;}
+.__NTS_markup.yellow .__check[aria-pressed="true"] .__view::before {color: #fbec46;}
+.__NTS_markup.yellow .__radio .__view:before {background-color: #5a5959;}
+.__NTS_markup.yellow .__radio[aria-pressed="true"] .__view:before {background-color: #fbec46;}
+
+/** BLUE 테마 **/
+.__NTS_markup_wrap.blue .__NTS_markup_show {background-color: #00adff;color: #fff;border: 1px solid #00adff;}
+.__NTS_markup_wrap.blue .__NTS_markup_show:hover {color: #000;}
+.__NTS_markup.blue {background-color: #fff;border: 1px solid #00adff;}
+.__NTS_markup.blue h2 {background-color: #00adff;color: #fff;}
+.__NTS_markup.blue .__area_env a{color: #000;}
+.__NTS_markup.blue .__area_env .__view {background-color: #00adff;}
+.__NTS_markup.blue .__area_env .__view:before {background-color: #fff;}
+.__NTS_markup.blue .__area_env .off .__view:before {background-color: #fff;}
+.__NTS_markup.blue .__area_group strong {background-color: #00adff;margin-bottom: 4px;color: #fff;}
+.__NTS_markup.blue .__area_btn {border-bottom: 0;}
+.__NTS_markup.blue .__area_btns a {background-color: #fff;border: 1px dotted #00adff;border-radius: 6px;margin-bottom: 4px;color: #000;}
+.__NTS_markup.blue .__check .__view:before {color: #000;}
+.__NTS_markup.blue .__check[aria-pressed="true"] .__view::before {color: #00adff;}
+.__NTS_markup.blue .__radio .__view:before {background-color: #5a5959;}
+.__NTS_markup.blue .__radio[aria-pressed="true"] .__view:before {background-color: #00adff;}
+
+/** ORANGE 테마 **/
+.__NTS_markup_wrap.orange .__NTS_markup_show {background-color: #ff9900;color: #fff;border: 1px solid #ff9900;}
+.__NTS_markup_wrap.orange .__NTS_markup_show:hover {color: #000;}
+.__NTS_markup.orange {background-color: #fff;border: 1px solid #ff9900;}
+.__NTS_markup.orange h2 {background-color: #ff9900;color: #fff;}
+.__NTS_markup.orange .__area_env a{color: #000;}
+.__NTS_markup.orange .__area_env .__view {background-color: #ff9900;}
+.__NTS_markup.orange .__area_env .__view:before {background-color: #fff;}
+.__NTS_markup.orange .__area_env .off .__view:before {background-color: #fff;}
+.__NTS_markup.orange .__area_group strong {background-color: #ff9900;margin-bottom: 4px;color: #fff;}
+.__NTS_markup.orange .__area_btn {border-bottom: 0;}
+.__NTS_markup.orange .__area_btns a {background-color: #fff;border: 1px dotted #ff9900;border-radius: 6px;margin-bottom: 4px;color: #000;}
+.__NTS_markup.orange .__check .__view:before {color: #000;}
+.__NTS_markup.orange .__check[aria-pressed="true"] .__view::before {color: #ff9900;}
+.__NTS_markup.orange .__radio .__view:before {background-color: #5a5959;}
+.__NTS_markup.orange .__radio[aria-pressed="true"] .__view:before {background-color: #ff9900;}
