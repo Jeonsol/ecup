@@ -108,6 +108,9 @@
 				};
 
 				createRenderMap(options, groupInfo);
+			},
+			show: function() {
+				markupLayerManager.show();
 			}
 		};
 
@@ -212,29 +215,39 @@
 
 				if (!option.target) throw new Error('target 이 반드시 필요합니다...');
 
-				var oppositeMap = {
-					'addClass': 'removeClass',
-					'removeClass': 'addClass',
-					'toggleClass': 'toggleClass',
-					'addAttr': 'removeAttr',
-					'removeAttr': 'addAttr',
-					'toggleAttr': 'toggleAttr',
-					'addStyle': 'removeStyle',
-					'toggleStyle': 'toggleStyle',
-					'show': 'hide',
-					'hide': 'show',
-					'toggle': 'toggle'
+				function toOpposite(fnString) {
+					switch(fnString) {
+						case 'addClass':case 'removeClass':case 'toggleClass':
+							return 'toggleClass';
+						case 'addAttr':case 'removeAttr':case 'toggleAttr':
+							return 'toggleAttr';
+						case 'addStyle':case 'removeStyle':case 'toggleStyle':
+							return 'toggleStyle';
+						case 'show':case 'hide':case 'toggle':
+							return 'toggle';
+					}
 				}
 
-				var fn, fnPart;
+				var fn, fnPart, fnParam;
 				var fnBody = 'var that = this;';
 
 				for (var optFn in option) {
 					if (optFn === 'target') continue;
-					if (oppositeFlag) optFn = oppositeMap[optFn];
-					fnPart = "that." + optFn + "('" + option[optFn] + "');";
+
+					var param = option[optFn];
+					if (oppositeFlag) optFn = toOpposite(optFn);
+
+					if (optFn === 'addClass' || optFn === 'removeClass' || optFn === 'toggleClass') {
+						fnParam = '"' + param + '"';
+					} else {
+						fnParam = JSON.stringify(param);
+					}
+
+					fnPart = "that.$" + optFn + "(" + fnParam + ");";
 					fnBody += fnPart;
 				}
+
+				console.log(fnBody);
 
 				fn = new Function('e', fnBody);
 				fn = fn.bind(option.target);
@@ -424,7 +437,7 @@
                             btnObj.button[$(this).text()].origin();
                             $(this).attr('aria-pressed','true');
                         }
-                    })
+                    });
                 } else if(groupType == 'button') { // 기본 버튼 타입 이벤트
                     $groups.on('click', 'a', function(e){
                         var name = $(this).text();
@@ -432,7 +445,7 @@
                             btnObj.button[name].origin();
                             $(this).attr('aria-pressed','true');
                         }
-                    })
+                    });
                 } else { // 체크박스 버튼 타입 이벤트 ( default )
                     $groups.on('click', 'a', function(e){
                         var name = $(this).text();
@@ -445,7 +458,7 @@
                             btnObj.button[name].origin();
                             $(this).attr('aria-pressed','true');
                         }
-                    })
+                    });
                 }
             }
 
@@ -848,7 +861,7 @@
 			attrName: attrVal,
 			...
 		},
-		style: { // 확장 예정
+		style: {
 			styleName: styleVal,
 			...
 		}
@@ -867,129 +880,130 @@
 			}
 			return -1;
 		},
-		setAttr: function(domAddress, attrName, attrVal) {
+		set: function(domAddress, type, name, value) {
 			var cache = this.cache,
 				index = this.find(domAddress);
 
 			if (index === -1) {
-				cache.push({
-					dom: domAddress,
-					attr: {}
-				});
+				var data = {
+					dom: domAddress
+				};
+				data[type] = {};
+
+				cache.push(data);
 				index = cache.length - 1;
 			}
-			cache[index]['attr'][attrName] = attrVal;
+			cache[index][type][name] = value;
 		},
-		getAttr: function(domAddress, attrName) {
+		get: function(domAddress, type, name) {
 			var cache = this.cache,
 				index = this.find(domAddress);
 
-			if (index !== -1) return cache[index]['attr'][attrName];
+			if (index !== -1) return cache[index][type][name];
 			else return undefined;
 		}
 	}
 	var domCacheStorage = new DomCacheManager();
 
-	jQuery.fn.addAttr = function() {HOF_parseParam.call(this, arguments, jQuery.fn.addAttr.PF);};
-	jQuery.fn.removeAttrOrigin = jQuery.fn.removeAttr;
-	jQuery.fn.removeAttr = function() {HOF_parseParam.call(this, arguments, jQuery.fn.removeAttr.PF);};
-	jQuery.fn.toggleAttr = function() {HOF_parseParam.call(this, arguments, jQuery.fn.toggleAttr.PF);};
-	jQuery.fn.addStyle = function() {HOF_parseParam.call(this, arguments, jQuery.fn.addStyle.PF);};
-	jQuery.fn.removeStyle = function() {HOF_parseParam.call(this, arguments, jQuery.fn.removeStyle.PF);};
-	jQuery.fn.toggleStyle = function() {HOF_parseParam.call(this, arguments, jQuery.fn.toggleStyle.PF);};
+	jQuery.fn.$addClass = jQuery.fn.addClass;
+	jQuery.fn.$removeClass = jQuery.fn.removeClass;
+	jQuery.fn.$toggleClass = jQuery.fn.toggleClass;
+	jQuery.fn.$addAttr = function() {HOF_param(this, arguments, jQuery.fn.$addAttr.PF);};
+	jQuery.fn.$removeAttr = function() {HOF_param_remove(this, arguments, jQuery.fn.$removeAttr.PF);};
+	jQuery.fn.$toggleAttr = function() {HOF_param(this, arguments, jQuery.fn.$toggleAttr.PF);};
+	jQuery.fn.$addStyle = function() {HOF_param(this, arguments, jQuery.fn.$addStyle.PF);};
+	jQuery.fn.$removeStyle = function() {HOF_param_remove(this, arguments, jQuery.fn.$removeStyle.PF);};
+	jQuery.fn.$toggleStyle = function() {HOF_param(this, arguments, jQuery.fn.$toggleStyle.PF);};
 
 	/* 속성 추가/수정 */
-	jQuery.fn.addAttr.PF = function($dom, attr, val) {
+	jQuery.fn.$addAttr.PF = function($dom, attr, val) {
+		if ($dom.attr(attr)) domCacheStorage.set($dom[0], 'attr', attr, $dom.attr(attr));
 		$dom.attr(attr, val);
 	};
 	/* 속성 삭제 */
-	jQuery.fn.removeAttr.PF = function($dom, attr) {
-		$dom.removeAttrOrigin(attr);
+	jQuery.fn.$removeAttr.PF = function($dom, attr) {
+		var rollback = domCacheStorage.get($dom[0], 'attr', attr);
+		if (rollback !== undefined) {
+			$dom[0].setAttribute(attr, rollback);
+			domCacheStorage.set($dom[0], 'attr', attr, undefined);
+		} else {
+			$dom.removeAttr(attr);
+		}
 	};
 	/* 속성 토글 */
-	jQuery.fn.toggleAttr.PF = function($doms, attr, val) {
-		$.each($doms, function(i, dom) {
-			if (!dom.hasAttribute(attr)) {
-				dom.setAttribute(attr, val);
-			} else if (dom.getAttribute(attr) !== val) {
-				domCacheStorage.setAttr(dom, attr, dom.getAttribute(attr));
-				dom.setAttribute(attr, val);
-			} else if (dom.getAttribute(attr) === val) {
-				var rollback = domCacheStorage.getAttr(dom, attr);
-				if (rollback !== undefined && rollback !== val) dom.setAttribute(attr, rollback);
-				else dom.removeAttribute(attr);
-			}
-		});
-
+	jQuery.fn.$toggleAttr.PF = function($dom, attr, val) {
+		var dom = $dom[0];
+		if (!dom.hasAttribute(attr)) {
+			dom.setAttribute(attr, val);
+		} else if (dom.getAttribute(attr) !== val) {
+			domCacheStorage.set(dom, 'attr', attr, dom.getAttribute(attr));
+			dom.setAttribute(attr, val);
+		} else if (dom.getAttribute(attr) === val) {
+			var rollback = domCacheStorage.get(dom, 'attr', attr);
+			if (rollback !== undefined && rollback !== val) dom.setAttribute(attr, rollback);
+			else dom.removeAttribute(attr);
+		}
 	};
 	/* 인라인 스타일 추가/수정 */
-	jQuery.fn.addStyle.PF = function($doms, style, val) {
-		$.each($doms, function(i, dom) {
-			dom.style[style] = val;
-		});
+	jQuery.fn.$addStyle.PF = function($dom, style, val) {
+		if (style === 'color' || style === 'background-color') val = $.hexToRgb(val);
+		if ($dom[0].style[style]) domCacheStorage.set($dom[0], 'style', style, $dom[0].style[style]);
+		$dom.css(style, val);
 	};
 	/* 인라인 스타일 삭제 */
-	jQuery.fn.removeStyle.PF = function($doms, style) {
-		$.each($doms, function(index, dom) {
+	jQuery.fn.$removeStyle.PF = function($dom, style) {
+		if (style === 'color' || style === 'background-color') val = $.hexToRgb(val);
+		var dom = $dom[0];
+		var rollback = domCacheStorage.get(dom, 'style', style);
+		if (rollback !== undefined) {
+			dom.style[style] = rollback;
+			domCacheStorage.set(dom, 'style', style, undefined);
+		} else {
 			if (dom.style.removeProperty) dom.style.removeProperty(style);
 			else dom.style.removeAttribute(style);
-
-		});
+		}
 	};
 	/* 인라인 스타일 토글 */
-	jQuery.fn.toggleStyle.PF = function($doms, style, val) {
-		$.each($doms, function(index, dom) {
-			if(!dom.style[style] || dom.style[style] !== val) {
-				dom.style[style] = val;
+	jQuery.fn.$toggleStyle.PF = function($dom, style, val) {
+		if (style === 'color' || style === 'background-color') val = $.hexToRgb(val);
+		var dom = $dom[0];
+		if (!dom.style[style]) {
+			console.log(1);
+			dom.style[style] = val;
+		} else if (dom.style[style] !== val) {
+			console.log(dom.style[style]);
+			domCacheStorage.set(dom, 'style', style, dom.style[style]);
+			dom.style[style] = val;
+		} else if (dom.style[style] === val) {
+			console.log(3);
+			var rollback = domCacheStorage.get(dom, 'style', style);
+			if (rollback !== undefined && rollback !== val) {
+				dom.style[style] = rollback;
 			} else {
 				if (dom.style.removeProperty) dom.style.removeProperty(style);
 				else dom.style.removeAttribute(style);
 			}
-		});
+		}
 	};
 
-	/* 고계 함수 - 문자열 파라미터 파싱 */
-	function HOF_parseParam(attrParams, callback) {
+	/* 고계 함수 - 파라미터 분기처리 - 삭제 메서드*/
+	function HOF_param_remove($target, args, callback) {
 
-		var that = this;
-
-		$.each(attrParams, function(index, attrParam) {
-
-			var attr, val, regExp;
-
-			if (typeof attrParam !== 'string') throw new Error("check a type of attribute parameter");
-
-			attrParam = $.trim(attrParam);
-			attrParam += ' ';
-
-			switch (callback) {
-				case jQuery.fn.removeAttr.PF:
-				case jQuery.fn.removeStyle.PF:
-					regExp = /([^\s,]+)(?=[\s,])/g;
-					break;
-				case jQuery.fn.addAttr.PF:
-				case jQuery.fn.toggleAttr.PF:
-					regExp = /([^\s,]+)="([^",]+)"(?=[\s,])/g;
-					break;
-				case jQuery.fn.addStyle.PF:
-				case jQuery.fn.toggleStyle.PF:
-					regExp = /([a-zA-Z\-]+)\s*:\s*(\S+)(?=;)/g;
-					break;
-			}
-
-			while(true) {
-
-				var temp = regExp.exec(attrParam);
-				if (temp === null) break;
-
-				if (temp[1]) attr = temp[1];
-				if (temp[2]) val = temp[2];
-
-				callback(that, attr, val);
-
-			}
-
+		$.each(args, function(index, attrParam) {
+			callback($target, attrParam);
 		});
+
+	}
+
+	/* 고계 함수 - 파라미터 분기처리 */
+	function HOF_param($target, args, callback) {
+
+		var map = {};
+
+		if (typeof args[0] === 'object') map = args[0];
+		else if (typeof args[0] === 'string') map[args[0]] = args[1];
+
+		for (name in map) callback($target, name, map[name]);
 
 	}
 
@@ -1140,6 +1154,14 @@
 		}
 
 		return browser;
+	}
+
+	jQuery.hexToRgb = function(hex) {
+		if (hex[0] === '#' && hex.length === 4) hex += hex[1] + hex[1] + hex[1];
+	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	    return result ? 'rgb(' + parseInt(result[1], 16) + ', '
+			+ parseInt(result[2], 16) + ', '
+			+ parseInt(result[3], 16) + ')' : hex;
 	}
 
 }, function() {
