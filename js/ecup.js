@@ -137,7 +137,7 @@
 
 		// markupLayer 셋팅 초기화
 		markupLayerManager.type = 'windows';
-		markupLayerManager.theme = 'dark';
+		markupLayerManager.theme = 'naver';
 		markupLayerManager.position = 'top right';
         markupLayerManager.newWindow = null;
 		markupLayerManager.buttonType = {};

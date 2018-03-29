@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/merge_end.css">
 	<link rel="stylesheet" type="text/css" href="css/merge_markup.css">
 	<link rel="stylesheet" href="./ui/ecup_comment.css">
+	<link rel="stylesheet" href="./ui/ecup_ui.css">
 </head>
 <body>
 	<nav id="u_skip" class="u_skip">
@@ -649,13 +650,14 @@
 	<script src="./js/ecup.js"></script>
 	<script>
 		ecup.markupLayer.set({
-		    type: 'windows',
+		    type: 'external',
 			theme: 'naver',
 			external: {
 				btnText: '마크업',
 				right: 50,
 				bottom: 50
 			},
+			internal: '#wrap',
 			buttonType: {
 				'로그인 상태': 'radio'
 		    }
