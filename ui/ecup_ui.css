@@ -37,7 +37,7 @@
 .__NTS_markup .__check[aria-pressed="true"] .__view:before {color:#b7b7b7;}
 
 .__NTS_markup .__radio .__view {width:2em;}
-.__NTS_markup .__radio .__view:before {content:'';display:inline-block;width:0.6em;height:0.6em;margin-top:0.7em;border-radius:50%;background-color:#4a4a4a;}
+.__NTS_markup .__radio .__view:before {content:'';display:inline-block;width:0.4em;height:0.4em;margin-top:0.8em;border-radius:50%;background-color:#4a4a4a;vertical-align:top;}
 .__NTS_markup .__radio[aria-pressed="true"] .__view:before {background-color:#b7b7b7;}
 
 /* external */
