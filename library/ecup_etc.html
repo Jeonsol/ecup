@@ -7,93 +7,93 @@
     <link rel="stylesheet" href="./ecup_lib.css">
 </head>
 <body>
-    <div class="wrap">
-        <header class="header">
-            <div class="inner">
-                <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
-            </div>
-        </header>
-        <main class="container">
-            <section class="section_intro">
-                <h2 class="tit">라이브러리 소개</h2>
-                <h3 class="develop_name">Ecup.js</h3>
-                <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
-                <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
-            </section>
+<div class="wrap">
+    <header class="header">
+        <div class="inner">
+            <h1 class="tit">NTS <span class="kr">마크업 라이브러리</span></h1>
+        </div>
+    </header>
+    <main class="container">
+        <section class="section_intro">
+            <h2 class="tit">라이브러리 소개</h2>
+            <h3 class="develop_name">Ecup.js</h3>
+            <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
+            <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
+        </section>
 
 
-            <div class="content">
-                <div class="area_nav">
-                    <div class="area_tab">
-                        <a href="./ecup_start.html" class="tab">시작하기</a>
-                        <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
-                        <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
-                        <a href="#" class="tab on">부가 기능</a>
-                    </div>
-                    <div class="area_sub_tab">
-                        <a href="#anchor_tmpimg" class="tab"># 임시 이미지</a>
-                    </div>
+        <div class="content">
+            <div class="area_nav">
+                <div class="area_tab">
+                    <a href="./ecup_start.html" class="tab">시작하기</a>
+                    <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                    <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
+                    <a href="#" class="tab on">부가 기능</a>
                 </div>
-                <div class="area_content">
-                    <div id="anchor_tmpimg" class="section_container">
-                        <section class="section_content">
-                        <h5 id="anchor_2" class="tit"><span class="code">&lt;img src=<span class="point">"#"</span> /&gt;</span> <span style="float:right">임시이미지 자동적용 기능</span></h5>
-                        <div class="inner">
-                            <p class="mg_top2">사내에서 구현된 임시이미지 웹앱 <a href="http://dev.ui.naver.com/tmp/generator.html" target="_blank">( http://dev.ui.naver.com/tmp/generator.html )</a> 을 기반으로 만든 기능으로<br>
-                                <span class="code">jQuery.js</span> 와 <span class="code">Ecup.js</span>가 추가되있으면 <strong class="code">src="#"</strong> 만으로 임시 이미지를 불러옵니다.</p>
+                <div class="area_sub_tab">
+                    <a href="#anchor_tmpimg" class="tab"># 임시 이미지</a>
+                </div>
+            </div>
+            <div class="area_content">
+                <div id="anchor_tmpimg" class="section_container">
+                    <section class="section_content">
+                    <h5 id="anchor_2" class="tit"><span class="code">&lt;img src=<span class="point">"#"</span> /&gt;</span> <span style="float:right">임시이미지 자동적용 기능</span></h5>
+                    <div class="inner">
+                        <p class="mg_top2">사내에서 구현된 임시이미지 웹앱 <a href="http://dev.ui.naver.com/tmp/generator.html" target="_blank">( http://dev.ui.naver.com/tmp/generator.html )</a> 을 기반으로 만든 기능으로<br>
+							<span class="code">jQuery.js</span> 와 <span class="code">Ecup.js</span>가 추가되있으면 <strong class="code">src="#"</strong> 만으로 임시 이미지를 불러옵니다.</p>
 
-                            <strong class="mg_top2" style="display:block;">Example</strong>
-                            <div class="box_code code_html">
-                                <p>// 랜덤 이미지 ( 인물, 라이프스타일, 배경 )</p>
-                                <p>&lt;img src="#" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p> </p>
-                                <p>// 인물 랜덤 이미지</p>
-                                <p>&lt;img src="#p" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p>&lt;img src="#사람" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p> </p>
-                                <p>// 라이프스타일 랜덤 이미지</p>
-                                <p>&lt;img src="#l" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p>&lt;img src="#라이프스타일" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p> </p>
-                                <p>// 자연 랜덤 이미지</p>
-                                <p>&lt;img src="#n" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p>&lt;img src="#자연" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p> </p>
-                                <p>// 고정 이미지 (뒤에 숫자 1 ~ 3)</p>
-                                <p>&lt;img src="#p1" width="100" height="100" alt="임시이미지"/&gt;</p>
-                                <p>&lt;img src="#자연3" width="100" height="100" alt="임시이미지"/&gt;</p>
-                            </div>
+                        <strong class="mg_top2" style="display:block;">Example</strong>
+                        <div class="box_code code_html">
+                            <p>// 랜덤 이미지 ( 인물, 라이프스타일, 배경 )</p>
+                            <p>&lt;img src="#" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p> </p>
+                            <p>// 인물 랜덤 이미지</p>
+                            <p>&lt;img src="#p" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p>&lt;img src="#사람" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p> </p>
+                            <p>// 라이프스타일 랜덤 이미지</p>
+                            <p>&lt;img src="#l" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p>&lt;img src="#라이프스타일" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p> </p>
+                            <p>// 자연 랜덤 이미지</p>
+                            <p>&lt;img src="#n" width="100" height="100" alt="임시이미지"/&gt;</p>
+                            <p>&lt;img src="#자연" width="100" height="100" alt="임시이미지"/&gt;</p>
+							<p> </p>
+							<p>// 고정 이미지 (뒤에 숫자 1 ~ 3)</p>
+							<p>&lt;img src="#p1" width="100" height="100" alt="임시이미지"/&gt;</p>
+							<p>&lt;img src="#자연3" width="100" height="100" alt="임시이미지"/&gt;</p>
                         </div>
-                    </section>
                     </div>
+                </section>
                 </div>
             </div>
-        </main>
-    </div>
-    <script src="./ecup_lib.js"></script>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script>
-        $(window).scroll(function() {
-            var $nav = $('.area_nav');
-            if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-            else $nav.removeClass('nav_fixed');
-        });
+        </div>
+    </main>
+</div>
+<script src="./ecup_lib.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script>
+    $(window).scroll(function() {
+        var $nav = $('.area_nav');
+        if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+        else $nav.removeClass('nav_fixed');
+    });
 
-        $('.area_sub_tab .tab').on('click', function(e){
-            e.preventDefault();
-            var id = $(this).attr('href');
-            $('.section_container').each(function(){
-                $(this).css({height:0});
-            })
-            $(id).css({height:'auto'});
-
-            var $hrefTarget = $($(this).attr('href'));
-            if($hrefTarget.length) {
-                var position = $hrefTarget.offset().top-150;
-
-                $('html,body').delay(100).animate({scrollTop:position}, 300);
-            }
+    $('.area_sub_tab .tab').on('click', function(e){
+        e.preventDefault();
+        var id = $(this).attr('href');
+        $('.section_container').each(function(){
+            $(this).css({height:0});
         })
-    </script>
+        $(id).css({height:'auto'});
+
+        var $hrefTarget = $($(this).attr('href'));
+        if($hrefTarget.length) {
+	        var position = $hrefTarget.offset().top-150;
+
+	        $('html,body').delay(100).animate({scrollTop:position}, 300);
+        }
+    })
+</script>
 </body>
 </html>
