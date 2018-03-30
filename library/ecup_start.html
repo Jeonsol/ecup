@@ -93,25 +93,27 @@
     <script src="./ecup_lib.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script>
-        $(window).scroll(function() {
-            var $nav = $('.area_nav');
-            if ($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-            else $nav.removeClass('nav_fixed');
-        });
+	    $(window).scroll(function() {
+		    var $nav = $('.area_nav');
+		    if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+		    else $nav.removeClass('nav_fixed');
+	    });
 
-        $('.area_sub_tab .tab').on('click', function(e){
-            e.preventDefault();
-            var id = $(this).attr('href');
-            $('.section_container').each(function(){
-                $(this).css({height:0});
-            })
-            $(id).css({height:'auto'});
+	    $('.area_sub_tab .tab').on('click', function(e){
+		    e.preventDefault();
+		    var id = $(this).attr('href');
+		    $('.section_container').each(function(){
+			    $(this).css({height:0});
+		    })
+		    $(id).css({height:'auto'});
 
-            var $hrefTarget = $($(this).attr('href'));
-            var position = $hrefTarget.offset().top-150;
+		    var $hrefTarget = $($(this).attr('href'));
+		    if($hrefTarget.length) {
+			    var position = $hrefTarget.offset().top-150;
 
-            $('html,body').delay(100).animate({scrollTop:position}, 300);
-        })
+			    $('html,body').delay(100).animate({scrollTop:position}, 300);
+		    }
+	    })
     </script>
 </body>
 
