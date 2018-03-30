@@ -3,12 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>NTS Markup Library : 마크업검수 레이어</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>NTS Markup Library : Ecup 시작하기</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="./ecup_lib.css">
     <style>
         .section_container {
             overflow: hidden;
+        }
+
+        .section_container .tit a {
+            color: #666;
         }
     </style>
 </head>
@@ -24,6 +29,7 @@
             <section class="section_intro">
                 <h2 class="tit">라이브러리 소개</h2>
                 <h3 class="develop_name">Ecup.js</h3>
+                <p>Easy Control markUP</p>
                 <p class="develop_summary">마크업개발자가 디자인검수를 위해 임시로 구현하는 HTML, JS 의 개발 리소스를 줄여주는 자바스크립트 라이브러리 입니다.</p>
                 <p class="develop_summary">크로스브라우징 이슈를 최소화하기 위해서 jQuery 에 의존성을 가지기 때문에, jQuery 라이브러리를 먼저 불러오신 다음 사용해주시기 바랍니다.</p>
             </section>
@@ -32,80 +38,234 @@
                 <div class="area_nav">
                     <div class="area_tab">
                         <a href="#" class="tab on">시작하기</a>
-                        <a href="./ecup_layer.html" class="tab">Ecup <span style="font-size:13px;">( Easy Control Markup )</span></a>
+                        <a href="./ecup_layer.html" class="tab">Ecup</a>
                         <a href="./ecup_jQuery.html" class="tab">jQuery 확장 메서드</a>
                         <a href="./ecup_etc.html" class="tab">부가 기능</a>
                     </div>
-                    <div class="area_sub_tab">
-                        <a href="#anchor_layer" class="tab"># 마크업검수 레이어</a>
-                    </div>
                 </div>
-                <div class="area_content">
+                <div class="area_content start">
                     <div id="anchor_start" class="section_container">
                         <section class="section_content">
                             <strong>Browser support</strong>
-                            <div class="box_code">
-                                <p>IE 8+ (possibly 9 also), latest of Chrome/FF/Safari, iOS 7+ and Android 2.1+ (except 3.x)</p>
+                            <div class="box_code code_js">
+								<div class="inner_code">
+									<p>IE 8+ (possibly 9 also), latest of Chrome/FF/Safari, iOS 7+ and Android 2.1+ (except 3.x)</p>
+								</div>
                             </div>
                             <br />
 
                             <strong>Load files or import library</strong>
                             <div class="box_code code_html">
-                                <p>src="http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/js/ecup.js"</p>
+								<div class="inner_code">
+									<p>&lt;script src="http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/js/ecup.js"/&gt;</p>
+								</div>
                             </div>
 
                             <br />
 
-                            <strong>Initialize</strong>
                             <div class="box_code code_js">
-                                <p>// 레이어 환경 설정 ( ex. 노출 타입, 디자인 테마 )</p>
-                                <p>ecup.markupLayer.set({</p>
-                                <p> type: 'external',</p>
-                                <p> theme: 'dark'</p>
-                                <p> external: {</p>
-                                <p> btnText: '마크업',</p>
-                                <p> right: 50,</p>
-                                <p> bottom: 50</p>
-                                <p> },</p>
-                                <p> buttonType: {</p>
-                                <p> '로그인 상태': 'radio'</p>
-                                <p> }</p>
-                                <p>});</p>
-                                <p> </p>
-                                <p>// 버튼 생성 ( 단일 or 그룹 )</p>
-                                <p>ecup.markupLayer({</p>
-                                <p> '버튼1 이름': function() {</p>
-                                <p> // 버튼1 기능</p>
-                                <p> },</p>
-                                <p> '버튼2 기능': function() {</p>
-                                <p> // 버튼2 기능</p>
-                                <p> }</p>
-                                <p>});</p>
-                                <p> </p>
+								<div class="tit_code">Initialize</div>
+								<div class="inner_code">
+									<p>// 레이어 환경 설정 ( ex. 노출 타입, 디자인 테마 )</p>
+	                                <p>ecup.markupLayer.set({</p>
+	                                <p>    type: 'external',</p>
+	                                <p>    theme: 'dark'</p>
+	                                <p>    external: {</p>
+	                                <p>        btnText: '마크업',</p>
+	                                <p>        right: 50,</p>
+	                                <p>        bottom: 50</p>
+	                                <p>    },</p>
+	                                <p>     buttonType: {</p>
+	                                <p>        '로그인 상태': 'radio'</p>
+	                                <p>    }</p>
+	                                <p>});</p>
+								</div>
                             </div>
-
                         </section>
+
+                        <div id="anchor_layer" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_layer.html#anchor_layer">검수 레이어 버튼 추가 및 활성화</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_js">
+										<div class="tit_code">단일 버튼</div>
+										<div class="inner_code">
+											<p>ecup.markupLayer({</p>
+	                                		<p>    '로딩': {</p>
+	                                        <p>        target: '.list_article',</p>
+	                                	    <p>        toggleClass: 'is_loading',</p>
+	                                		<p>    },</p>
+	                                		<p>});</p>
+										</div>
+                                    </div>
+                                    <div class="box_code code_js">
+										<div class="tit_code">그룹 버튼</div>
+										<div class="inner_code">
+											<p>ecup.markupLayer('로그인 상태').group({</p>
+	                                        <p>    '로그인 전': function(){</p>
+	                                        <p>        $(".header .button_login").show();</p>
+	                        				<p>        $(".header .area_user").hide();</p>
+	                                        <p>    },</p>
+	                                        <p>    '로그인 후': function(){</p>
+	                                        <p>        $(".header .button_login").hide();</p>
+	                        				<p>        $(".header .area_user").show();</p>
+	                                        <p>    }</p>
+	                                        <p>});</p>
+										</div>
+                                    </div>
+                                    <div class="box_code code_js">
+										<div class="tit_code">마크업 가이드 레이어 활성화</div>
+										<div class="inner_code">
+											<p>ecup.markupLayer.show();</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div id="anchor_comment" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_layer.html#anchor_comment">UI 코멘트 달기</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_js">
+										<div class="tit_code">단일 코멘트</div>
+										<div class="inner_code">
+											<p>ecup.comment('.content_image','콘텐츠 이미지 영역입니다.');</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div id="anchor_layerControl" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_layer.html#anchor_layerControl">레이어 제어하기</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_js">
+										<div class="tit_code">단일 추가 제어</div>
+										<div class="inner_code">
+											<p>ecup.layerControl('.layer','.open_btn','close_btn');</p>
+										</div>
+                                    </div>
+                                    <div class="box_code code_js">
+										<div class="tit_code">다중 추가 제어</div>
+										<div class="inner_code">
+											<p>ecup.layerControl(['.layer','.event_btn'],['.profile_img','.open_btn']);</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div id="anchor_selectControl" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_layer.html#anchor_selectControl">셀렉트박스 제어하기</a></h5>
+                                <div class="inner">
+                                    <strong></strong>
+                                    <div class="box_code code_js">
+										<div class="tit_code">.option을 aria-select로 제어</div>
+										<div class="inner_code">
+											<p>ecup.selectControl('.button','.listbox',{'.option':'aria-selected'});</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div id="anchor_attr" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_jQuery.html#anchor_attr">요소 속성 제어</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_js">
+										<div class="inner_code">
+											<p>$('#test').$addAttr('role', 'button');</p>
+	                                        <p>$('#test').$removeAttr('role', 'aria-label');</p>
+	                                        <p>$('#test').$toggleAttr({</p>
+											<p>    role: 'button',</p>
+											<p>    'aria-label': '테스트'</p>
+											<p>});</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_jQuery.html#anchor_inline">요소 인라인 스타일 제어</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_js">
+										<div class="inner_code">
+											<p>$('#test').$addStyle('background-color', '#333');</p>
+	                                        <p>$('#test').$removeStyle('background-color, color');</p>
+	                                        <p>$('#test').$toggleStyle({</p>
+											<p>    display: 'block',</p>
+											<p>    width: '100px'</p>
+											<p>});</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div id="anchor_sprite" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_jQuery.html#anchor_sprite">스프라이트 이미지 애니메이션 효과</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_js">
+										<div class="inner_code">
+											<p>$('.icon_select').sprite({</p>
+	                                        <p>    count: 13,  // 프레임 개수</p>
+	                                        <p>    pos: 40, // 프레임 사이즈</p>
+	                                        <p>    orient: 'vertical', // 이동 방향</p>
+	                                        <p>    duration: 0.2, // 동작 시간</p>
+	                                        <p>    mode: 'remove' // 효과 종료 후 스타일 유무</p>
+	                                        <p>});</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div id="anchor_randomImg" class="section_container">
+                            <section class="section_content">
+                                <h5 class="tit"><a href="./ecup_etc.html#anchor_tmpimg">임시이미지 자동 적용</a></h5>
+                                <div class="inner">
+                                    <div class="box_code code_html">
+										<div class="inner_code">
+											<p>&lt;img src="#" width="100" height="100" alt="임시이미지"/&gt;</p>
+										</div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    <script src="./ecup_lib.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="./ecup_lib.js"></script>
     <script>
-        $(window).scroll(function() {
-            var $nav = $('.area_nav');
-            if ($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
-            else $nav.removeClass('nav_fixed');
-        });
+	    var isMobile = /Android|webOS|iPhone|BlackBerry/i.test(navigator.userAgent) ? true : false;
 
-        $('.area_sub_tab .tab').on('click', function(e){
-            e.preventDefault();
-            var id = $(this).attr('href');
-            $('.section_container').each(function(){
-                $(this).css({height:0});
-            })
-            $(id).css({height:'auto'});
+	    $(window).scroll(function() {
+		    var $nav = $('.area_nav');
+		    if(isMobile) {
+			    console.log($(this).scrollTop());
+			    if($(this).scrollTop() >= 288) $nav.addClass('nav_fixed');
+			    else $nav.removeClass('nav_fixed');
+		    }
+		    else {
+			    if($(this).scrollTop() >= 338) $nav.addClass('nav_fixed');
+			    else $nav.removeClass('nav_fixed');
+		    }
+	    });
+
+	    $('.area_sub_tab .tab').on('click', function(e){
+		    e.preventDefault();
+		    var id = $(this).attr('href');
+		    $('.section_container').each(function(){
+			    $(this).css({height:0});
+		    })
+		    $(id).css({height:'auto'});
 
             var $hrefTarget = $($(this).attr('href'));
 	        if($hrefTarget.length) {

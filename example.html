@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .list_article {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+        .list_article.is_loading:after {
+            content: '...';
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="list_article">
+
+    </div>
+    <button class="btn_profile">홍길동</button>
+    <button class="btn_login">로그인</button>
+
+    <script src="./js/jquery-1.12.1.min.js"></script>
+    <script src="./js/ecup.js"></script>
+    <script>
+        ecup.markupLayer.set({
+            type: 'external',
+            theme: 'pink',
+            external: {
+                btnText: '마크업',
+                right: 50,
+                bottom: 50
+            },
+            buttonType: {
+                '로그인 상태': 'radio'
+            }
+        });
+
+        ecup.markupLayer({
+            '로딩': {
+                target: '.list_article',
+                toggleClass: 'is_loading',
+            },
+        });
+
+        ecup.markupLayer('로그인 상태').group({
+            '로그인 전': {
+                target: '.btn_profile',
+                addStyle: 'display: none;'
+            },
+            '로그인 후': {
+                target: '.btn_login',
+                addStyle: 'display: none;'
+            }
+        });
+
+        ecup.comment('.btn_profile','프로필 확인 버튼입니다.');
+        ecup.layerControl('.list_article','.btn_login','.btn_profile');
+
+        ecup.markupLayer.show();
+    </script>
+</body>
+
+</html>
