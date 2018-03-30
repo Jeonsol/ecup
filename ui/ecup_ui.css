@@ -13,7 +13,7 @@
 .__NTS_markup .__area_env .__view {float:left;width:2.4em;height:1.4em;border-radius:0.7em;margin:0.3em 0.6em 0 0;background-color:#a7a7a7;}
 .__NTS_markup .__area_env .__view:before {content:'';float:left;width:1em;height:1em;margin:0.2em 0 0 0.2em;border-radius:50%;background-color:#555;}
 .__NTS_markup .__area_env .off .__view:before {float:right;margin:0.2em 0.3em 0 0;background-color:#777;}
-.__NTS_markup .__NTS_markup_range {position:absolute;top:75px;right:12px;width:20%;height:6px;border-radius:3px;background:#00c73c;}
+.__NTS_markup .__NTS_markup_range {position:absolute;top:75px;right:12px;width:20%;height:6px;border-radius:3px;background:#ccc;}
 
 
 /* 버튼영역 레이아웃 */
@@ -46,7 +46,7 @@
 .__NTS_markup_wrap .__NTS_markup_show {display:block;box-sizing:border-box;height:32px;padding:0 7px;border:2px solid #3c3f41;background-color:#2a2a2a;font-family:NanumGothic, sans-serif;font-weight:bold;font-size:16px;line-height:28px;color:#c7c7c7;white-space:nowrap;cursor:pointer;}
 .__NTS_markup_wrap .__NTS_markup_show:hover {text-decoration:none;color:#c7c7c7;}
 .__NTS_markup_hide {position:absolute;top:0;right:0;width:3.1em;height:3.1em;text-align:center;}
-.__NTS_markup_hide::before {content:'';display:inline-block;width:1em;height:1em;margin-top:1.2em;background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/dark/btn_close.png) no-repeat 50% 50%/100% 100%;}
+.__NTS_markup_hide::before {content:'';display:inline-block;width:1em;height:1em;margin-top:1.2em;background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/btn_close_black.png) no-repeat 50% 50%/100% 100%;}
 
 /** Comment **/
 .__ecup_comment {position: absolute;z-index: 1000;}
@@ -69,6 +69,7 @@
 .__NTS_markup.naver .__check[aria-pressed="true"] .__view::before {color: #00c73c;}
 .__NTS_markup.naver .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.naver .__radio[aria-pressed="true"] .__view:before {background-color: #00c73c;}
+.__NTS_markup.naver .__NTS_markup_range {background-color: #00c73c;}
 
 /** PURPLE 테마 **/
 .__NTS_markup_wrap.purple .__NTS_markup_show {background-color: #cd65dc;color: #fff;border: 1px solid #cd65dc;}
@@ -86,6 +87,7 @@
 .__NTS_markup.purple .__check[aria-pressed="true"] .__view::before {color: #cd65dc;}
 .__NTS_markup.purple .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.purple .__radio[aria-pressed="true"] .__view:before {background-color: #cd65dc;}
+.__NTS_markup.purple .__NTS_markup_range {background-color: #cd65dc;}
 
 /** YELLOW 테마 **/
 .__NTS_markup_wrap.yellow .__NTS_markup_show {background-color: #fbec46;color: #fff;border: 1px solid #fbec46;}
@@ -103,6 +105,8 @@
 .__NTS_markup.yellow .__check[aria-pressed="true"] .__view::before {color: #fbec46;}
 .__NTS_markup.yellow .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.yellow .__radio[aria-pressed="true"] .__view:before {background-color: #fbec46;}
+.__NTS_markup.yellow .__NTS_markup_range {background-color: #fbec46;}
+
 
 /** BLUE 테마 **/
 .__NTS_markup_wrap.blue .__NTS_markup_show {background-color: #00adff;color: #fff;border: 1px solid #00adff;}
@@ -120,6 +124,7 @@
 .__NTS_markup.blue .__check[aria-pressed="true"] .__view::before {color: #00adff;}
 .__NTS_markup.blue .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.blue .__radio[aria-pressed="true"] .__view:before {background-color: #00adff;}
+.__NTS_markup.blue .__NTS_markup_range {background-color: #00adff;}
 
 /** ORANGE 테마 **/
 .__NTS_markup_wrap.orange .__NTS_markup_show {background-color: #ff9900;color: #fff;border: 1px solid #ff9900;}
@@ -137,3 +142,7 @@
 .__NTS_markup.orange .__check[aria-pressed="true"] .__view::before {color: #ff9900;}
 .__NTS_markup.orange .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.orange .__radio[aria-pressed="true"] .__view:before {background-color: #ff9900;}
+.__NTS_markup.orange .__NTS_markup_range {background-color: #ff9900;}
+
+/** Dark 테마 **/
+.__NTS_markup.dark .__NTS_markup_hide::before {background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/btn_close_gray.png)}
