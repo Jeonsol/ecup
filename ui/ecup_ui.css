@@ -27,18 +27,18 @@
 
 /* 버튼영역 내용 */
 .__NTS_markup .__area_group strong {display:block;overflow:hidden;text-overflow:ellipsis;background-color:#d2d2d2;padding:0.3em 0.7em;font-family:NanumGothic, sans-serif;font-weight:normal;font-size:1em;white-space:nowrap;color:#333;}
-.__NTS_markup .__area_btn .__btn::before {content:'';font-weight:bold;color:#b7b7b7;}
+.__NTS_markup .__area_btn .__btn:before {content:'';font-weight:bold;color:#b7b7b7;}
 
 .__NTS_markup .__button .__view{width:1em;}
 .__NTS_markup .__button[aria-pressed="true"] {background-color:#777;}
 
 .__NTS_markup .__check .__view {width:2em;}
 .__NTS_markup .__check .__view:before {content:'\2713';font-size:1.5em;color:#4a4a4a;}
-.__NTS_markup .__check[aria-pressed="true"] .__view::before {color:#b7b7b7;}
+.__NTS_markup .__check[aria-pressed="true"] .__view:before {color:#b7b7b7;}
 
 .__NTS_markup .__radio .__view {width:2em;}
 .__NTS_markup .__radio .__view:before {content:'';display:inline-block;width:0.6em;height:0.6em;margin-top:0.7em;border-radius:50%;background-color:#4a4a4a;}
-.__NTS_markup .__radio[aria-pressed="true"] .__view::before {background-color:#b7b7b7;}
+.__NTS_markup .__radio[aria-pressed="true"] .__view:before {background-color:#b7b7b7;}
 
 /* external */
 .__NTS_markup_wrap {position:fixed;z-index:10000;opacity: 0.9;}
@@ -46,12 +46,13 @@
 .__NTS_markup_wrap .__NTS_markup_show {display:block;box-sizing:border-box;height:32px;padding:0 7px;border:2px solid #3c3f41;background-color:#2a2a2a;font-family:NanumGothic, sans-serif;font-weight:bold;font-size:16px;line-height:28px;color:#c7c7c7;white-space:nowrap;cursor:pointer;}
 .__NTS_markup_wrap .__NTS_markup_show:hover {text-decoration:none;color:#c7c7c7;}
 .__NTS_markup_hide {position:absolute;top:0;right:0;width:3.1em;height:3.1em;text-align:center;}
-.__NTS_markup_hide::before {content:'';display:inline-block;width:1em;height:1em;margin-top:1.2em;background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/btn_close_white.png) no-repeat 50% 50%/100% 100%;}
+.__NTS_markup_hide:before {content:'';display:inline-block;width:1em;height:1em;margin-top:1.2em;background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/btn_close_white.png) no-repeat 50% 50%/100% 100%;}
 
 /** Comment **/
 .__ecup_comment {position: absolute;z-index: 1000;}
 .__ecup_comment .__comment_btn {position: absolute;top: 0;left: 0;width: 24px;height: 24px;border-radius: 100%;border: 2px solid #000;background-color: #ffec00;}
 .__ecup_comment .__comment_area {display: none;max-width: 100px;border: 2px solid #000;border-radius: 5px;background-color: #fff;padding: 0.5em;margin-left: 2em;font-size: 0.8em;}
+.__comment_blind {position: absolute;clip: rect(0 0 0 0);width: 1px;height: 1px;margin: -1px;}
 
 /** Naver 테마 **/
 .__NTS_markup_wrap.naver .__NTS_markup_show {background-color: #00c73c;color: #fff;border: 1px solid #00c73c;}
@@ -66,7 +67,7 @@
 .__NTS_markup.naver .__area_btn {border-bottom: 0;}
 .__NTS_markup.naver .__area_btns a {background-color: #fff;border: 1px dotted #00c73c;border-radius: 6px;margin-bottom: 4px;color: #000;}
 .__NTS_markup.naver .__check .__view:before {color: #000;}
-.__NTS_markup.naver .__check[aria-pressed="true"] .__view::before {color: #00c73c;}
+.__NTS_markup.naver .__check[aria-pressed="true"] .__view:before {color: #00c73c;}
 .__NTS_markup.naver .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.naver .__radio[aria-pressed="true"] .__view:before {background-color: #00c73c;}
 .__NTS_markup.naver .__NTS_markup_range {background-color: #00c73c;}
@@ -84,7 +85,7 @@
 .__NTS_markup.purple .__area_btn {border-bottom: 0;}
 .__NTS_markup.purple .__area_btns a {background-color: #fff;border: 1px dotted #cd65dc;border-radius: 6px;margin-bottom: 4px;color: #000;}
 .__NTS_markup.purple .__check .__view:before {color: #000;}
-.__NTS_markup.purple .__check[aria-pressed="true"] .__view::before {color: #cd65dc;}
+.__NTS_markup.purple .__check[aria-pressed="true"] .__view:before {color: #cd65dc;}
 .__NTS_markup.purple .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.purple .__radio[aria-pressed="true"] .__view:before {background-color: #cd65dc;}
 .__NTS_markup.purple .__NTS_markup_range {background-color: #cd65dc;}
@@ -102,7 +103,7 @@
 .__NTS_markup.yellow .__area_btn {border-bottom: 0;}
 .__NTS_markup.yellow .__area_btns a {background-color: #fff;border: 1px dotted #efdf2d;border-radius: 6px;margin-bottom: 4px;color: #000;}
 .__NTS_markup.yellow .__check .__view:before {color: #000;}
-.__NTS_markup.yellow .__check[aria-pressed="true"] .__view::before {color: #fbec46;}
+.__NTS_markup.yellow .__check[aria-pressed="true"] .__view:before {color: #fbec46;}
 .__NTS_markup.yellow .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.yellow .__radio[aria-pressed="true"] .__view:before {background-color: #fbec46;}
 .__NTS_markup.yellow .__NTS_markup_range {background-color: #fbec46;}
@@ -121,7 +122,7 @@
 .__NTS_markup.blue .__area_btn {border-bottom: 0;}
 .__NTS_markup.blue .__area_btns a {background-color: #fff;border: 1px dotted #00adff;border-radius: 6px;margin-bottom: 4px;color: #000;}
 .__NTS_markup.blue .__check .__view:before {color: #000;}
-.__NTS_markup.blue .__check[aria-pressed="true"] .__view::before {color: #00adff;}
+.__NTS_markup.blue .__check[aria-pressed="true"] .__view:before {color: #00adff;}
 .__NTS_markup.blue .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.blue .__radio[aria-pressed="true"] .__view:before {background-color: #00adff;}
 .__NTS_markup.blue .__NTS_markup_range {background-color: #00adff;}
@@ -139,10 +140,10 @@
 .__NTS_markup.orange .__area_btn {border-bottom: 0;}
 .__NTS_markup.orange .__area_btns a {background-color: #fff;border: 1px dotted #ff9900;border-radius: 6px;margin-bottom: 4px;color: #000;}
 .__NTS_markup.orange .__check .__view:before {color: #000;}
-.__NTS_markup.orange .__check[aria-pressed="true"] .__view::before {color: #ff9900;}
+.__NTS_markup.orange .__check[aria-pressed="true"] .__view:before {color: #ff9900;}
 .__NTS_markup.orange .__radio .__view:before {background-color: #5a5959;}
 .__NTS_markup.orange .__radio[aria-pressed="true"] .__view:before {background-color: #ff9900;}
 .__NTS_markup.orange .__NTS_markup_range {background-color: #ff9900;}
 
 /** Dark 테마 **/
-.__NTS_markup.dark .__NTS_markup_hide::before {background:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/btn_close_gray.png)}
+.__NTS_markup.dark .__NTS_markup_hide:before {background-image:url(http://view.gitlab2.uit.navercorp.com/NT11398/ecup/raw/develop/theme/btn_close_gray.png)}
