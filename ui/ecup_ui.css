@@ -13,6 +13,7 @@
 .__NTS_markup .__area_env .__view {float:left;width:2.4em;height:1.4em;border-radius:0.7em;margin:0.3em 0.6em 0 0;background-color:#a7a7a7;}
 .__NTS_markup .__area_env .__view:before {content:'';float:left;width:1em;height:1em;margin:0.2em 0 0 0.2em;border-radius:50%;background-color:#555;}
 .__NTS_markup .__area_env .off .__view:before {float:right;margin:0.2em 0.3em 0 0;background-color:#777;}
+.__NTS_markup .__NTS_markup_range {position:absolute;top:75px;right:12px;width:20%;height:6px;border-radius:3px;background:#00c73c;}
 
 
 /* 버튼영역 레이아웃 */
@@ -41,7 +42,7 @@
 
 /* external */
 .__NTS_markup_wrap {position:fixed;z-index:10000;opacity: 0.9;}
-.__NTS_markup_wrap .__NTS_markup {position:absolute;top:auto;right:0;bottom:0;width:260px;max-height:none;}
+.__NTS_markup_wrap .__NTS_markup {position:absolute;top:auto;right:0;bottom:0;width:260px;max-height:none;opacity:1;}
 .__NTS_markup_wrap .__NTS_markup_show {display:block;box-sizing:border-box;height:32px;padding:0 7px;border:2px solid #3c3f41;background-color:#2a2a2a;font-family:NanumGothic, sans-serif;font-weight:bold;font-size:16px;line-height:28px;color:#c7c7c7;white-space:nowrap;cursor:pointer;}
 .__NTS_markup_wrap .__NTS_markup_show:hover {text-decoration:none;color:#c7c7c7;}
 .__NTS_markup_hide {position:absolute;top:0;right:0;width:3.1em;height:3.1em;text-align:center;}

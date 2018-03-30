@@ -514,6 +514,8 @@
 			}
 
 			// DOM 생성 초기화
+			var $opacityController = createOpacityController($wrap);
+			if ($opacityController) $wrap.append($opacityController);
 			var $body = $(document.body);
 			$btnHide = $('<a role="button" aria-label="마크업검수 레이어 숨기기" class="__NTS_markup_hide"></a>');
 			$body.append($wrap.append($btnHide));
@@ -550,7 +552,6 @@
 				if ($wrap.attr('data-show') === 'true') {
 					setLayer(topOrigin, 0.5, 'false');
 				}
-
 			}
 
 			function setLayer(destTop, destOpacity, data) {
@@ -590,12 +591,14 @@
 			var $externalWrap = $('<div class="__NTS_markup_wrap '+markupLayerManager.theme+'"></div>'),
 				$btnShow = $('<a class="__NTS_markup_show" role="button" aria-label="마크업검수 레이어 보기"></a>'),
 				$btnShowText = $('<span>' + btnShowText + '</span>'),
-                $btnHide = $('<a class="__NTS_markup_hide" role="button" aria-label="마크업검수 레이어 숨기기">');
+                $btnHide = $('<a class="__NTS_markup_hide" role="button" aria-label="마크업검수 레이어 숨기기">'),
+				$opacityController = createOpacityController($externalWrap);
 
 			$btnShow.click(onClickListenerBtnShow);
             $btnHide.click(onClickListenerBtnHide);
 
 			$externalWrap.css({right: wrapRight, bottom: wrapBottom});
+			if ($opacityController) $wrap.append($opacityController);
 			$externalWrap.append($btnShow.append($btnShowText)).append($wrap.append($btnHide));
 			$(document.body).append($externalWrap);
 
@@ -619,6 +622,20 @@
 				});
 			}
 
+		}
+
+		function createOpacityController($target) {
+			var browser = $.checkBrowser();
+			if (browser !== 'IE8' || browser !== 'IE9') {
+				var $controller = $('<input type="range" min="30" max="90" value="90" class="__NTS_markup_range">');
+				$controller.on('change', function() {
+					var opacityVal = $(this).val() / 100;
+					$target.css('opacity', opacityVal);
+				});
+				return $controller;
+			} else {
+				return null;
+			}
 		}
 
 	},
@@ -881,7 +898,10 @@
 }, function() {
 	/** jQuery 확장 **/
 
-	/** DOM 캐시 관리자 **/
+	/** DOM 캐시 관리자
+	* 해당 DOM의 속성 / 인라인 스타일을 저장해뒀다가
+	* remove 또는 toggle시 rollback 한다.
+	**/
 	/* 구조
 	{
 		dom: DOM 주소값,
@@ -996,14 +1016,11 @@
 		if (style === 'color' || style === 'background-color') val = $.hexToRgb(val);
 		var dom = $dom[0];
 		if (!dom.style[style]) {
-			console.log(1);
 			dom.style[style] = val;
 		} else if (dom.style[style] !== val) {
-			console.log(dom.style[style]);
 			domCacheStorage.set(dom, 'style', style, dom.style[style]);
 			dom.style[style] = val;
 		} else if (dom.style[style] === val) {
-			console.log(3);
 			var rollback = domCacheStorage.get(dom, 'style', style);
 			if (rollback !== undefined && rollback !== val) {
 				dom.style[style] = rollback;
