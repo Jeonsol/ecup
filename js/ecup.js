@@ -824,7 +824,7 @@
 
 					$commentBtn.click(function() {
 						$(this).siblings('.__comment_area').toggle();
-						$(window).scroll();
+						$(window).resize();
 					});
 
 					commentManager.targetData.push(target);
@@ -863,7 +863,20 @@
 					$commentData.css({'top': top, 'left': left});
 
 					var $commentAreaRightOffset = $commentArea.offset().left + $commentArea.outerWidth();
+					if ($window.width() - $commentAreaRightOffset < 110) $commentArea.css({'width':'100px','margin-left':'-101px'});
+					else $commentArea.css({'width':'auto','margin-left':'2em'});
+				}
+			});
 
+			$window.on("resize",function() {
+
+				commentData = commentManager.targetDom.find('.__ecup_comment') || [];
+
+				for (var i = 0; i < targetData.length; i++) {
+					$commentData = $(commentData[i]);
+					$commentArea = $commentData.find('.__comment_area');
+
+					var $commentAreaRightOffset = $commentArea.offset().left + $commentArea.outerWidth();
 					if ($window.width() - $commentAreaRightOffset < 110) $commentArea.css({'width':'100px','margin-left':'-101px'});
 					else $commentArea.css({'width':'auto','margin-left':'2em'});
 				}
