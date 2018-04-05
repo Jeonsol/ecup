@@ -42,7 +42,7 @@
 
 /* external */
 .__NTS_markup_wrap {position:fixed;z-index:10000;opacity: 0.9;}
-.__NTS_markup_wrap .__NTS_markup {position:absolute;top:auto;right:0;bottom:0;width:260px;max-height:none;opacity:1;}
+.__NTS_markup_wrap .__NTS_markup {position:absolute;top:auto;right:0;bottom:0;width:260px;max-height:500px;opacity:1;}
 .__NTS_markup_wrap .__NTS_markup_show {display:block;box-sizing:border-box;height:32px;padding:0 7px;border:2px solid #3c3f41;background-color:#2a2a2a;font-family:NanumGothic, sans-serif;font-weight:bold;font-size:16px;line-height:28px;color:#c7c7c7;white-space:nowrap;cursor:pointer;}
 .__NTS_markup_wrap .__NTS_markup_show:hover {text-decoration:none;color:#c7c7c7;}
 .__NTS_markup_hide {position:absolute;top:0;right:0;width:3.1em;height:3.1em;text-align:center;}
