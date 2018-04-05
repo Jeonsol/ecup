@@ -340,21 +340,20 @@
                     });
 
                     if (func.opposite) $a.addClass('__'+ type);
-                    else $a.addClass('__button');
+					else $a.addClass('__button').addClass('__'+ type);;
 
                     $a.prepend('<span class="__view"></span>');
                     return $a;
                 }
 
                 // 각각의 버튼 이벤트 할당
-                function makeEvent(){
+				function makeEvent(){
                     if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
                         $groups.on('click', 'a', function(e){
                             var $my = $(this);
                             var a = $(this).parent().children('a');
 
-
-                            if(!$(this).hasClass('__button'))
+                            if(!$(this).hasClass('__button')) {
                                 $.each(a, function(index){
                                     if($(a[index]).attr('aria-pressed') == 'true' && !$(a[index]).hasClass('__button')){
                                         $(a[index]).attr('aria-pressed', 'false');
@@ -365,35 +364,41 @@
                                     }
                                 });
 
-                            if($(this).attr('aria-pressed') == 'false') {
-                                btnObj.button[$(this).text()].origin();
+                                if($(this).attr('aria-pressed') == 'false') {
+                                    btnObj.button[$(this).text()].origin();
+                                    $(this).attr('aria-pressed','true');
+                                }
+                            } else {
+                                var name = $(this).text();
+                                $(this).siblings('a').attr('aria-pressed', 'false');
                                 $(this).attr('aria-pressed','true');
-                            }
-                        })
-                    } else if(groupType == 'button') { // 기본 버튼 타입 이벤트
-                        $groups.on('click', 'a', function(e){
-                            var name = $(this).text();
-                            if($(this).attr('aria-pressed') == 'false') {
                                 btnObj.button[name].origin();
-                                $(this).attr('aria-pressed','true');
                             }
-                        })
+
+                        });
                     } else { // 체크박스 버튼 타입 이벤트 ( default )
                         $groups.on('click', 'a', function(e){
                             var name = $(this).text();
-                            if($(this).attr('aria-pressed') == 'true' ) {
-                                if(btnObj.button[name].opposite != null) {
-                                    btnObj.button[name].opposite();
-                                    $(this).attr('aria-pressed','false');
-                                }
-                            } else {
-                                btnObj.button[name].origin();
+                            if($(this).hasClass('__button')) {
+                                $(this).siblings('a').attr('aria-pressed', 'false');
                                 $(this).attr('aria-pressed','true');
+                                btnObj.button[name].origin();
+                            }
+                            else {
+                                if($(this).attr('aria-pressed') == 'true' ) {
+                                    if(btnObj.button[name].opposite != null) {
+                                        btnObj.button[name].opposite();
+                                        $(this).attr('aria-pressed','false');
+                                    }
+                                } else {
+                                    btnObj.button[name].origin();
+                                    $(this).attr('aria-pressed','true');
+                                }
                             }
                         })
                     }
                 }
-            }
+			}
         }
 
         /* 별도의 창으로 그려줌 */
@@ -447,7 +452,7 @@
             }
 
             // 각각의 버튼 이벤트 할당
-            function makeEvent(index, btnObj, groupType){
+			function makeEvent(index, btnObj, groupType){
                 var $groups = $(doc.querySelectorAll('.__area_btn')[index]);
 
                 if(groupType == 'radio'){ // 라디오 버튼 타입 이벤트
@@ -471,30 +476,29 @@
                             $(this).attr('aria-pressed','true');
                         }
                     });
-                } else if(groupType == 'button') { // 기본 버튼 타입 이벤트
-                    $groups.on('click', 'a', function(e){
-                        var name = $(this).text();
-                        if($(this).attr('aria-pressed') == 'false') {
-                            btnObj.button[name].origin();
-                            $(this).attr('aria-pressed','true');
-                        }
-                    });
                 } else { // 체크박스 버튼 타입 이벤트 ( default )
                     $groups.on('click', 'a', function(e){
                         var name = $(this).text();
-                        if($(this).attr('aria-pressed') == 'true' ) {
-                            if(btnObj.button[name].opposite != null) {
-                                btnObj.button[name].opposite();
-                                $(this).attr('aria-pressed','false');
+                        if($(this).hasClass('__button')) {
+                            var name = $(this).text();
+                            if($(this).attr('aria-pressed') == 'false') {
+                                $(this).attr('aria-pressed','true');
                             }
-                        } else {
                             btnObj.button[name].origin();
-                            $(this).attr('aria-pressed','true');
+                        } else {
+                            if($(this).attr('aria-pressed') == 'true' ) {
+                                if(btnObj.button[name].opposite != null) {
+                                    btnObj.button[name].opposite();
+                                    $(this).attr('aria-pressed','false');
+                                }
+                            } else {
+                                btnObj.button[name].origin();
+                                $(this).attr('aria-pressed','true');
+                            }
                         }
                     });
                 }
             }
-
 		}
 
 		/* 보이지 않게 내장되게 그려줌 */
@@ -699,10 +703,12 @@
 	},
 
 	selectControl : function(btn, listBox, targetObj) {
-		$(btn).click(function() {
-			$(this).attr('aria-expanded','true');
-			$(listBox).css('display','block');
-		});
+		var btnText;
+ 		$(btn).click(function() {
+     		$(this).attr('aria-expanded','true');
+     		$(listBox).css('display','block');
+     		btnText = $(this).text().replace( /(\s\s)/g, '').replace( /(\t)/g, '');
+ 		});
 
 		var $selector, selector;
 
@@ -732,8 +738,10 @@
 				$target.addClass(toggleClass);
 			}
 
-			$(btn).text($target.text());
+			var text = ($(btn).html()).replace(btnText,$target.text().replace( /(\s\s)/g, '').replace( /(\t)/g, ''));
+			$(btn).html(text);
 			$(listBox).css('display','none');
+			$(btn).attr('aria-expanded','false');
 
 		});
 	},
@@ -1193,6 +1201,32 @@
             }
             return opt;
         }
+    }
+
+	/* 라디오 타입 이벤트 */
+    jQuery.fn.radioEvent = function(optionObj){
+        $(this).on('click', function(){
+            for(var attr in optionObj) {
+                var value = optionObj[attr];
+
+				if(typeof value == 'boolean') {
+                    if($(this).attr(attr) == value)
+                        break;
+
+                    $(this).attr(attr, value);
+                    $(this).siblings(this.selector).attr(attr, !value);
+                }else {
+                    if($(this).attr(attr).match(value))
+                        break;
+
+                    var values = $(this).attr(attr).split(' ');
+                    values.push(value);
+                    $(this).attr(attr, values.join(' '));
+                    values.pop();
+                    $(this).siblings(this.selector).attr(attr, values.join(' '));
+                }
+            }
+        })
     }
 
 	jQuery.checkBrowser = function() {
