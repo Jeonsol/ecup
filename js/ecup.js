@@ -153,7 +153,7 @@
 			var map = markupLayerManager.buttonArray = markupLayerManager.buttonArray || [];
 
 			var groupName = groupInfo && groupInfo.groupName ? groupInfo.groupName : '__single';
-            var groupType = groupInfo && groupInfo.groupType ? groupInfo.groupType : 'check';
+            var groupType = groupInfo && groupInfo.groupType ? groupInfo.groupType : (groupName == '__single' ? 'check' : 'radio');
 			var spec = optionObj_to_eventFunc(option, groupInfo);
 
 			if (groupName === '__single') {
@@ -380,7 +380,7 @@
                         $groups.on('click', 'a', function(e){
                             var name = $(this).text();
                             if($(this).hasClass('__button')) {
-                                $(this).siblings('a').attr('aria-pressed', 'false');
+                                // $(this).siblings('a').attr('aria-pressed', 'false');
                                 $(this).attr('aria-pressed','true');
                                 btnObj.button[name].origin();
                             }
@@ -460,7 +460,7 @@
                         var $my = $(this);
                         var a = $(this).parent().children('a');
 
-                        if(!$(this).hasClass('__button'))
+                        if(!$(this).hasClass('__button')) {
                             $.each(a, function(index){
                                 if($(a[index]).attr('aria-pressed') == 'true' && !$(a[index]).hasClass('__button')){
                                     $(a[index]).attr('aria-pressed', 'false');
@@ -470,20 +470,22 @@
                                         btnObj.button[name].opposite();
                                 }
                             });
-
-                        if($(this).attr('aria-pressed') == 'false') {
-                            btnObj.button[$(this).text()].origin();
+                            if($(this).attr('aria-pressed') == 'false') {
+                                btnObj.button[$(this).text()].origin();
+                                $(this).attr('aria-pressed','true');
+                            }
+                        } else {
+                            var name = $(this).text();
+                            $(this).siblings('a').attr('aria-pressed', 'false');
                             $(this).attr('aria-pressed','true');
+                            btnObj.button[name].origin();
                         }
                     });
                 } else { // 체크박스 버튼 타입 이벤트 ( default )
                     $groups.on('click', 'a', function(e){
                         var name = $(this).text();
                         if($(this).hasClass('__button')) {
-                            var name = $(this).text();
-                            if($(this).attr('aria-pressed') == 'false') {
-                                $(this).attr('aria-pressed','true');
-                            }
+                            $(this).attr('aria-pressed','true');
                             btnObj.button[name].origin();
                         } else {
                             if($(this).attr('aria-pressed') == 'true' ) {
