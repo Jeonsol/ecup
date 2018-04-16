@@ -23,3 +23,6 @@ UI 개발시 마크업개발자가 디자인 검수를 위해 임시로 구현�
 3. 디자인 검수에 필요한 케이스별 명세서 생성을 자동화
 4. 필요성을 느낀 부수적인 기능 (ie 9 이하 애니메이션, 디자이너 코멘트)
 
+### 참고 URL
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/Jeonsol/ecup/develop/library/ecup_start.html
+
